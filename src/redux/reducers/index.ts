@@ -1,24 +1,23 @@
-import { combineReducers } from "redux";
-import { HYDRATE } from "next-redux-wrapper";
-import product, { TProductReducerState } from "../reducers/productReducer";
+import { combineReducers } from 'redux'
+import { HYDRATE } from 'next-redux-wrapper'
+import product, { TProductReducerState } from '../reducers/productReducer'
 
 export interface IReducerState {
-  user: TProductReducerState;
+  product: TProductReducerState
 }
-
 
 const rootReducer = (state: any = {}, action: any) => {
   switch (action.type) {
     case HYDRATE:
-      return action.payload;
+      return action.payload
     default: {
       const combineReducer = combineReducers({
         product,
-      });
-      return combineReducer(state, action);
+      })
+      return combineReducer(state, action)
     }
   }
-};
+}
 
-export default rootReducer;
-export type RootState = ReturnType<typeof rootReducer>;
+export default rootReducer
+export type RootState = ReturnType<typeof rootReducer>
