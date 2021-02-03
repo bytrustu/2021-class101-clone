@@ -5,24 +5,34 @@ const takeLatest: any = Eff.takeLatest
 const takeEvery: any = Eff.takeEvery
 export const call: any = Eff.call
 
-import { TEST_REQUEST, testSuccessAction, testErrorAction } from '../actions'
+import {
+  LOAD_BANNER_REQUEST,
+  LOAD_BANNER_SUCCESS,
+  LOAD_BANNER_FAILURE,
+  loadBannerSuccess,
+  loadBannerError
+} from '../actions'
+import {
+  getBannerAPI,
+  getCooponListAPI,
+  getProductItemListAPI
+} from '../../api'
 import { IAction } from '../../types'
 import { sleep } from '../../utils'
-import { getCooponList, getProductItemList } from '../../api'
 
-export function* test(action: IAction<number>) {
+export function* getBanner(action: IAction<number>) {
   try {
-    // yield sleep(2)
-    const result = yield call(getProductItemList, action.payload)
-    yield put(testSuccessAction(result))
+    yield sleep(1)
+    const result = yield call(getBannerAPI)
+    yield put(loadBannerSuccess(result))
   } catch (e) {
     console.error(e)
-    yield put(testErrorAction(e.message))
+    yield put(loadBannerError(e.message))
   }
 }
 
 function* watchTest() {
-  yield takeEvery(TEST_REQUEST, test)
+  yield takeEvery(LOAD_BANNER_REQUEST, getBanner)
 }
 
 export default function* companySaga() {

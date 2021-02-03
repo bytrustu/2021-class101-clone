@@ -1,3 +1,5 @@
+import { TProductReducerState } from "../redux/reducers/productReducer"
+
 export interface IFetchCycle {
   type: string[]
   response: { [k: string]: string }
@@ -10,6 +12,7 @@ export interface IProductState {
   productItemList: IProductItem[]
   recommendProductItem: IProductItem | null
   cooponList: ICoopon[]
+  bannerData: IBannerData | null
 }
 
 export interface IAction<T> {
@@ -37,7 +40,7 @@ export interface ICoopon extends IErrorMessage {
 }
 
 export interface IErrorMessage {
-  error?: string
+  message?: string
 }
 
 export interface IResponseProductData extends IErrorMessage {
@@ -45,4 +48,14 @@ export interface IResponseProductData extends IErrorMessage {
   maxPage?: number
   productItemList?: IProductItem[]
   recommendProductItem?: IProductItem
+}
+
+export interface IBannerData extends IErrorMessage{
+  title?: string
+  detail?: string
+  imageUrl?: string
+}
+
+export interface IStoreState {
+  product: TProductReducerState
 }

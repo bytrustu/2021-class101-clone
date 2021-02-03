@@ -2,10 +2,6 @@ import { combineReducers } from 'redux'
 import { HYDRATE } from 'next-redux-wrapper'
 import product, { TProductReducerState } from '../reducers/productReducer'
 
-export interface IReducerState {
-  product: TProductReducerState
-}
-
 const rootReducer = (state: any = {}, action: any) => {
   switch (action.type) {
     case HYDRATE:

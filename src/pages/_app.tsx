@@ -5,6 +5,7 @@ import 'antd/dist/antd.css'
 import wrapper from '../redux/store/configureStore'
 import AppLayout from '../components/Layout/AppLayout'
 import Header from '../components/Layout/Header'
+import Contents from '../components/Layout/Contents'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
@@ -12,7 +13,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" className="next-head" />
       <AppLayout>
         <Header />
-        <Component {...pageProps} />
+        <Contents>
+          <Component {...pageProps} />
+        </Contents>
       </AppLayout>
     </>
   )
