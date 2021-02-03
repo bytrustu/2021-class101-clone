@@ -1,11 +1,11 @@
 import { ICoopon, IErrorMessage } from '../types'
 
-export const getCooponList = async (): Promise<ICoopon[] | IErrorMessage> => {
+export const getCooponListAPI = async (): Promise<ICoopon[] | IErrorMessage> => {
   try {
     console.log(coopons);
     return coopons
   } catch (e) {
-    return { error: '쿠폰을 불러올 수 없습니다.' }
+    return { message: '쿠폰을 불러올 수 없습니다.' }
   }
 }
 
