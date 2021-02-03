@@ -1,21 +1,24 @@
 export interface IFetchCycle {
-  type: string[];
+  type: string[]
   response: { [k: string]: string }
 }
 
-export interface IInitialState {
-  loading: IFetchCycle,
-  success: IFetchCycle,
-  error: IFetchCycle,
+export interface IProductState {
+  loading: IFetchCycle
+  success: IFetchCycle
+  error: IFetchCycle
+  productItemList: IProductItem[]
+  recommendProductItem: IProductItem | null
+  cooponList: ICoopon[]
 }
 
 export interface IAction<T> {
-  type: string;
-  payload?: T;
+  type: string
+  payload?: T
 }
-export type TCreateAction<T> = (payload?: T) => IAction<T>;
+export type TCreateAction<T, U> = (payload?: T) => IAction<U>
 
-export type IHandleChangeFetchCycle = (fetchCycle: IFetchCycle, initType: string, data?: any) => IFetchCycle;
+export type IHandleChangeFetchCycle = (fetchCycle: IFetchCycle, initType: string, data?: any) => IFetchCycle
 
 export interface IProductItem {
   id: string
@@ -26,9 +29,20 @@ export interface IProductItem {
   availableCoupon?: boolean
 }
 
-export interface ICoupon {
+export interface ICoopon extends IErrorMessage {
   type: string
   title: string
   discountRate?: number
   discountAmount?: number
+}
+
+export interface IErrorMessage {
+  error?: string
+}
+
+export interface IResponseProductData extends IErrorMessage {
+  currentPage?: number
+  maxPage?: number
+  productItemList?: IProductItem[]
+  recommendProductItem?: IProductItem
 }
