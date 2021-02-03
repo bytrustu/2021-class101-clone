@@ -1,11 +1,17 @@
 import React, { FC, ReactElement } from 'react'
+import styled from 'styled-components'
 
-interface IProps {
+const StyleAppLayout = styled.div`
+  min-width: 360px;
+  width: 100%;
+`
+
+interface IAppLayoutProps {
   children: ReactElement | ReactElement[]
 }
 
-const AppLayout: FC<IProps> = ({ children }) => {
-  return <div>{children}</div>
+const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
+  return <StyleAppLayout>{children}</StyleAppLayout>
 }
 
 export default AppLayout

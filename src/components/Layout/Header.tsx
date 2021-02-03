@@ -10,7 +10,7 @@ const StyleHeader = styled.header`
   align-items: center;
   height: 80px;
   background-color: #fff;
-  border-bottom: 1px solid #ececec;
+  box-shadow: rgb(248 248 249) 0px -1px 0px inset;
   cursor: pointer;
 `
 
@@ -31,7 +31,7 @@ const StyleCartWrap = styled.div`
   align-items: center;
   width: 50px;
   height: 50px;
-  border: 1px solid #eee5ee;
+  box-shadow: #ddd 0px -1px 0px inset;
   border-radius: 50%;
   cursor: pointer;
   transition: background 0.3s 0.2s ease-out;
@@ -45,7 +45,7 @@ const StyleCartIcon = styled.img`
   width: 25px;
 `
 
-const StyleCartCount = styled.div`
+const StyleCartCounter = styled.div`
   position: absolute;
   top: 5px;
   right: 6px;
@@ -56,7 +56,7 @@ const StyleCartCount = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: #444;
+  background-color: #3869da;
   color: #fff;
   font-weight: 400;
   font-size: 12px;
@@ -70,7 +70,7 @@ const Header: FC = () => {
       </Link>
       <Link href="/cart">
         <StyleCartWrap>
-          <StyleCartCount>3</StyleCartCount>
+          <StyleCartCounter>3</StyleCartCounter>
           <StyleCartIcon src="images/CartIcon.svg" alt="장바구니아이콘" />
         </StyleCartWrap>
       </Link>
