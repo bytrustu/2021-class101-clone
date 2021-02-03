@@ -2,6 +2,7 @@ import React from "react";
 import { AppProps } from "next/app";
 import PropTypes from "prop-types";
 import "antd/dist/antd.css";
+import wrapper from "../redux/store/configureStore";
 import AppLayout from "../components/Layout/AppLayout";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
@@ -23,4 +24,4 @@ MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
 };
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);
