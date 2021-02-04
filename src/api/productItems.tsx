@@ -1,51 +1,6 @@
 import { IBannerData, IProductItem, IResponseProductData } from '../types'
 import { randomPickElement } from '../utils'
 
-export const loadProductItemListAPI = async (page: number): Promise<IResponseProductData> => {
-  try {
-    const responseProductData: IResponseProductData = {}
-    if (page < 1) page = 1
-    const productSortByScoreDesc = productItems.sort((a, b) => b.score - a.score)
-    const pageSplit = 5
-    const maxPage = Math.ceil(productSortByScoreDesc.length / pageSplit)
-    if (page > maxPage) page = maxPage
-    const startIndex = page ? (page - 1) * pageSplit : 0
-    console.log(page, page === 1)
-    if (page === 1) {
-      const localCartList = localStorage.getItem('cart') as string
-      if (!localCartList) localStorage.setItem('cart', JSON.stringify([]))
-      console.log(localCartList)
-      responseProductData.recommendProductItem =
-        JSON.parse(localCartList).length > 0
-          ? [...productSortByScoreDesc].filter(
-              (product) => product.id === randomPickElement(JSON.parse(localCartList)),
-            )[0]
-          : randomPickElement([...productSortByScoreDesc])
-    }
-
-    responseProductData.productItemList = [...productSortByScoreDesc].splice(startIndex, pageSplit)
-    responseProductData.currentPage = page
-    responseProductData.maxPage = maxPage
-
-    return responseProductData
-  } catch (e) {
-    return { message: '상품을 불러올수 없습니다.' }
-  }
-}
-
-export const loadBannerAPI = async (): Promise<IBannerData> => {
-  try {
-    const bannerData: IBannerData = {
-      title: '일 잘하는 사람은 이유가 있습니다.',
-      detail: '더 똑똑하게 일할 수 있는 온라인 강의와 1:1 코칭!',
-      imageUrl: '/images/CarrerMain.png',
-    }
-    return bannerData
-  } catch (e) {
-    return { message: '상품을 불러올수 없습니다.' }
-  }
-}
-
 const productItems: IProductItem[] = [
   {
     id: 'B9vUv0E0ibc0X55kVVLr',
@@ -135,3 +90,49 @@ const productItems: IProductItem[] = [
     score: 220,
   },
 ]
+
+export const loadProductItemListAPI = async (page: number): Promise<IResponseProductData> => {
+  try {
+    const responseProductData: IResponseProductData = {}
+    if (page < 1) page = 1
+    const productSortByScoreDesc = productItems.sort((a, b) => b.score - a.score)
+    const pageSplit = 5
+    const maxPage = Math.ceil(productSortByScoreDesc.length / pageSplit)
+    if (page > maxPage) page = maxPage
+    const startIndex = page ? (page - 1) * pageSplit : 0
+    console.log(page, page === 1)
+    if (page === 1) {
+      const localCartList = localStorage.getItem('cart') as string
+      if (!localCartList) {
+        localStorage.setItem('cart', JSON.stringify([]))
+        responseProductData.recommendProductItem = randomPickElement(productSortByScoreDesc)
+      } else {
+        const onPickCartProduct = randomPickElement(JSON.parse(localCartList))
+        responseProductData.recommendProductItem = productSortByScoreDesc.filter(
+          (product) => product.id === onPickCartProduct,
+        )[0]
+      }
+    }
+
+    responseProductData.productItemList = [...productSortByScoreDesc].splice(startIndex, pageSplit)
+    responseProductData.currentPage = page
+    responseProductData.maxPage = maxPage
+
+    return responseProductData
+  } catch (e) {
+    return { message: '상품을 불러올수 없습니다.' }
+  }
+}
+
+export const loadBannerAPI = async (): Promise<IBannerData> => {
+  try {
+    const bannerData: IBannerData = {
+      title: '일 잘하는 사람은 이유가 있습니다.',
+      detail: '더 똑똑하게 일할 수 있는 온라인 강의와 1:1 코칭!',
+      imageUrl: '/images/CarrerMain.png',
+    }
+    return bannerData
+  } catch (e) {
+    return { message: '상품을 불러올수 없습니다.' }
+  }
+}
