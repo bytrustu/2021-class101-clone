@@ -1,7 +1,7 @@
 import { IBannerData, IProductItem, IResponseProductData } from '../types'
 import { randomPickElement } from '../utils'
 
-export const getProductItemListAPI = async (page: number): Promise<IResponseProductData> => {
+export const loadProductItemListAPI = async (page: number): Promise<IResponseProductData> => {
   try {
     const responseProductData: IResponseProductData = {}
     if (page < 1) page = 1
@@ -31,20 +31,18 @@ export const getProductItemListAPI = async (page: number): Promise<IResponseProd
   }
 }
 
-export const getBannerAPI = async (): Promise<IBannerData> => {
+export const loadBannerAPI = async (): Promise<IBannerData> => {
   try {
-    const bannerData:IBannerData = {
+    const bannerData: IBannerData = {
       title: '일 잘하는 사람은 이유가 있습니다.',
       detail: '더 똑똑하게 일할 수 있는 온라인 강의와 1:1 코칭!',
-      imageUrl: '/images/CarrerMain.png'
+      imageUrl: '/images/CarrerMain.png',
     }
     return bannerData
   } catch (e) {
     return { message: '상품을 불러올수 없습니다.' }
   }
 }
-
-
 
 const productItems: IProductItem[] = [
   {
