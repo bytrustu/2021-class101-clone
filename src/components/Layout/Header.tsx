@@ -3,6 +3,12 @@ import styled from 'styled-components'
 import Link from 'next/link'
 
 const StyleHeader = styled.header`
+  @media (min-width: 1240px) {
+    max-width: 1176px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
   position: relative;
   display: flex;
   flex-direction: row;
@@ -19,12 +25,12 @@ const StyleMainLogo = styled.img`
 `
 
 const StyleCartWrap = styled.div`
-  @media (min-width: 1024px) {
-    right: 15vh;
+  @media (min-width: 768px) {
+    right: 3vw;
   }
 
   position: absolute;
-  right: 5vh;
+  right: 5vw;
   display: flex;
   flex-direction: row;
   justify-content: center;

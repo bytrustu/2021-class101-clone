@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
-import Skeleton from 'react-loading-skeleton';
-import { IBannerData } from '../../types';
+import Skeleton from 'react-loading-skeleton'
+import { IBannerData } from '../../types'
 
 const StyleBannerWrap = styled.div`
   @media (max-width: 1023px) {
@@ -19,7 +19,6 @@ const StyleBannerWrap = styled.div`
 `
 
 const StyleBannerTextWrap = styled.div`
-
   position: absolute;
   word-break: keep-all;
   top: 30px;
@@ -46,7 +45,7 @@ const StyleBannerTextWrap = styled.div`
     line-height: 24px;
     letter-spacing: -0.3px;
   }
-  
+
   @media (min-width: 1024px) {
     max-width: 330px;
     top: 46px;
@@ -73,10 +72,9 @@ const StyleBannerTextWrap = styled.div`
     }
   }
 
-    @media (min-width: 768px) {
-      max-width: 255px;
-    }
- 
+  @media (min-width: 768px) {
+    max-width: 255px;
+  }
 `
 
 const StyleBannerImageWrap = styled.div`
@@ -108,23 +106,22 @@ const StyleBannerImage = styled.img`
 `
 
 interface IBannerProps {
-  bannerData?: IBannerData
+  bannerData: IBannerData | null
 }
 
 const Banner: FC<IBannerProps> = ({ bannerData }) => {
-  return (
-    bannerData ?
-      <StyleBannerWrap>
-        <StyleBannerTextWrap>
-          <h2>{bannerData?.title}</h2>
-          <h4>{bannerData?.detail}</h4>
-        </StyleBannerTextWrap>
-        <StyleBannerImageWrap>
-          <StyleBannerImage src={bannerData?.imageUrl} alt="클래스101배너" />
-        </StyleBannerImageWrap>
-      </StyleBannerWrap>
-      :
-      <Skeleton height={320}/>
+  return bannerData ? (
+    <StyleBannerWrap>
+      <StyleBannerTextWrap>
+        <h2>{bannerData?.title}</h2>
+        <h4>{bannerData?.detail}</h4>
+      </StyleBannerTextWrap>
+      <StyleBannerImageWrap>
+        <StyleBannerImage src={bannerData?.imageUrl} alt="클래스101배너" />
+      </StyleBannerImageWrap>
+    </StyleBannerWrap>
+  ) : (
+    <Skeleton height={320} />
   )
 }
 
