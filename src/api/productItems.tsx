@@ -100,7 +100,6 @@ export const loadProductItemListAPI = async (page: number): Promise<IResponsePro
     const maxPage = Math.ceil(productSortByScoreDesc.length / pageSplit)
     if (page > maxPage) page = maxPage
     const startIndex = page ? (page - 1) * pageSplit : 0
-    console.log(page, page === 1)
     if (page === 1) {
       const localCartList = localStorage.getItem('cart') as string
       if (!localCartList) {

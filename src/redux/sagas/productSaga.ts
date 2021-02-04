@@ -11,8 +11,14 @@ import {
   loadBannerError,
   loadProductSuccess,
   loadProductError,
-  LOAD_PRODUCT_REQUEST, addCartSuccess, addCartError, ADD_CART_REQUEST
-} from "../actions";
+  LOAD_PRODUCT_REQUEST,
+  addCartSuccess,
+  addCartError,
+  ADD_CART_REQUEST,
+  removeCartSuccess,
+  removeCartError,
+  REMOVE_CART_REQUEST,
+} from '../actions'
 import { loadBannerAPI, loadProductItemListAPI } from '../../api'
 import { IAction } from '../../types'
 import { sleep } from '../../utils'
@@ -29,7 +35,7 @@ export function* loadBanner() {
 }
 
 function* watchLoadBanner() {
-  yield takeEvery(LOAD_BANNER_REQUEST, loadBanner)
+  yield takeLatest(LOAD_BANNER_REQUEST, loadBanner)
 }
 
 export function* loadProduct(action: IAction<number>) {
@@ -44,13 +50,16 @@ export function* loadProduct(action: IAction<number>) {
 }
 
 function* watchLoadProduct() {
-  yield takeEvery(LOAD_PRODUCT_REQUEST, loadProduct)
+  yield takeLatest(LOAD_PRODUCT_REQUEST, loadProduct)
 }
 
 export function* addCart(action: IAction<string>) {
   try {
-    yield sleep(0.5)
+    yield sleep(1)
     yield put(addCartSuccess(action.payload))
+    const cartList = JSON.parse(localStorage.getItem('cart') as string)
+    cartList.push(action.payload)
+    localStorage.setItem('cart', JSON.stringify([...new Set(cartList)]))
   } catch (e) {
     console.error(e)
     yield put(addCartError(e.message))
@@ -58,11 +67,26 @@ export function* addCart(action: IAction<string>) {
 }
 
 function* watchAddCart() {
-  yield takeEvery(ADD_CART_REQUEST, addCart)
+  yield takeLatest(ADD_CART_REQUEST, addCart)
+}
+
+export function* removeCart(action: IAction<string>) {
+  try {
+    yield sleep(1)
+    yield put(removeCartSuccess(action.payload))
+  } catch (e) {
+    console.error(e)
+    yield put(removeCartError(e.message))
+  }
+}
+
+function* watchRemoveCart() {
+  yield takeLatest(REMOVE_CART_REQUEST, removeCart)
 }
 
 export default function* companySaga() {
   yield all([fork(watchLoadBanner)])
   yield all([fork(watchLoadProduct)])
   yield all([fork(watchAddCart)])
+  yield all([fork(watchRemoveCart)])
 }

@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton'
 import { ProductCartIcon } from '../../components'
 import { calcMontlyPrice, changeToPrice } from '../../utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { ADD_CART_REQUEST, addCartReqeust } from '../../redux/actions'
+import { ADD_CART_REQUEST, addCartReqeust, REMOVE_CART_REQUEST, removeCartReqeust } from "../../redux/actions";
 import { IStoreState } from '../../types'
 import { message } from 'antd'
 
@@ -68,10 +68,17 @@ const ProductPrices: FC<IProductPricesProps> = ({ id, price, monthly = 0 }) => {
   const monthlyPrice = calcMontlyPrice(price, monthly)
 
   const onClickCartHandle = () => {
-    if (cartList.length >= 3) {
-      return message.info('장바구니 개수를 초과 하였습니다.')
+    if (loading.type.includes(ADD_CART_REQUEST) || loading.type.includes(REMOVE_CART_REQUEST)) {
+      return message.info('장바구니 갱신 중입니다.')
     }
-    dispatch(addCartReqeust(id))
+    if (cartList.includes(id as string)) {
+      return dispatch(removeCartReqeust(id))
+    } else {
+      if (cartList.length >= 3) {
+        return message.info('장바구니 개수를 초과 하였습니다.')
+      }
+      return dispatch(addCartReqeust(id))
+    }
   }
 
   return (
@@ -84,7 +91,7 @@ const ProductPrices: FC<IProductPricesProps> = ({ id, price, monthly = 0 }) => {
           </StyleProductPridceByMontly>
           <ProductCartIcon
             active={cartList?.includes(id as string)}
-            loading={loading.response[ADD_CART_REQUEST] === id}
+            loading={loading.response[ADD_CART_REQUEST] === id || loading.response[REMOVE_CART_REQUEST] === id}
             onClickHandle={onClickCartHandle}
           />
         </>

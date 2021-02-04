@@ -4,11 +4,11 @@ import createSagaMiddleware, { Task } from 'redux-saga'
 import { createWrapper } from 'next-redux-wrapper'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import reducer, { IReducerState } from '../reducers'
+import reducer, { RootState } from '../reducers'
 import rootSaga from '../sagas'
 
 interface Props extends AppProps {
-  store: Store<IReducerState>
+  store: Store<RootState>
 }
 
 interface IStore extends Store {

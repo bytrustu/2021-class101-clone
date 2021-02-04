@@ -12,6 +12,9 @@ import {
   ADD_CART_REQUEST,
   ADD_CART_SUCCESS,
   ADD_CART_FAILURE,
+  REMOVE_CART_REQUEST,
+  REMOVE_CART_SUCCESS,
+  REMOVE_CART_FAILURE,
 } from '../actions'
 
 const fetchCycle: IFetchCycle = {
@@ -106,6 +109,23 @@ export default (state: TProductReducerState = initialState, action: TProductActi
       case ADD_CART_FAILURE: {
         draft.loading = initFetchCycle(draft.loading, ADD_CART_REQUEST)
         draft.error = processFetchCycle(draft.error, ADD_CART_FAILURE, action.payload)
+        break
+      }
+      case REMOVE_CART_REQUEST: {
+        draft.loading = processFetchCycle(draft.loading, REMOVE_CART_REQUEST, action.payload)
+        draft.error = initFetchCycle(draft.error, REMOVE_CART_FAILURE)
+        draft.success = initFetchCycle(draft.success, REMOVE_CART_SUCCESS)
+        break
+      }
+      case REMOVE_CART_SUCCESS: {
+        draft.loading = initFetchCycle(draft.loading, REMOVE_CART_REQUEST)
+        draft.success = processFetchCycle(draft.success, REMOVE_CART_SUCCESS)
+        draft.cartList = draft.cartList.filter((cartItem) => cartItem !== action.payload)
+        break
+      }
+      case REMOVE_CART_FAILURE: {
+        draft.loading = initFetchCycle(draft.loading, REMOVE_CART_REQUEST)
+        draft.error = processFetchCycle(draft.error, REMOVE_CART_FAILURE, action.payload)
         break
       }
       default: {

@@ -17,10 +17,6 @@ const Products: FC = () => {
     (state: IStoreState) => state.product,
   )
 
-  const onClickCartHandle = (id: string) => {
-    console.log(id)
-  }
-
   useEffect(() => {
     dispatch(loadBannerReqeust())
     dispatch(loadProductReqeust(1))
