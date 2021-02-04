@@ -4,20 +4,27 @@ import Link from 'next/link'
 
 const StyleHeader = styled.header`
   @media (min-width: 1240px) {
-    max-width: 1176px;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    & > div {
+      max-width: 1176px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
   position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
   height: 80px;
   background-color: #fff;
-  box-shadow: rgb(248 248 249) 0px -1px 0px inset;
+  box-shadow: #f8f8f9 0px -1px 0px inset;
   cursor: pointer;
+
+  & > div {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 const StyleMainLogo = styled.img`
@@ -71,15 +78,17 @@ const StyleCartCounter = styled.div`
 const Header: FC = () => {
   return (
     <StyleHeader>
-      <Link href="/products">
-        <StyleMainLogo src="/images/HeaderLogo.svg" alt="클래스101로고" />
-      </Link>
-      <Link href="/cart">
-        <StyleCartWrap>
-          <StyleCartCounter>3</StyleCartCounter>
-          <StyleCartIcon src="images/CartIcon.svg" alt="장바구니아이콘" />
-        </StyleCartWrap>
-      </Link>
+      <div>
+        <Link href="/products">
+          <StyleMainLogo src="/images/HeaderLogo.svg" alt="클래스101로고" />
+        </Link>
+        <Link href="/cart">
+          <StyleCartWrap>
+            <StyleCartCounter>3</StyleCartCounter>
+            <StyleCartIcon src="images/CartIcon.svg" alt="장바구니아이콘" />
+          </StyleCartWrap>
+        </Link>
+      </div>
     </StyleHeader>
   )
 }

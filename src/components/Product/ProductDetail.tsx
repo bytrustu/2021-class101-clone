@@ -1,6 +1,6 @@
 import React, { FC, ReactElement } from 'react'
 import styled from 'styled-components'
-import Skeleton from "react-loading-skeleton";
+import Skeleton from 'react-loading-skeleton'
 
 const StyleProductDetailWrap = styled.div`
   position: relative;
@@ -9,6 +9,9 @@ const StyleProductDetailWrap = styled.div`
 `
 
 const StyleProductDetailTitle = styled.h3`
+  @media (max-width: 375px) {
+    font-size: 12px;
+  }
   margin-top: 10px;
   font-size: 15px;
   font-weight: 400;
@@ -25,7 +28,7 @@ const StyleProductDetailTitle = styled.h3`
 const StyleSkeletonByProductDetail = styled(Skeleton)`
   height: 17px;
   & + & {
-    margin-bottom: 10px;  
+    margin-bottom: 10px;
   }
 `
 
@@ -36,12 +39,7 @@ interface IProductDetailProps {
 const ProductDetail: FC<IProductDetailProps> = ({ title }) => {
   return (
     <StyleProductDetailWrap>
-      {
-        title ?
-          <StyleProductDetailTitle>{title}</StyleProductDetailTitle>
-          :
-          <StyleSkeletonByProductDetail count={2}/>
-      }
+      {title ? <StyleProductDetailTitle>{title}</StyleProductDetailTitle> : <StyleSkeletonByProductDetail count={2} />}
     </StyleProductDetailWrap>
   )
 }

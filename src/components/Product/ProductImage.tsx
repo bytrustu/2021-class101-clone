@@ -3,24 +3,43 @@ import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 
 const StyleProductImageWrap = styled.div`
-  border-radius: 4px;
-  max-height: 247px;
+  @media (max-width: 768px) {
+    max-height: 200px;
+  }
+  max-height: 250px;
   overflow: hidden;
+  border-radius: 4px;
+  & > div {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    padding-top: 75%;
+  }
 `
 
 const StyleProductImage = styled.img`
+  @media (min-width: 768px) {
+    height: 248px;
+  }
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  position: absolute;
   transition: transform 0.3s ease 0s, opacity 0.1s linear 0s;
   cursor: pointer;
   object-fit: cover;
-  height: 248px;
   &:hover {
     transform: scale(1.1);
   }
 `
 
 const StyleSkeletonByProductImage = styled(Skeleton)`
-  height: 248px;
+  height: 250px;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  position: absolute;
 `
 
 interface IProductImageProps {
@@ -30,7 +49,9 @@ interface IProductImageProps {
 const ProductImage: FC<IProductImageProps> = ({ imageUrl }) => {
   return (
     <StyleProductImageWrap>
+    <div>
       {imageUrl ? <StyleProductImage src={imageUrl} alt="상품이미지" /> : <StyleSkeletonByProductImage />}
+    </div>
     </StyleProductImageWrap>
   )
 }

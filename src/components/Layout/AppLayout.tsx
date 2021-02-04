@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from 'react'
 import styled from 'styled-components'
 
 const StyleAppLayout = styled.div`
-  min-width: 360px;
+  min-width: 360px !important;
   width: 100%;
 `
 

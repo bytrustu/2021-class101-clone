@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton'
 import ProductCartIcon from '../../components/Product/ProductCartIcon'
 import { calcMontlyPrice, changeToPrice } from '../../utils'
 
-const StyleProductPricesWrap = styled.div<IProductPricesProps>`
+const StyleProductPricesWrap = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -14,6 +14,10 @@ const StyleProductPricesWrap = styled.div<IProductPricesProps>`
 `
 
 const StyleProductPrice = styled.span`
+  @media (max-width: 375px) {
+    line-height: 28px;
+  }
+
   font-size: 11px;
   font-weight: normal;
   line-height: 16px;
@@ -44,16 +48,6 @@ const StyleProductPridceByMontly = styled.strong`
 const StyleSkeletonByProductPrice = styled(Skeleton)`
   height: 17px;
 `
-const StyleCartIcon = styled.img`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 25px;
-  height: 25px;
-  margin: 5px 10px;
-  cursor: pointer;
-`
-
 interface IProductPricesProps {
   price?: number
   monthly?: number
@@ -65,7 +59,7 @@ const ProductPrices: FC<IProductPricesProps> = ({ price, monthly = 0, cartActive
   const originPrice = changeToPrice(price)
   const monthlyPrice = calcMontlyPrice(price, monthly)
   return (
-    <StyleProductPricesWrap price={price}>
+    <StyleProductPricesWrap>
       {price ? (
         <>
           <StyleProductPrice>{originPrice}원</StyleProductPrice>

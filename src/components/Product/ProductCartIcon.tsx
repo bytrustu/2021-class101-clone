@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import { LoadingOutlined } from '@ant-design/icons'
 
 const StyleProductCartIconWrap = styled.div<IProductPriceProps>`
+  @media (max-width: 375px) {
+    bottom: 17px;
+    right: -7px;
+  }
   position: absolute;
   display: flex;
   flex-direction: row;
@@ -14,7 +18,6 @@ const StyleProductCartIconWrap = styled.div<IProductPriceProps>`
   height: 50px;
   transition: background 0.2s 0.2s ease-out;
   border-radius: 50%;
-  // box-shadow: ${(props) => !props.loading && '#ddd 0px -1px 0px inset'};
   cursor: ${(props) => (props.loading ? 'not-allowed' : 'pointer')};
   &:hover {
     background-color: ${(props) => !props.loading && '#fcfcfc'};
@@ -22,6 +25,10 @@ const StyleProductCartIconWrap = styled.div<IProductPriceProps>`
 `
 
 const StyleProductCartIcon = styled.img`
+  @media (max-width: 375px) {
+    width: 20px;
+    height: 20px;
+  }
   width: 25px;
   height: 25px;
 `
