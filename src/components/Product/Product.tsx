@@ -9,20 +9,21 @@ const StyleProduct = styled.div`
 `
 
 interface IProductProps {
+  id?: string
   imageUrl?: string
   title?: string
   price?: number
   monthly?: number
+  recommend?: boolean
 }
 
-const Product: FC<IProductProps> = ({ imageUrl, title, price, monthly }) => {
-  console.log(imageUrl, title, price, monthly);
+const Product: FC<IProductProps> = ({ id, imageUrl, title, price, monthly, recommend }) => {
   return (
     <StyleProduct>
-      <ProductImage imageUrl={imageUrl} />
+      <ProductImage imageUrl={imageUrl} recommend={recommend} />
       <ProductDetail title={title} />
       <ProductLine />
-      <ProductPrices price={price} monthly={monthly} />
+      <ProductPrices id={id} price={price} monthly={monthly} />
     </StyleProduct>
   )
 }

@@ -1,51 +1,66 @@
 import React, { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loadBannerReqeust } from '../redux/actions'
+import {
+  LOAD_BANNER_SUCCESS,
+  LOAD_PRODUCT_REQUEST,
+  LOAD_PRODUCT_SUCCESS,
+  loadBannerReqeust,
+  loadProductReqeust,
+} from '../redux/actions'
 import { IStoreState } from '../types'
 import { Banner, ProductWrap, Product } from '../components'
+import { range } from '../utils'
 
 const Products: FC = () => {
   const dispatch = useDispatch()
-  const { bannerData } = useSelector((state: IStoreState) => state.product)
+  const { bannerData, currentPage, maxPage, recommendProductItem, productItemList, loading, success } = useSelector(
+    (state: IStoreState) => state.product,
+  )
+
+  const onClickCartHandle = (id: string) => {
+    console.log(id)
+  }
 
   useEffect(() => {
     dispatch(loadBannerReqeust())
+    dispatch(loadProductReqeust(1))
   }, [])
 
   return (
     <>
       <Banner bannerData={bannerData ? bannerData : null} />
       <ProductWrap>
-        <Product
-          imageUrl="https://cdn.class101.net/images/3a25ecd9-d1ab-4d21-8cc1-522ea711e729/375xauto"
-          title="글씨 쓰는 김이영과 함께 아이패드에 그려낸 캘리그라피글씨"
-          price={100000}
-          monthly={5}
-        />
-        <Product
-          imageUrl="https://cdn.class101.net/images/3a25ecd9-d1ab-4d21-8cc1-522ea711e729/375xauto"
-          title="글씨 쓰는 김이영과 함께 아이패드에 그려낸 캘리그라피글씨"
-          price={100000}
-          monthly={5}
-        />
-        <Product
-          imageUrl="https://cdn.class101.net/images/3a25ecd9-d1ab-4d21-8cc1-522ea711e729/375xauto"
-          title="글씨 쓰는 김이영과 함께 아이패드에 그려낸 캘리그라피글씨"
-          price={100000}
-          monthly={5}
-        />
-        <Product
-          imageUrl="https://cdn.class101.net/images/3a25ecd9-d1ab-4d21-8cc1-522ea711e729/375xauto"
-          title="글씨 쓰는 김이영과 함께 아이패드에 그려낸 캘리그라피글씨"
-          price={100000}
-          monthly={5}
-        />
-        <Product
-          imageUrl="https://cdn.class101.net/images/3a25ecd9-d1ab-4d21-8cc1-522ea711e729/375xauto"
-          title="글씨 쓰는 김이영과 함께 아이패드에 그려낸 캘리그라피글씨"
-          price={100000}
-          monthly={5}
-        />
+        {recommendProductItem && (
+          <Product
+            key={recommendProductItem.id}
+            id={recommendProductItem.id}
+            imageUrl={recommendProductItem.coverImage}
+            title={recommendProductItem.title}
+            price={recommendProductItem.price}
+            monthly={5}
+            recommend={true}
+          />
+        )}
+
+        {productItemList.length > 0 &&
+          productItemList.map((productItem) => (
+            <Product
+              key={productItem.id}
+              id={productItem.id}
+              imageUrl={productItem.coverImage}
+              title={productItem.title}
+              price={productItem.price}
+              monthly={5}
+            />
+          ))}
+
+        {loading.type.includes(LOAD_PRODUCT_REQUEST) && currentPage === 1 ? (
+          range(6).map((el) => <Product key={el} />)
+        ) : loading.type.includes(LOAD_PRODUCT_REQUEST) && currentPage > 1 ? (
+          range(5).map((el) => <Product key={el} />)
+        ) : (
+          <></>
+        )}
       </ProductWrap>
     </>
   )

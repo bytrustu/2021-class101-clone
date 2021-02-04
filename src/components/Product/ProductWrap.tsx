@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react'
+import React, { FC, ReactElement, ReactFragment } from "react";
 import styled from 'styled-components'
 
 const StyleProductWrap = styled.section`
@@ -20,7 +20,7 @@ const StyleProductWrap = styled.section`
 `
 
 interface IProductWrapProps {
-  children?: ReactElement | ReactElement[]
+  children?: ReactElement | ReactElement[] | ReactFragment
 }
 
 const ProductWrap: FC<IProductWrapProps> = ({ children }) => {

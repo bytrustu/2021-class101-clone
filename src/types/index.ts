@@ -1,4 +1,4 @@
-import { TProductReducerState } from "../redux/reducers/productReducer"
+import { TProductReducerState } from '../redux/reducers/productReducer'
 
 export interface IFetchCycle {
   type: string[]
@@ -13,6 +13,9 @@ export interface IProductState {
   recommendProductItem: IProductItem | null
   cooponList: ICoopon[]
   bannerData: IBannerData | null
+  currentPage: number
+  maxPage: number
+  cartList: string[]
 }
 
 export interface IAction<T> {

@@ -1,6 +1,8 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
+import { useSelector } from 'react-redux'
+import { IStoreState } from '../../types'
 
 const StyleHeader = styled.header`
   @media (min-width: 1240px) {
@@ -76,6 +78,7 @@ const StyleCartCounter = styled.div`
 `
 
 const Header: FC = () => {
+  const { cartList } = useSelector((state: IStoreState) => state.product)
   return (
     <StyleHeader>
       <div>
@@ -84,7 +87,7 @@ const Header: FC = () => {
         </Link>
         <Link href="/cart">
           <StyleCartWrap>
-            <StyleCartCounter>3</StyleCartCounter>
+            <StyleCartCounter>{cartList.length}</StyleCartCounter>
             <StyleCartIcon src="images/CartIcon.svg" alt="장바구니아이콘" />
           </StyleCartWrap>
         </Link>

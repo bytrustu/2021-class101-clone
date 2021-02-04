@@ -16,3 +16,5 @@ export const calcMontlyPrice = (price?: number, monthly?: number): string => {
   const monthlyPrice = Math.floor(price / monthly)
   return changeToPrice(monthlyPrice)
 }
+
+export const range = (length: number, init = 0): number[] => Array.from({ length }).map((_, index) => index + init)

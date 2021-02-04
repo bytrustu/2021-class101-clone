@@ -41,11 +41,12 @@ interface IProductPriceProps {
   active?: boolean
   loading?: boolean
   style?: { [k: string]: string }
+  onClickHandle?: any
 }
 
-const ProductCartIcon: FC<IProductPriceProps> = ({ active, loading, style }) => {
+const ProductCartIcon: FC<IProductPriceProps> = ({ active, loading, style, onClickHandle }) => {
   return (
-    <StyleProductCartIconWrap active={active} loading={loading} style={style}>
+    <StyleProductCartIconWrap active={active} loading={loading} style={style} onClick={onClickHandle}>
       {loading ? (
         <StyleProductCartLoading />
       ) : (

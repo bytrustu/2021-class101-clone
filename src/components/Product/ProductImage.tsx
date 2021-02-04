@@ -1,14 +1,17 @@
-import React, { FC, ReactElement } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
+import { ProductBadge, ProductRecommendMotion } from '../../components'
 
-const StyleProductImageWrap = styled.div`
+const StyleProductImageWrap = styled.div<IProductImageProps>`
   @media (max-width: 768px) {
     max-height: 200px;
   }
   max-height: 250px;
   overflow: hidden;
   border-radius: 4px;
+  position: relative;
+
   & > div {
     display: block;
     position: relative;
@@ -29,6 +32,7 @@ const StyleProductImage = styled.img`
   transition: transform 0.3s ease 0s, opacity 0.1s linear 0s;
   cursor: pointer;
   object-fit: cover;
+
   &:hover {
     transform: scale(1.1);
   }
@@ -43,13 +47,24 @@ const StyleSkeletonByProductImage = styled(Skeleton)`
 `
 
 interface IProductImageProps {
-  imageUrl: string | undefined
+  imageUrl?: string
+  recommend?: boolean
 }
 
-const ProductImage: FC<IProductImageProps> = ({ imageUrl }) => {
+const ProductImage: FC<IProductImageProps> = ({ imageUrl, recommend }) => {
   return (
-    <StyleProductImageWrap>
-      <div>{imageUrl ? <StyleProductImage src={imageUrl} alt="상품이미지" /> : <StyleSkeletonByProductImage />}</div>
+    <StyleProductImageWrap recommend={recommend}>
+      {recommend && <ProductRecommendMotion />}
+      <div>
+        {imageUrl ? (
+          <>
+            <StyleProductImage src={imageUrl} alt="상품이미지" />
+            {recommend && <ProductBadge color="#000" text="CLASS101 추천" />}
+          </>
+        ) : (
+          <StyleSkeletonByProductImage />
+        )}
+      </div>
     </StyleProductImageWrap>
   )
 }

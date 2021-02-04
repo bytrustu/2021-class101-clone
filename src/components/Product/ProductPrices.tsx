@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 import { ProductCartIcon } from '../../components'
 import { calcMontlyPrice, changeToPrice } from '../../utils'
+import { useDispatch, useSelector } from 'react-redux'
+import { ADD_CART_REQUEST, addCartReqeust } from '../../redux/actions'
+import { IStoreState } from '../../types'
+import { message } from 'antd'
 
 const StyleProductPricesWrap = styled.div`
   position: relative;
@@ -49,15 +53,27 @@ const StyleSkeletonByProductPrice = styled(Skeleton)`
   height: 17px;
 `
 interface IProductPricesProps {
+  id?: string
   price?: number
   monthly?: number
   cartActive?: boolean
   cartLoading?: boolean
 }
 
-const ProductPrices: FC<IProductPricesProps> = ({ price, monthly = 0, cartActive, cartLoading }) => {
+const ProductPrices: FC<IProductPricesProps> = ({ id, price, monthly = 0 }) => {
+  const dispatch = useDispatch()
+  const { loading, cartList } = useSelector((state: IStoreState) => state.product)
+
   const originPrice = changeToPrice(price)
   const monthlyPrice = calcMontlyPrice(price, monthly)
+
+  const onClickCartHandle = () => {
+    if (cartList.length >= 3) {
+      return message.info('장바구니 개수를 초과 하였습니다.')
+    }
+    dispatch(addCartReqeust(id))
+  }
+
   return (
     <StyleProductPricesWrap>
       {price ? (
@@ -66,7 +82,11 @@ const ProductPrices: FC<IProductPricesProps> = ({ price, monthly = 0, cartActive
           <StyleProductPridceByMontly>
             월 {monthlyPrice}원<span>({monthly}개월)</span>
           </StyleProductPridceByMontly>
-          <ProductCartIcon active={cartActive} loading={cartLoading} />
+          <ProductCartIcon
+            active={cartList?.includes(id as string)}
+            loading={loading.response[ADD_CART_REQUEST] === id}
+            onClickHandle={onClickCartHandle}
+          />
         </>
       ) : (
         <>
