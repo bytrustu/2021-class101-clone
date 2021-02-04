@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
-import ProductCartIcon from '../../components/Product/ProductCartIcon'
+import { ProductCartIcon } from '../../components'
 import { calcMontlyPrice, changeToPrice } from '../../utils'
 
 const StyleProductPricesWrap = styled.div`

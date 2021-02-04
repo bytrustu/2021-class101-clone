@@ -49,9 +49,7 @@ interface IProductImageProps {
 const ProductImage: FC<IProductImageProps> = ({ imageUrl }) => {
   return (
     <StyleProductImageWrap>
-    <div>
-      {imageUrl ? <StyleProductImage src={imageUrl} alt="상품이미지" /> : <StyleSkeletonByProductImage />}
-    </div>
+      <div>{imageUrl ? <StyleProductImage src={imageUrl} alt="상품이미지" /> : <StyleSkeletonByProductImage />}</div>
     </StyleProductImageWrap>
   )
 }

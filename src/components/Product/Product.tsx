@@ -1,5 +1,6 @@
-import React, { FC, ReactElement } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
+import { ProductDetail, ProductImage, ProductLine, ProductPrices } from '../../components'
 
 const StyleProduct = styled.div`
   display: flex;
@@ -7,12 +8,23 @@ const StyleProduct = styled.div`
   width: 100%;
 `
 
-interface IProductWrapProps {
-  children?: ReactElement | ReactElement[]
+interface IProductProps {
+  imageUrl?: string
+  title?: string
+  price?: number
+  monthly?: number
 }
 
-const ProductWrap: FC<IProductWrapProps> = ({ children }) => {
-  return <StyleProduct>{children}</StyleProduct>
+const Product: FC<IProductProps> = ({ imageUrl, title, price, monthly }) => {
+  console.log(imageUrl, title, price, monthly);
+  return (
+    <StyleProduct>
+      <ProductImage imageUrl={imageUrl} />
+      <ProductDetail title={title} />
+      <ProductLine />
+      <ProductPrices price={price} monthly={monthly} />
+    </StyleProduct>
+  )
 }
 
-export default React.memo(ProductWrap)
+export default React.memo(Product)

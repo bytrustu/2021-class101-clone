@@ -3,9 +3,7 @@ import { AppProps } from 'next/app'
 import PropTypes from 'prop-types'
 import 'antd/dist/antd.css'
 import wrapper from '../redux/store/configureStore'
-import AppLayout from '../components/Layout/AppLayout'
-import Header from '../components/Layout/Header'
-import Contents from '../components/Layout/Contents'
+import { AppLayout, Header, Contents } from '../components'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
