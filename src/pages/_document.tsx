@@ -1,6 +1,6 @@
 import React from 'react'
-import Document, { Head, Html, Main, NextScript } from 'next/document'
-import { createGlobalStyle } from 'styled-components'
+import Document, { DocumentContext, Head, Html, Main, NextScript } from "next/document"
+import { createGlobalStyle, ServerStyleSheet } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -27,9 +27,41 @@ const GlobalStyles = createGlobalStyle`
   body {
     height: 100%;
   }
-`
+`;
 
-export default class MyDocument extends Document {
+interface IProps {
+  styleTags: Array<React.ReactElement<{}>>;
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+export default // @ts-ignore
+class MyDocument extends Document<IProps> {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  static async getInitialProps(ctx: DocumentContext) {
+    const sheet = new ServerStyleSheet()
+    const originalRenderPage = ctx.renderPage
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
+        })
+      const initialProps = await Document.getInitialProps(ctx)
+      return {
+        ...initialProps,
+        styles: (
+          <>
+            {initialProps.styles}
+            {sheet.getStyleElement()}
+          </>
+        ),
+      }
+    } catch (e) {
+      console.error(e)
+    } finally {
+      sheet.seal()
+    }
+  }
+
   render() {
     return (
       <Html>
