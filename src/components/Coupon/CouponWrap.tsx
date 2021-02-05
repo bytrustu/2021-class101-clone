@@ -14,26 +14,27 @@ const StyleCouponWrapper = styled.div`
     }
 
     & .button {
-      margin: 10px 0 0;
+      margin: 20px 0 0;
       width: 100%;
-      
+
+      button {
+        width: 100%;
+      }
+
+      & + & {
+        margin-left: 10px !important;
+      }
+
       .react-loading-skeleton {
         width: 100% !important;
         margin: 0;
       }
-      
-      button {
-        width: 100%;
-      }
-      
-      & + & {
-        margin-left: 10px;
-      }
     }
 
     .coupon-wrap {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0 10px;
     }
   }
 

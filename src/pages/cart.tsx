@@ -158,7 +158,7 @@ const indexPage: FC = () => {
             <Label value="" />
             <Label color="#1b1c1d" size="18px" weight="600" value="252,200원" labelLoading={loadingState} />
           </ContentSpaceBetween>
-          <ContentSpaceBetween margin="30px 0 0">
+          <ContentSpaceBetween margin="40px 0 0">
             <Label value="" />
             <Button value="결제하기" buttonLoading={loadingState} />
           </ContentSpaceBetween>

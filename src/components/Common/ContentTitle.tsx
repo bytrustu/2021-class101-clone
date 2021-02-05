@@ -20,6 +20,9 @@ const StyleContentTitle = styled.h3`
 `
 
 const StyleContentTitleSkeleton = styled(Skeleton)`
+  @media (max-width: 768px) {
+    width: 150px !important;
+  }
   width: 200px !important;
   height: 40px !important;
 `

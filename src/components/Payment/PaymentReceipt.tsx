@@ -13,6 +13,11 @@ const StylePaymentReceipt = styled.section`
       button {
         width: 100%;  
       }
+
+      .react-loading-skeleton {
+        width: 100% !important;
+        margin: 0;
+      }
     
     }
 `

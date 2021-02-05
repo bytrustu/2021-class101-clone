@@ -17,6 +17,10 @@ const StyleCartButtonWrap = styled.div`
         width: 100%;
       }
     }
+    .react-loading-skeleton {
+      width: 100% !important;
+      margin: 0;
+    }
   }
   display: inline-block;
 `
