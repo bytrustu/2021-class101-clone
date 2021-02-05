@@ -65,6 +65,7 @@ export interface IBannerData extends IErrorMessage{
   title?: string
   detail?: string
   imageUrl?: string
+  backgroundColor?: string
 }
 
 export interface IStoreState {

@@ -87,7 +87,7 @@ const Header: FC = () => {
         </Link>
         <Link href="/cart">
           <StyleCartWrap>
-            <StyleCartCounter>{cartList.length}</StyleCartCounter>
+            <StyleCartCounter>{cartList ? cartList.length : 0}</StyleCartCounter>
             <StyleCartIcon src="images/CartIcon.svg" alt="장바구니아이콘" />
           </StyleCartWrap>
         </Link>

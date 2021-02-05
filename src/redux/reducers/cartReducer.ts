@@ -8,9 +8,11 @@ import {
   REMOVE_CART_REQUEST,
   REMOVE_CART_SUCCESS,
   REMOVE_CART_FAILURE,
+  LOAD_CART,
 } from '../actions'
 import { initFetchCycle, processFetchCycle } from '../utils'
 import { fetchCycle } from '../../const'
+import { pushLocalStorageByArray } from '../../utils'
 
 const initialState: ICartState = {
   loading: fetchCycle,
@@ -56,6 +58,11 @@ export default (state: TCartReducerState = initialState, action: TCartAction) =>
       case REMOVE_CART_FAILURE: {
         draft.loading = initFetchCycle(draft.loading, REMOVE_CART_REQUEST)
         draft.error = processFetchCycle(draft.error, REMOVE_CART_FAILURE, action.payload)
+        break
+      }
+      case LOAD_CART: {
+        const cartList = localStorage.getItem('cart') as string
+        cartList ? (draft.cartList = JSON.parse(cartList)) : pushLocalStorageByArray('cart')
         break
       }
       default: {

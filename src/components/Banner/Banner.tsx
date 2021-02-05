@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 import { IBannerData } from '../../types'
 
-const StyleBannerWrap = styled.div`
+const StyleBannerWrap = styled.div<IBannerData>`
   @media (max-width: 1023px) {
   }
   @media (min-width: 768px) {
@@ -13,7 +13,7 @@ const StyleBannerWrap = styled.div`
   height: 380px;
   display: block;
   position: relative;
-  background-color: rgb(79, 131, 252);
+  background-color: ${(props) => props.backgroundColor};
   overflow: hidden;
   cursor: not-allowed;
 `
@@ -111,13 +111,13 @@ interface IBannerProps {
 
 const Banner: FC<IBannerProps> = ({ bannerData }) => {
   return bannerData ? (
-    <StyleBannerWrap>
+    <StyleBannerWrap backgroundColor={bannerData.backgroundColor}>
       <StyleBannerTextWrap>
         <h2>{bannerData?.title}</h2>
         <h4>{bannerData?.detail}</h4>
       </StyleBannerTextWrap>
       <StyleBannerImageWrap>
-        <StyleBannerImage src={bannerData?.imageUrl} alt="클래스101배너" />
+        <StyleBannerImage src={bannerData?.imageUrl} alt="CLASS101 배너" />
       </StyleBannerImageWrap>
     </StyleBannerWrap>
   ) : (

@@ -18,3 +18,19 @@ export const calcMontlyPrice = (price?: number, monthly?: number): string => {
 }
 
 export const range = (length: number, init = 0): number[] => Array.from({ length }).map((_, index) => index + init)
+
+export const pushLocalStorageByArray = (key: string, value?: any): void => {
+  if (!value) {
+    localStorage.setItem(key, JSON.stringify([]))
+    return
+  }
+  const storageArray = JSON.parse(localStorage.getItem(key) as string)
+  storageArray.push(value)
+  localStorage.setItem(key, JSON.stringify([...new Set(storageArray)]))
+}
+
+export const filterLocalStorageByArray = (key: string, value: any): void => {
+  const storageArray = JSON.parse(localStorage.getItem(key) as string)
+  const filterCartList = storageArray.filter((cartProduct: string) => cartProduct !== value)
+  localStorage.setItem(key, JSON.stringify(filterCartList))
+}

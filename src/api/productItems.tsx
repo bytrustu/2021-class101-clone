@@ -1,5 +1,5 @@
 import { IBannerData, IProductItem, IResponseProductData } from '../types'
-import { randomPickElement } from '../utils'
+import { pushLocalStorageByArray, randomPickElement } from "../utils";
 
 const productItems: IProductItem[] = [
   {
@@ -103,7 +103,7 @@ export const loadProductItemListAPI = async (page: number): Promise<IResponsePro
     if (page === 1) {
       const localCartList = localStorage.getItem('interestCart') as string
       if (!localCartList || JSON.parse(localCartList).length === 0) {
-        localStorage.setItem('interestCart', JSON.stringify([]))
+        pushLocalStorageByArray('interestCart')
         responseProductData.recommendProductItem = randomPickElement([...productSortByScoreDesc])
       } else {
         const onPickCartProduct = randomPickElement(JSON.parse(localCartList))

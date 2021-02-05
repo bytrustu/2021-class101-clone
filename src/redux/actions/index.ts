@@ -18,6 +18,8 @@ export const REMOVE_CART_REQUEST = 'REMOVE_CART_REQUEST'
 export const REMOVE_CART_SUCCESS = 'REMOVE_CART_SUCCESS'
 export const REMOVE_CART_FAILURE = 'REMOVE_CART_FAILURE'
 
+export const LOAD_CART = 'LOAD_CART'
+
 export const loadBannerReqeust: TCreateAction<any, any> = () => createAction(LOAD_BANNER_REQUEST)
 export const loadBannerSuccess: TCreateAction<string, IResponseProductData> = (payload) =>
   createAction(LOAD_BANNER_SUCCESS, payload)
@@ -38,6 +40,8 @@ export const removeCartSuccess: TCreateAction<string, IResponseProductData> = (p
   createAction(REMOVE_CART_SUCCESS, payload)
 export const removeCartError: TCreateAction<string, string> = (payload) => createAction(REMOVE_CART_FAILURE, payload)
 
+export const loadCart: TCreateAction<any, any> = () => createAction(LOAD_CART)
+
 export type TProductAction =
   | ReturnType<typeof loadBannerReqeust>
   | ReturnType<typeof loadBannerSuccess>
@@ -53,3 +57,4 @@ export type TCartAction =
   | ReturnType<typeof removeCartReqeust>
   | ReturnType<typeof removeCartSuccess>
   | ReturnType<typeof removeCartError>
+  | ReturnType<typeof loadCart>

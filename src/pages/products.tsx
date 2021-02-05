@@ -1,6 +1,12 @@
 import React, { FC, useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { LOAD_PRODUCT_REQUEST, LOAD_PRODUCT_SUCCESS, loadBannerReqeust, loadProductReqeust } from '../redux/actions'
+import {
+  LOAD_PRODUCT_REQUEST,
+  LOAD_PRODUCT_SUCCESS,
+  loadBannerReqeust,
+  loadCart,
+  loadProductReqeust,
+} from '../redux/actions'
 import { IStoreState } from '../types'
 import { Banner, ProductWrap, Product } from '../components'
 import { range } from '../utils'
@@ -28,6 +34,7 @@ const Products: FC = () => {
   useEffect(() => {
     dispatch(loadBannerReqeust())
     dispatch(loadProductReqeust(1))
+    dispatch(loadCart())
   }, [])
 
   useEffect(() => {
