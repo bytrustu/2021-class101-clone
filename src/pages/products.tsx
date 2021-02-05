@@ -4,7 +4,7 @@ import { LOAD_PRODUCT_REQUEST, LOAD_PRODUCT_SUCCESS, loadBannerReqeust, loadProd
 import { IStoreState } from '../types'
 import { Banner, ProductWrap, Product } from '../components'
 import { range } from '../utils'
-import { adjustableHeight, productMonthly } from '../const'
+import { adjustableHeight, image750Size, productMonthly } from "../const";
 
 const Products: FC = () => {
   const dispatch = useDispatch()
@@ -57,7 +57,7 @@ const Products: FC = () => {
           <Product
             key={recommendProductItem.id}
             id={recommendProductItem.id}
-            imageUrl={recommendProductItem.coverImage}
+            imageUrl={recommendProductItem.coverImage + image750Size}
             title={recommendProductItem.title}
             price={recommendProductItem.price}
             monthly={productMonthly}
@@ -70,7 +70,7 @@ const Products: FC = () => {
             <Product
               key={productItem.id}
               id={productItem.id}
-              imageUrl={productItem.coverImage}
+              imageUrl={productItem.coverImage + image750Size}
               title={productItem.title}
               price={productItem.price}
               monthly={productMonthly}

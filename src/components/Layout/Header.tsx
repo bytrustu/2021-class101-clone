@@ -17,7 +17,6 @@ const StyleHeader = styled.header`
   height: 80px;
   background-color: #fff;
   box-shadow: #f8f8f9 0px -1px 0px inset;
-  cursor: pointer;
 
   & > div {
     position: relative;
@@ -31,6 +30,7 @@ const StyleHeader = styled.header`
 
 const StyleMainLogo = styled.img`
   width: 110px;
+  cursor: pointer;
 `
 
 const StyleCartWrap = styled.div`
@@ -78,7 +78,7 @@ const StyleCartCounter = styled.div`
 `
 
 const Header: FC = () => {
-  const { cartList } = useSelector((state: IStoreState) => state.product)
+  const { cartList } = useSelector((state: IStoreState) => state.cart)
   return (
     <StyleHeader>
       <div>

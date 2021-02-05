@@ -18,9 +18,9 @@ const StyleProductCartIconWrap = styled.div<IProductPriceProps>`
   height: 50px;
   transition: background 0.2s 0.2s ease-out;
   border-radius: 50%;
-  cursor: ${(props) => (props.loading ? 'not-allowed' : 'pointer')};
+  cursor: ${(props) => (props.cartLoading ? 'not-allowed' : 'pointer')};
   &:hover {
-    background-color: ${(props) => !props.loading && '#fcfcfc'};
+    background-color: ${(props) => !props.cartLoading && '#fcfcfc'};
   }
 `
 
@@ -38,19 +38,22 @@ const StyleProductCartLoading = styled(LoadingOutlined)`
 `
 
 interface IProductPriceProps {
-  active?: boolean
-  loading?: boolean
+  cartActive?: boolean
+  cartLoading?: boolean
   style?: { [k: string]: string }
   onClickHandle?: any
 }
 
-const ProductCartIcon: FC<IProductPriceProps> = ({ active, loading, style, onClickHandle }) => {
+const ProductCartIcon: FC<IProductPriceProps> = ({ cartActive, cartLoading, style, onClickHandle }) => {
   return (
-    <StyleProductCartIconWrap active={active} loading={loading} style={style} onClick={onClickHandle}>
-      {loading ? (
+    <StyleProductCartIconWrap cartActive={cartActive} cartLoading={cartLoading} style={style} onClick={onClickHandle}>
+      {cartLoading ? (
         <StyleProductCartLoading />
       ) : (
-        <StyleProductCartIcon src={active ? '/images/ActiveCartIcon.svg' : 'images/CartIcon.svg'} alt="카트아이콘" />
+        <StyleProductCartIcon
+          src={cartActive ? '/images/ActiveCartIcon.svg' : 'images/CartIcon.svg'}
+          alt="카트아이콘"
+        />
       )}
     </StyleProductCartIconWrap>
   )

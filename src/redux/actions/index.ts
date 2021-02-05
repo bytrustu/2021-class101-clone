@@ -45,6 +45,8 @@ export type TProductAction =
   | ReturnType<typeof loadProductReqeust>
   | ReturnType<typeof loadProductSuccess>
   | ReturnType<typeof loadProductError>
+
+export type TCartAction =
   | ReturnType<typeof addCartReqeust>
   | ReturnType<typeof addCartSuccess>
   | ReturnType<typeof addCartError>

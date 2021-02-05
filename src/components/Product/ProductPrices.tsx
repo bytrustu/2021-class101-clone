@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton'
 import { ProductCartIcon } from '../../components'
 import { calcMontlyPrice, changeToPrice } from '../../utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { ADD_CART_REQUEST, addCartReqeust, REMOVE_CART_REQUEST, removeCartReqeust } from "../../redux/actions";
+import { ADD_CART_REQUEST, addCartReqeust, REMOVE_CART_REQUEST, removeCartReqeust } from '../../redux/actions'
 import { IStoreState } from '../../types'
 import { message } from 'antd'
 
@@ -62,7 +62,7 @@ interface IProductPricesProps {
 
 const ProductPrices: FC<IProductPricesProps> = ({ id, price, monthly = 0 }) => {
   const dispatch = useDispatch()
-  const { loading, cartList } = useSelector((state: IStoreState) => state.product)
+  const { loading, cartList } = useSelector((state: IStoreState) => state.cart)
 
   const originPrice = changeToPrice(price)
   const monthlyPrice = calcMontlyPrice(price, monthly)
@@ -90,8 +90,8 @@ const ProductPrices: FC<IProductPricesProps> = ({ id, price, monthly = 0 }) => {
             월 {monthlyPrice}원<span>({monthly}개월)</span>
           </StyleProductPridceByMontly>
           <ProductCartIcon
-            active={cartList?.includes(id as string)}
-            loading={loading.response[ADD_CART_REQUEST] === id || loading.response[REMOVE_CART_REQUEST] === id}
+            cartActive={cartList?.includes(id as string)}
+            cartLoading={loading.response[ADD_CART_REQUEST] === id || loading.response[REMOVE_CART_REQUEST] === id}
             onClickHandle={onClickCartHandle}
           />
         </>

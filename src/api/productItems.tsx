@@ -102,7 +102,7 @@ export const loadProductItemListAPI = async (page: number): Promise<IResponsePro
     const startIndex = page ? (page - 1) * pageSplit : 0
     if (page === 1) {
       const localCartList = localStorage.getItem('cart') as string
-      if (!localCartList) {
+      if (!localCartList || JSON.parse(localCartList).length === 0) {
         localStorage.setItem('cart', JSON.stringify([]))
         responseProductData.recommendProductItem = randomPickElement(productSortByScoreDesc)
       } else {

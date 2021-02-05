@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { HYDRATE } from 'next-redux-wrapper'
-import product, { TProductReducerState } from '../reducers/productReducer'
+import product from '../reducers/productReducer'
+import cart from '../reducers/cartReducer'
 
 const rootReducer = (state: any = {}, action: any) => {
   switch (action.type) {
@@ -9,6 +10,7 @@ const rootReducer = (state: any = {}, action: any) => {
     default: {
       const combineReducer = combineReducers({
         product,
+        cart,
       })
       return combineReducer(state, action)
     }

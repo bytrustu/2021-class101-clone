@@ -1,20 +1,28 @@
 import { TProductReducerState } from '../redux/reducers/productReducer'
+import { TCartReducerState } from '../redux/reducers/cartReducer'
 
 export interface IFetchCycle {
   type: string[]
   response: { [k: string]: string }
 }
 
-export interface IProductState {
+export interface IFetchState {
   loading: IFetchCycle
   success: IFetchCycle
   error: IFetchCycle
+}
+
+export interface IProductState extends IFetchState {
   productItemList: IProductItem[]
   recommendProductItem: IProductItem | null
   cooponList: ICoopon[]
   bannerData: IBannerData | null
   currentPage: number
   maxPage: number
+  cartList: string[]
+}
+
+export interface ICartState extends IFetchState {
   cartList: string[]
 }
 
@@ -61,4 +69,5 @@ export interface IBannerData extends IErrorMessage{
 
 export interface IStoreState {
   product: TProductReducerState
+  cart: TCartReducerState
 }
