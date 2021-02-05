@@ -15,8 +15,9 @@ const StyleFooter = styled.footer`
 const StyleCopyright = styled.h3`
   color: #222;
   font-weight: 800;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
+  letter-spacing: -1px;
 `
 
 const Footer: FC = () => {

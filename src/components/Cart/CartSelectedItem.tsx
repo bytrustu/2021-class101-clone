@@ -26,7 +26,7 @@ const CartSelectedItemTitle = styled.h3`
   left: 20px;
 `
 
-const StyleCartPaymentItem = styled.div`
+const StyleCartSelectedItem = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -67,15 +67,15 @@ const CartSelectedItem: FC<ICartSelectedItemProps> = ({ cartLoading }) => {
         ) : (
           <div className="cart-selected-wrap">
             <CartSelectedItemTitle>구매목록</CartSelectedItemTitle>
-            <StyleCartPaymentItem>
+            <StyleCartSelectedItem>
               소복소복 바늘 끝에서 피어오르는 자수 <StyleMultiplyIcon src="/images/Cross.svg" alt="곱하기 아이콘" /> 3
-            </StyleCartPaymentItem>
-            <StyleCartPaymentItem>
+            </StyleCartSelectedItem>
+            <StyleCartSelectedItem>
               소복소복 바늘 끝에서 피어오르는 자수 <StyleMultiplyIcon src="/images/Cross.svg" alt="곱하기 아이콘" /> 3
-            </StyleCartPaymentItem>
-            <StyleCartPaymentItem>
+            </StyleCartSelectedItem>
+            <StyleCartSelectedItem>
               소복소복 바늘 끝에서 피어오르는 자수 <StyleMultiplyIcon src="/images/Cross.svg" alt="곱하기 아이콘" /> 3
-            </StyleCartPaymentItem>
+            </StyleCartSelectedItem>
           </div>
         )}
       </StyleCartSelectedItemWrap>

@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
-import { ProductBadge, ProductRecommendMotion } from '../../components'
+import { ProductBadge, RecommendMotion } from '../../components'
 
 const StyleProductImageWrap = styled.div<IProductImageProps>`
   @media (max-width: 768px) {
@@ -54,7 +54,7 @@ interface IProductImageProps {
 const ProductImage: FC<IProductImageProps> = ({ imageUrl, recommend }) => {
   return (
     <StyleProductImageWrap recommend={recommend}>
-      {recommend && <ProductRecommendMotion />}
+      {recommend && <RecommendMotion />}
       <div>
         {imageUrl ? (
           <>

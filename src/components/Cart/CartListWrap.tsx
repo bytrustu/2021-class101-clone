@@ -13,6 +13,7 @@ const StyleCartListWrapper = styled.div`
     gap: 40px 10px;
   }
 
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 40px 25px;

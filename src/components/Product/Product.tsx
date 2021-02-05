@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
-import { ProductDetail, ProductImage, ProductLine, ProductPrices } from '../../components'
+import { Divider, ProductDetail, ProductImage, ProductPrices } from '../../components'
 
 const StyleProduct = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ const Product: FC<IProductProps> = ({ id, imageUrl, title, price, monthly, recom
     <StyleProduct>
       <ProductImage imageUrl={imageUrl} recommend={recommend} />
       <ProductDetail title={title} />
-      <ProductLine />
+      <Divider />
       <ProductPrices id={id} price={price} monthly={monthly} />
     </StyleProduct>
   )
