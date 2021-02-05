@@ -1,6 +1,5 @@
 import produce, { Draft } from 'immer'
 import { IFetchCycle, IProductState } from '../../types'
-
 import {
   TProductAction,
   LOAD_BANNER_REQUEST,

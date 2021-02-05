@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
-import { ExclamationOutlined } from '@ant-design/icons'
 
 const StyleProductBadge = styled.div<IProductBadgeProps>`
   @media (max-width: 375px) {
@@ -35,7 +34,12 @@ interface IProductBadgeProps {
 }
 
 const ProductBadge: FC<IProductBadgeProps> = ({ text, color }) => {
-  return <StyleProductBadge color={color}><StyleExcelamation src="/images/Exclamation.svg" alt="추천아이콘" />{text}</StyleProductBadge>
+  return (
+    <StyleProductBadge color={color}>
+      <StyleExcelamation src="/images/Exclamation.svg" alt="추천아이콘" />
+      {text}
+    </StyleProductBadge>
+  )
 }
 
 export default React.memo(ProductBadge)

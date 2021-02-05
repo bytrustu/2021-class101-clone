@@ -1,9 +1,7 @@
 import { all, fork, put } from 'redux-saga/effects'
 import * as Eff from 'redux-saga/effects'
-
 const takeLatest: any = Eff.takeLatest
 export const call: any = Eff.call
-
 import {
   loadBannerSuccess,
   loadBannerError,

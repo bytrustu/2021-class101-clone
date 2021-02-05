@@ -2,7 +2,6 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 import { ProductBadge, ProductRecommendMotion } from '../../components'
-import Image from 'next/image'
 
 const StyleProductImageWrap = styled.div<IProductImageProps>`
   @media (max-width: 768px) {

@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, ReactFragment } from "react";
+import React, { FC, ReactElement, ReactFragment } from 'react'
 import styled from 'styled-components'
 
 const StyleProductWrap = styled.section`

@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 const StyleRecommendMotionTop = styled.span`
   position: absolute;

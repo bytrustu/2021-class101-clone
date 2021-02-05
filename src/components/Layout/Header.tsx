@@ -96,4 +96,4 @@ const Header: FC = () => {
   )
 }
 
-export default Header
+export default React.memo(Header)

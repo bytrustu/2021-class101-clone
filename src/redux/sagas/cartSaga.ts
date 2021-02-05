@@ -12,7 +12,6 @@ import {
   ADD_CART_REQUEST,
   REMOVE_CART_REQUEST,
 } from '../actions'
-
 import { IAction } from '../../types'
 import { sleep } from '../../utils'
 

@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 
@@ -33,7 +33,7 @@ const StyleSkeletonByProductDetail = styled(Skeleton)`
 `
 
 interface IProductDetailProps {
-  title: string | undefined
+  title?: string
 }
 
 const ProductDetail: FC<IProductDetailProps> = ({ title }) => {

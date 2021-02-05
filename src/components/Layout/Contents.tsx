@@ -29,4 +29,4 @@ const Contents: FC<IProps> = ({ children }) => {
   )
 }
 
-export default Contents
+export default React.memo(Contents)

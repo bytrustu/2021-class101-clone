@@ -1,12 +1,12 @@
-import React, { FC } from 'react'
+import React, { FC, useCallback } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
+import { useDispatch, useSelector } from 'react-redux'
+import { message } from 'antd'
 import { ProductCartIcon } from '../../components'
 import { calcMontlyPrice, changeToPrice } from '../../utils'
-import { useDispatch, useSelector } from 'react-redux'
 import { ADD_CART_REQUEST, addCartReqeust, REMOVE_CART_REQUEST, removeCartReqeust } from '../../redux/actions'
 import { IStoreState } from '../../types'
-import { message } from 'antd'
 
 const StyleProductPricesWrap = styled.div`
   position: relative;
@@ -67,7 +67,7 @@ const ProductPrices: FC<IProductPricesProps> = ({ id, price, monthly = 0 }) => {
   const originPrice = changeToPrice(price)
   const monthlyPrice = calcMontlyPrice(price, monthly)
 
-  const onClickCartHandle = () => {
+  const onClickCartHandle = useCallback(() => {
     if (loading.type.includes(ADD_CART_REQUEST) || loading.type.includes(REMOVE_CART_REQUEST)) {
       return message.info('장바구니 갱신 중입니다.')
     }
@@ -79,7 +79,7 @@ const ProductPrices: FC<IProductPricesProps> = ({ id, price, monthly = 0 }) => {
       }
       return dispatch(addCartReqeust(id))
     }
-  }
+  }, [loading.type])
 
   return (
     <StyleProductPricesWrap>

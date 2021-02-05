@@ -4,14 +4,14 @@ import { LOAD_PRODUCT_REQUEST, LOAD_PRODUCT_SUCCESS, loadBannerReqeust, loadProd
 import { IStoreState } from '../types'
 import { Banner, ProductWrap, Product } from '../components'
 import { range } from '../utils'
-import { adjustableHeight, image750Size, productMonthly } from "../const";
+import { adjustableHeight, image750Size, productMonthly } from '../const'
 
 const Products: FC = () => {
+  const [isFetching, setIsFetching] = useState<boolean>(false)
   const dispatch = useDispatch()
   const { bannerData, currentPage, maxPage, recommendProductItem, productItemList, loading, success } = useSelector(
     (state: IStoreState) => state.product,
   )
-  const [isFetching, setIsFetching] = useState<boolean>(false)
 
   const handleScroll = useCallback(() => {
     if (currentPage >= maxPage) return

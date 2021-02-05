@@ -1,9 +1,7 @@
 import React, { FC } from 'react'
 
 const indexPage: FC = () => {
-  return (
-    <></>
-  )
+  return <></>
 }
 
 export default indexPage
