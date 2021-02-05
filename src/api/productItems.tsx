@@ -101,10 +101,10 @@ export const loadProductItemListAPI = async (page: number): Promise<IResponsePro
     if (page > maxPage) page = maxPage
     const startIndex = page ? (page - 1) * pageSplit : 0
     if (page === 1) {
-      const localCartList = localStorage.getItem('cart') as string
+      const localCartList = localStorage.getItem('interestCart') as string
       if (!localCartList || JSON.parse(localCartList).length === 0) {
-        localStorage.setItem('cart', JSON.stringify([]))
-        responseProductData.recommendProductItem = randomPickElement(productSortByScoreDesc)
+        localStorage.setItem('interestCart', JSON.stringify([]))
+        responseProductData.recommendProductItem = randomPickElement([...productSortByScoreDesc])
       } else {
         const onPickCartProduct = randomPickElement(JSON.parse(localCartList))
         responseProductData.recommendProductItem = productSortByScoreDesc.filter(
@@ -126,9 +126,10 @@ export const loadProductItemListAPI = async (page: number): Promise<IResponsePro
 export const loadBannerAPI = async (): Promise<IBannerData> => {
   try {
     const bannerData: IBannerData = {
-      title: '일 잘하는 사람은 이유가 있습니다.',
-      detail: '더 똑똑하게 일할 수 있는 온라인 강의와 1:1 코칭!',
-      imageUrl: '/images/CarrerMain.png',
+      title: '준비물까지 챙겨주는 온라인 클래스',
+      detail: '취미를 시작하는데 필요한 모든 것을 준비해드려요.',
+      imageUrl: 'https://class101.net/images/im-brand-hero-shot-creative.png',
+      backgroundColor: '#222',
     }
     return bannerData
   } catch (e) {
