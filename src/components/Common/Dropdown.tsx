@@ -61,6 +61,9 @@ const StyleDropdownOption = styled.div<IDropdownProps>`
 `
 
 const StyleDropdownSkeleton = styled(Skeleton)`
+  @media (max-width: 768px) {
+    width: 100% !important;
+  }
   width: 400px !important;
   height: 45px;
 `

@@ -2,15 +2,15 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 
-const StyleContentTitleWrap = styled.div`
+const StyleContentTitleWrap = styled.div<IContentTitleProps>`
   @media (min-width: 768px) and (max-width: 1022px) {
     padding-left: 2rem;
   }
   @media (max-width: 768px) {
     padding-left: 2rem;
   }
-  margin: 2rem 0;
-  padding: 0;
+  padding: ${(props) => props.padding};
+  margin: ${(props) => props.margin};
 `
 
 const StyleContentTitle = styled.h3`
@@ -27,11 +27,13 @@ const StyleContentTitleSkeleton = styled(Skeleton)`
 interface IContentTitleProps {
   title?: string
   titleLoading?: boolean
+  padding?: string | number
+  margin?: string | number
 }
 
-const ContentTitle: FC<IContentTitleProps> = ({ title, titleLoading }) => {
+const ContentTitle: FC<IContentTitleProps> = ({ title, titleLoading, margin = '2rem 0', padding = 0 }) => {
   return (
-    <StyleContentTitleWrap>
+    <StyleContentTitleWrap margin={margin} padding={padding}>
       {titleLoading ? <StyleContentTitleSkeleton /> : <StyleContentTitle>{title}</StyleContentTitle>}
     </StyleContentTitleWrap>
   )

@@ -9,6 +9,7 @@ const StyleContentWrapper = styled.section`
   & + & {
     margin-top: 3rem;
   }
+  position: relative;
 `
 
 const ContentWrapper: FC<ICartWrapProps> = ({ children }) => {

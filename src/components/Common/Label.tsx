@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
+import Skeleton from 'react-loading-skeleton'
 
 export const StyleLabelWrapper = styled.div<ILabelProps>`
   font-size: ${(props) => props.size};
@@ -7,6 +8,12 @@ export const StyleLabelWrapper = styled.div<ILabelProps>`
   padding: ${(props) => props.padding};
   margin: ${(props) => props.margin};
   color: ${(props) => props.color};
+  text-decoration: ${(props) => props.decoration};
+`
+
+const StyleLabelSkeleton = styled(Skeleton)`
+  width: 100px !important;
+  height: 30px;
 `
 
 export interface ILabelProps {
@@ -15,9 +22,11 @@ export interface ILabelProps {
   padding?: string
   margin?: string
   color?: string
+  decoration?: string
   value?: string | number
   onClickHandle?: React.MouseEventHandler<HTMLElement>
   labelId?: string | number
+  labelLoading?: boolean
 }
 
 const Label: FC<ILabelProps> = ({
@@ -26,9 +35,11 @@ const Label: FC<ILabelProps> = ({
   padding = '0',
   margin = '0',
   color = '#121212',
+  decoration = 'auto',
   value = '',
   onClickHandle,
   labelId,
+  labelLoading = false,
 }) => {
   return (
     <StyleLabelWrapper
@@ -37,10 +48,11 @@ const Label: FC<ILabelProps> = ({
       padding={padding}
       margin={margin}
       color={color}
+      decoration={decoration}
       onClick={onClickHandle}
       labelId={labelId}
     >
-      {value}
+      {labelLoading ? <StyleLabelSkeleton /> : value}
     </StyleLabelWrapper>
   )
 }
