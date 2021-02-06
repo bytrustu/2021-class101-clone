@@ -1,12 +1,10 @@
-import React, { FC, useCallback } from 'react'
+import React, { FC, useMemo } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
-import { useDispatch, useSelector } from 'react-redux'
-import { message } from 'antd'
-import { ProductCartIcon } from '../../components'
+import { Counter } from '../../components'
 import { calcMontlyPrice, changeToPrice } from '../../utils'
-import { ADD_CART_REQUEST, addCartReqeust, REMOVE_CART_REQUEST, removeCartReqeust } from '../../redux/actions'
-import { IStoreState } from '../../types'
+import { useCounter } from '../../hooks'
+import { IUseCounter } from '../../types'
 
 const StyleProductPricesWrap = styled.div`
   position: relative;
@@ -58,28 +56,14 @@ interface IProductPricesProps {
   monthly?: number
   cartActive?: boolean
   cartLoading?: boolean
+  productFeature?: React.ReactNode
+  counterState?: ReturnType<IUseCounter> | null
 }
 
-const ProductPrices: FC<IProductPricesProps> = ({ id, price, monthly = 0 }) => {
-  const dispatch = useDispatch()
-  const { loading, cartList } = useSelector((state: IStoreState) => state.cart)
-
-  const originPrice = changeToPrice(price)
-  const monthlyPrice = calcMontlyPrice(price, monthly)
-
-  const onClickCartHandle = useCallback(() => {
-    if (loading.type.includes(ADD_CART_REQUEST) || loading.type.includes(REMOVE_CART_REQUEST)) {
-      return message.info('장바구니 갱신 중입니다.')
-    }
-    if (cartList.includes(id as string)) {
-      return dispatch(removeCartReqeust(id))
-    } else {
-      if (cartList.length >= 3) {
-        return message.info('장바구니 개수를 초과 하였습니다.')
-      }
-      return dispatch(addCartReqeust(id))
-    }
-  }, [loading.type])
+const ProductPrices: FC<IProductPricesProps> = ({ price, monthly = 0, productFeature, counterState }) => {
+  const priceMemo = price && counterState ? useMemo(() => price * counterState.count, [counterState.count]) : price
+  const originPrice = priceMemo && changeToPrice(priceMemo)
+  const monthlyPrice = priceMemo && calcMontlyPrice(priceMemo, monthly)
 
   return (
     <StyleProductPricesWrap>
@@ -89,11 +73,14 @@ const ProductPrices: FC<IProductPricesProps> = ({ id, price, monthly = 0 }) => {
           <StyleProductPridceByMontly>
             월 {monthlyPrice}원<span>({monthly}개월)</span>
           </StyleProductPridceByMontly>
-          <ProductCartIcon
-            cartActive={cartList?.includes(id as string)}
-            cartLoading={loading.response[ADD_CART_REQUEST] === id || loading.response[REMOVE_CART_REQUEST] === id}
-            onClickHandle={onClickCartHandle}
-          />
+          {productFeature}
+          {counterState && (
+            <Counter
+              value={counterState.count}
+              countUp={() => counterState.countUp()}
+              countDown={() => counterState.countDown()}
+            />
+          )}
         </>
       ) : (
         <>

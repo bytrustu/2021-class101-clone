@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 import { ProductBadge, RecommendMotion } from '../../components'
 
-const StyleProductImageWrap = styled.div<IProductImageProps>`
+const StyleProductImageWrap = styled.div`
   @media (max-width: 768px) {
     max-height: 200px;
   }
@@ -48,18 +48,19 @@ const StyleSkeletonByProductImage = styled(Skeleton)`
 
 interface IProductImageProps {
   imageUrl?: string
-  recommend?: boolean
+  badge?: string
+  important?: boolean
 }
 
-const ProductImage: FC<IProductImageProps> = ({ imageUrl, recommend }) => {
+const ProductImage: FC<IProductImageProps> = ({ imageUrl, badge, important }) => {
   return (
-    <StyleProductImageWrap recommend={recommend}>
-      {recommend && <RecommendMotion />}
+    <StyleProductImageWrap>
+      {important && <RecommendMotion />}
       <div>
         {imageUrl ? (
           <>
             <StyleProductImage src={imageUrl} alt="상품이미지" />
-            {recommend && <ProductBadge color="#000" text="CLASS101 추천" />}
+            {badge && <ProductBadge color="#000" text={badge} />}
           </>
         ) : (
           <StyleSkeletonByProductImage />

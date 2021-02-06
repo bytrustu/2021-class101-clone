@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 import { Divider, ProductDetail, ProductImage, ProductPrices } from '../../components'
+import { useCounter } from '../../hooks'
 
 const StyleProduct = styled.div`
   display: flex;
@@ -14,16 +15,36 @@ interface IProductProps {
   title?: string
   price?: number
   monthly?: number
-  recommend?: boolean
+  badge?: string
+  important?: boolean
+  isCounter?: boolean
+  children?: React.ReactNode
 }
 
-const Product: FC<IProductProps> = ({ id, imageUrl, title, price, monthly, recommend }) => {
+const Product: FC<IProductProps> = ({
+  id = '',
+  imageUrl = '',
+  title = '',
+  price = 0,
+  monthly = 1,
+  badge = '',
+  important = false,
+  isCounter = false,
+  children,
+}) => {
+  const counterState = useCounter(1, 10)
   return (
     <StyleProduct>
-      <ProductImage imageUrl={imageUrl} recommend={recommend} />
+      <ProductImage imageUrl={imageUrl} badge={badge} important={important} />
       <ProductDetail title={title} />
       <Divider />
-      <ProductPrices id={id} price={price} monthly={monthly} />
+      <ProductPrices
+        id={id}
+        price={price}
+        monthly={monthly}
+        counterState={isCounter ? counterState : null}
+        productFeature={children}
+      />
     </StyleProduct>
   )
 }
