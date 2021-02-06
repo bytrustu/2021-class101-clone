@@ -1,23 +1,41 @@
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  ADD_CART_REQUEST,
+  addCartReqeust,
   LOAD_PRODUCT_REQUEST,
   LOAD_PRODUCT_SUCCESS,
   loadBannerReqeust,
-  loadCart,
+  loadLocalCart,
   loadProductReqeust,
+  REMOVE_CART_REQUEST,
+  removeCartReqeust,
 } from '../redux/actions'
 import { IStoreState } from '../types'
-import { Banner, ProductWrap, Product } from '../components'
+import { Banner, ProductWrap, Product, ProductCartIcon } from '../components'
 import { range } from '../utils'
 import { adjustableHeight, image750Size, productMonthly } from '../const'
+import { message } from 'antd'
 
 const Products: FC = () => {
   const [isFetching, setIsFetching] = useState<boolean>(false)
   const dispatch = useDispatch()
-  const { bannerData, currentPage, maxPage, recommendProductItem, productItemList, loading, success } = useSelector(
-    (state: IStoreState) => state.product,
-  )
+  const {
+    bannerData,
+    currentPage,
+    maxPage,
+    recommendProductItem,
+    productItemList,
+    loading: productLoading,
+    success: productSuccess,
+  } = useSelector((state: IStoreState) => state.product)
+  const { loading: cartLoading, cartList } = useSelector((state: IStoreState) => state.cart)
+
+  const cartAddLoadingMemo = useMemo(() => cartLoading.response[ADD_CART_REQUEST], [cartLoading.response])
+  const cartRevmoeLoadingMemo = useMemo(() => cartLoading.response[REMOVE_CART_REQUEST], [cartLoading.response])
+  const cartAddRequestMemo = useMemo(() => cartLoading.type.includes(ADD_CART_REQUEST), [cartLoading.type])
+  const cartRemoveRequestMemo = useMemo(() => cartLoading.type.includes(ADD_CART_REQUEST), [cartLoading.type])
+  const productLoadRequestMemo = useMemo(() => productLoading.type.includes(LOAD_PRODUCT_REQUEST), [productLoading.type])
 
   const handleScroll = useCallback(() => {
     if (currentPage >= maxPage) return
@@ -31,23 +49,40 @@ const Products: FC = () => {
     }
   }, [isFetching])
 
+  const onClickCartHandle = useCallback(
+    (id: string) => {
+      if (cartAddRequestMemo || cartRemoveRequestMemo) {
+        return message.info('장바구니 갱신 중입니다.')
+      }
+      if (cartList.includes(id as string)) {
+        return dispatch(removeCartReqeust(id))
+      } else {
+        if (cartList.length >= 3) {
+          return message.info('장바구니 개수를 초과 하였습니다.')
+        }
+        return dispatch(addCartReqeust(id))
+      }
+    },
+    [cartLoading.type],
+  )
+
   useEffect(() => {
     dispatch(loadBannerReqeust())
     dispatch(loadProductReqeust(1))
-    dispatch(loadCart())
+    dispatch(loadLocalCart())
   }, [])
 
   useEffect(() => {
-    if (loading.type.includes(LOAD_PRODUCT_REQUEST)) {
+    if (productLoadRequestMemo) {
       setIsFetching(true)
     }
-  }, [loading.type])
+  }, [productLoading.type])
 
   useEffect(() => {
-    if (success.type.includes(LOAD_PRODUCT_SUCCESS)) {
+    if (productSuccess.type.includes(LOAD_PRODUCT_SUCCESS)) {
       setIsFetching(false)
     }
-  }, [success.type])
+  }, [productSuccess.type])
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
@@ -68,8 +103,19 @@ const Products: FC = () => {
             title={recommendProductItem.title}
             price={recommendProductItem.price}
             monthly={productMonthly}
-            recommend={true}
-          />
+            badge="CLASS101 추천"
+            important={true}
+          >
+            <ProductCartIcon
+              cartActive={cartList?.includes(recommendProductItem.id as string)}
+              cartLoading={
+                cartAddLoadingMemo === recommendProductItem.id || cartRevmoeLoadingMemo === recommendProductItem.id
+              }
+              onClickHandle={() => {
+                onClickCartHandle(recommendProductItem.id)
+              }}
+            />
+          </Product>
         )}
 
         {productItemList.length > 0 &&
@@ -81,12 +127,20 @@ const Products: FC = () => {
               title={productItem.title}
               price={productItem.price}
               monthly={productMonthly}
-            />
+            >
+              <ProductCartIcon
+                cartActive={cartList?.includes(productItem.id as string)}
+                cartLoading={cartAddLoadingMemo === productItem.id || cartRevmoeLoadingMemo === productItem.id}
+                onClickHandle={() => {
+                  onClickCartHandle(productItem.id)
+                }}
+              />
+            </Product>
           ))}
 
-        {loading.type.includes(LOAD_PRODUCT_REQUEST) && currentPage === 1 ? (
+        {productLoadRequestMemo && currentPage === 1 ? (
           range(6).map((el) => <Product key={el} />)
-        ) : loading.type.includes(LOAD_PRODUCT_REQUEST) && currentPage > 1 ? (
+        ) : productLoadRequestMemo && currentPage > 1 ? (
           range(5).map((el) => <Product key={el} />)
         ) : (
           <></>
