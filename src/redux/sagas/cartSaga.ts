@@ -17,8 +17,11 @@ import {
   loadCouponSuccess,
   loadCouponError,
   LOAD_COUPON_REQUEST,
+  paymentSuccess,
+  paymentError,
+  PAYMENT_REQUEST,
 } from '../actions'
-import { IAction } from '../../types'
+import { IAction, IPayment } from '../../types'
 import { filterLocalStorageByArray, pushLocalStorageByArray, sleep } from '../../utils'
 import { loadCooponListAPI, loadPurchaseAPI } from '../../api'
 
@@ -80,9 +83,23 @@ function* watchLoadCoupon() {
   yield takeLatest(LOAD_COUPON_REQUEST, loadCoupon)
 }
 
+export function* requestPayment(action: IAction<IPayment>) {
+  try {
+    yield sleep(10)
+    yield put(paymentSuccess(action.payload))
+  } catch (e) {
+    console.error(e)
+    yield put(paymentError(e.message))
+  }
+}
+function* watchRequestPayment() {
+  yield takeLatest(PAYMENT_REQUEST, requestPayment)
+}
+
 export default function* cartSaga() {
   yield all([fork(watchAddCart)])
   yield all([fork(watchRemoveCart)])
   yield all([fork(watchLoadPurchase)])
   yield all([fork(watchLoadCoupon)])
+  yield all([fork(watchRequestPayment)])
 }

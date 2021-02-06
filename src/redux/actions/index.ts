@@ -1,4 +1,4 @@
-import { ICoupon, IPurchaseItem, IResponseProductData, TCreateAction } from '../../types'
+import { ICoupon, IPayment, IPurchaseItem, IResponseProductData, TCreateAction } from '../../types'
 
 const createAction = (type: string, payload?: any) => ({ type, payload })
 
@@ -24,12 +24,16 @@ export const LOAD_PURCHASE_REQUEST = 'LOAD_PURCHASE_REQUEST'
 export const LOAD_PURCHASE_SUCCESS = 'LOAD_PURCHASE_SUCCESS'
 export const LOAD_PURCHASE_FAILURE = 'LOAD_PURCHASE_FAILURE'
 
-export const REQUEST_PLUS_PURCHASE = 'REQUEST_PLUS_PURCHASE'
-export const REQUEST_MINUS_PURCHASE = 'REQUEST_MINUS_PURCHASE'
+export const PLUS_PURCHASE_REQUEST = 'PLUS_PURCHASE_REQUEST'
+export const MINUS_PURCHASE_REQUEST = 'MINUS_PURCHASE_REQUEST'
 
 export const LOAD_COUPON_REQUEST = 'LOAD_COUPON_REQUEST'
 export const LOAD_COUPON_SUCCESS = 'LOAD_COUPON_SUCCESS'
 export const LOAD_COUPON_FAILURE = 'LOAD_COUPON_FAILURE'
+
+export const PAYMENT_REQUEST = 'PAYMENT_REQUEST'
+export const PAYMENT_SUCCESS = 'PAYMENT_SUCCESS'
+export const PAYMENT_FAILURE = 'PAYMENT_FAILURE'
 
 export const loadBannerReqeust: TCreateAction<any, any> = () => createAction(LOAD_BANNER_REQUEST)
 export const loadBannerSuccess: TCreateAction<string, IResponseProductData> = (payload) =>
@@ -60,14 +64,18 @@ export const loadPurchaseSuccess: TCreateAction<IPurchaseItem[], string> = (payl
 export const loadPurchaseError: TCreateAction<string, string> = (payload) =>
   createAction(LOAD_PURCHASE_FAILURE, payload)
 
-export const reqestPlusPurchase: TCreateAction<string, any> = (payload) => createAction(REQUEST_PLUS_PURCHASE, payload)
+export const reqestPlusPurchase: TCreateAction<string, any> = (payload) => createAction(PLUS_PURCHASE_REQUEST, payload)
 export const reqestMinusPurchase: TCreateAction<string, any> = (payload) =>
-  createAction(REQUEST_MINUS_PURCHASE, payload)
+  createAction(MINUS_PURCHASE_REQUEST, payload)
 
 export const loadCouponReqeust: TCreateAction<any, any> = () => createAction(LOAD_COUPON_REQUEST)
 export const loadCouponSuccess: TCreateAction<ICoupon[], string> = (payload) =>
   createAction(LOAD_COUPON_SUCCESS, payload)
 export const loadCouponError: TCreateAction<string, string> = (payload) => createAction(LOAD_COUPON_FAILURE, payload)
+
+export const paymentReqeust: TCreateAction<IPayment, any> = (payload) => createAction(PAYMENT_REQUEST, payload)
+export const paymentSuccess: TCreateAction<IPayment, string> = (payload) => createAction(PAYMENT_SUCCESS, payload)
+export const paymentError: TCreateAction<string, string> = (payload) => createAction(PAYMENT_FAILURE, payload)
 
 export type TProductAction =
   | ReturnType<typeof loadBannerReqeust>
@@ -93,3 +101,6 @@ export type TCartAction =
   | ReturnType<typeof loadCouponReqeust>
   | ReturnType<typeof loadCouponSuccess>
   | ReturnType<typeof loadCouponError>
+  | ReturnType<typeof paymentReqeust>
+  | ReturnType<typeof paymentSuccess>
+  | ReturnType<typeof paymentError>

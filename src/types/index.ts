@@ -26,6 +26,7 @@ export interface ICartState extends IFetchState {
   cartList: string[]
   purchaseList: IPurchaseItem[]
   couponList: ICoupon[]
+  payment: IPayment
 }
 
 export interface IAction<T> {
@@ -107,4 +108,10 @@ export interface IMessageAlert {
   okOnClick?: () => void
   isCancel?: boolean
   isSuccess?: boolean
+}
+
+export interface IPayment {
+  totalPrice?: number
+  discountPrice?: number
+  products?: IPurchaseItem[]
 }

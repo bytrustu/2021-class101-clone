@@ -12,11 +12,14 @@ import {
   LOAD_PURCHASE_REQUEST,
   LOAD_PURCHASE_SUCCESS,
   LOAD_PURCHASE_FAILURE,
-  REQUEST_PLUS_PURCHASE,
-  REQUEST_MINUS_PURCHASE,
+  PLUS_PURCHASE_REQUEST,
+  MINUS_PURCHASE_REQUEST,
   LOAD_COUPON_REQUEST,
   LOAD_COUPON_SUCCESS,
   LOAD_COUPON_FAILURE,
+  PAYMENT_REQUEST,
+  PAYMENT_SUCCESS,
+  PAYMENT_FAILURE,
 } from '../actions'
 import { initFetchCycle, processFetchCycle } from '../utils'
 import { fetchCycle } from '../../const'
@@ -29,6 +32,7 @@ const initialState: ICartState = {
   cartList: [],
   purchaseList: [],
   couponList: [],
+  payment: {},
 }
 
 export type TCartReducerState = typeof initialState
@@ -53,6 +57,7 @@ export default (state: TCartReducerState = initialState, action: TCartAction) =>
         draft.error = processFetchCycle(draft.error, ADD_CART_FAILURE, action.payload)
         break
       }
+
       case REMOVE_CART_REQUEST: {
         draft.loading = processFetchCycle(draft.loading, REMOVE_CART_REQUEST, action.payload)
         draft.error = initFetchCycle(draft.error, REMOVE_CART_FAILURE)
@@ -70,11 +75,13 @@ export default (state: TCartReducerState = initialState, action: TCartAction) =>
         draft.error = processFetchCycle(draft.error, REMOVE_CART_FAILURE, action.payload)
         break
       }
+
       case LOAD_LOCAL_CART: {
         const cartList = localStorage.getItem('cart') as string
         cartList ? (draft.cartList = JSON.parse(cartList)) : pushLocalStorageByArray('cart')
         break
       }
+
       case LOAD_PURCHASE_REQUEST: {
         draft.loading = processFetchCycle(draft.loading, LOAD_PURCHASE_REQUEST, action.payload)
         draft.error = initFetchCycle(draft.error, LOAD_PURCHASE_FAILURE)
@@ -93,7 +100,7 @@ export default (state: TCartReducerState = initialState, action: TCartAction) =>
         break
       }
 
-      case REQUEST_PLUS_PURCHASE: {
+      case PLUS_PURCHASE_REQUEST: {
         draft.purchaseList = draft.purchaseList.map((product) => {
           if (product.id === action.payload) {
             product.count += 1
@@ -102,8 +109,7 @@ export default (state: TCartReducerState = initialState, action: TCartAction) =>
         })
         break
       }
-
-      case REQUEST_MINUS_PURCHASE: {
+      case MINUS_PURCHASE_REQUEST: {
         draft.purchaseList = draft.purchaseList.map((product) => {
           if (product.id === action.payload) {
             product.count -= 1
@@ -130,6 +136,25 @@ export default (state: TCartReducerState = initialState, action: TCartAction) =>
         draft.error = processFetchCycle(draft.error, LOAD_COUPON_FAILURE, action.payload)
         break
       }
+
+      case PAYMENT_REQUEST: {
+        draft.loading = processFetchCycle(draft.loading, PAYMENT_REQUEST)
+        draft.error = initFetchCycle(draft.error, PAYMENT_FAILURE)
+        draft.success = initFetchCycle(draft.success, PAYMENT_SUCCESS)
+        break
+      }
+      case PAYMENT_SUCCESS: {
+        draft.loading = initFetchCycle(draft.loading, PAYMENT_REQUEST)
+        draft.success = processFetchCycle(draft.success, PAYMENT_SUCCESS)
+        draft.payment = action.payload
+        break
+      }
+      case PAYMENT_FAILURE: {
+        draft.loading = initFetchCycle(draft.loading, PAYMENT_REQUEST)
+        draft.error = processFetchCycle(draft.error, PAYMENT_FAILURE, action.payload)
+        break
+      }
+
       default: {
         break
       }

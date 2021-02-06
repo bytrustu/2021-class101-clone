@@ -1,6 +1,9 @@
 import { ICoupon, IPurchaseItem } from '../types'
 
-const filterPaymentProducts = (products: IPurchaseItem[] = [], checkboxState: string[] = []): IPurchaseItem[] => {
+export const filterPaymentProducts = (
+  products: IPurchaseItem[] = [],
+  checkboxState: string[] = [],
+): IPurchaseItem[] => {
   if (products.length === 0 || checkboxState.length === 0) return []
   return products.filter((product) => checkboxState.includes(product.id))
 }

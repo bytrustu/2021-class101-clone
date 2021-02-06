@@ -20,16 +20,18 @@ import {
   LOAD_PURCHASE_SUCCESS,
   loadCouponReqeust,
   loadLocalCart,
-  loadPurchaseReqeust,
+  loadPurchaseReqeust, PAYMENT_SUCCESS,
+  paymentReqeust,
   REMOVE_CART_REQUEST,
-  removeCartReqeust,
-} from '../redux/actions'
+  removeCartReqeust
+} from "../redux/actions";
+import { message } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { image750Size, productMonthly } from '../const'
 import { IProductItem, IStoreState } from '../types'
 import { changeToPrice, range } from '../utils'
 import { useAlert, useCheckbox, useDropdown } from '../hooks'
-import { discountCost, sumTotalCost, bestPricingByCoupon } from '../utils/calculatorPrice'
+import { discountCost, sumTotalCost, bestPricingByCoupon, filterPaymentProducts } from '../utils/calculatorPrice'
 
 const cartPage: FC = () => {
   const dispatch = useDispatch()
@@ -58,6 +60,7 @@ const cartPage: FC = () => {
   const cartLoadingMemo = useMemo(() => cartLoading.type.includes(LOAD_PURCHASE_REQUEST), [cartLoading.type])
   const removeCartLoadingMemo = useMemo(() => cartLoading.type.includes(REMOVE_CART_REQUEST), [cartLoading.type])
   const cartSuccessMemo = useMemo(() => cartSuccess.type.includes(LOAD_PURCHASE_SUCCESS), [cartSuccess.type])
+  const paymentSuccessMemo = useMemo(() => cartSuccess.type.includes(PAYMENT_SUCCESS), [cartSuccess.type])
   const purchaseIdListMemo = useMemo(() => purchaseList.map((product) => product.id), [purchaseList])
   const discountPrice = useMemo(() => discountCost(purchaseList, dropdownValue, checkboxState.form), [
     purchaseList,
@@ -65,6 +68,10 @@ const cartPage: FC = () => {
     checkboxState.form,
   ])
   const totalPrice = useMemo(() => sumTotalCost(purchaseList, checkboxState.form), [purchaseList, checkboxState.form])
+  const paymentList = useMemo(() => filterPaymentProducts(purchaseList, checkboxState.form), [
+    purchaseList,
+    checkboxState.form,
+  ])
 
   const requestRemoveCart = useCallback(
     (data: string | string[]) => {
@@ -79,6 +86,25 @@ const cartPage: FC = () => {
     [dispatch],
   )
 
+  const requestPayment = useCallback(
+    (totalPrice, discountPrice) => {
+      if (totalPrice <= 0) return message.info('결제 가능한 클래스가 없습니다.')
+      return requestApiConfirmHanlder({
+        funcAPI: () => {
+          dispatch(
+            paymentReqeust({
+              totalPrice,
+              discountPrice,
+              products: paymentList,
+            }),
+          )
+        },
+        message: '선택한 클래스를 결제 하시겠습니까?',
+      })
+    },
+    [paymentList],
+  )
+
   useEffect(() => {
     dispatch(loadLocalCart())
     dispatch(loadCouponReqeust())
@@ -89,6 +115,11 @@ const cartPage: FC = () => {
   useEffect(() => {
     checkboxState.checkAllCheckbox(purchaseIdListMemo)
   }, [cartSuccessMemo])
+  useEffect(() => {
+    if (paymentSuccessMemo) {
+      dispatch(removeCartReqeust(checkboxState.form))
+    }
+  }, [paymentSuccessMemo])
 
   return (
     <>
@@ -194,7 +225,12 @@ const cartPage: FC = () => {
       </ContentWrapper>
       <ContentWrapper>
         <ContentTitle title="결제 금액" titleLoading={cartLoadingMemo} />
-        <PaymentReceipt paymentLoading={cartLoadingMemo} discountPrice={discountPrice} totalPrice={totalPrice} />
+        <PaymentReceipt
+          paymentLoading={cartLoadingMemo}
+          discountPrice={discountPrice}
+          totalPrice={totalPrice}
+          onClickPaymentHandle={requestPayment}
+        />
       </ContentWrapper>
     </>
   )
