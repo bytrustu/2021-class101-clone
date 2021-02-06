@@ -1,12 +1,14 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 import { Divider, ProductDetail, ProductImage, ProductPrices } from '../../components'
-import { useCounter } from '../../hooks'
+import { useCheckbox, useCounter } from '../../hooks'
+import { TUseCheckbox } from '../../types'
 
 const StyleProduct = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
 `
 
 interface IProductProps {
@@ -18,6 +20,7 @@ interface IProductProps {
   badge?: string
   important?: boolean
   isCounter?: boolean
+  checkboxState?: ReturnType<TUseCheckbox>
   children?: React.ReactNode
 }
 
@@ -30,12 +33,19 @@ const Product: FC<IProductProps> = ({
   badge = '',
   important = false,
   isCounter = false,
+  checkboxState,
   children,
 }) => {
   const counterState = useCounter(1, 10)
   return (
     <StyleProduct>
-      <ProductImage imageUrl={imageUrl} badge={badge} important={important} />
+      <ProductImage
+        id={id}
+        imageUrl={imageUrl}
+        badge={badge}
+        important={important}
+        checkboxState={checkboxState ? checkboxState : undefined}
+      />
       <ProductDetail title={title} />
       <Divider />
       <ProductPrices

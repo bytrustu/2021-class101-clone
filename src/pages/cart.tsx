@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { image750Size, productMonthly } from '../const'
 import { ICoopon, IProductItem, IStoreState } from '../types'
 import { changeToPrice, range } from '../utils'
-import { useDropdown } from '../hooks'
+import { useCheckbox, useDropdown } from '../hooks'
 
 const couponsData = [
   {
@@ -44,8 +44,9 @@ const indexPage: FC = () => {
     (state: IStoreState) => state.cart,
   )
 
-  const cartLoadingState = useMemo(() => cartLoading.type.includes(LOAD_PURCHASE_REQUEST), [cartLoading.type])
-  const cartSuccessState = useMemo(() => cartSuccess.type.includes(LOAD_PURCHASE_SUCCESS), [cartSuccess.type])
+  const cartLoadingMemo = useMemo(() => cartLoading.type.includes(LOAD_PURCHASE_REQUEST), [cartLoading.type])
+  const cartSuccessMemo = useMemo(() => cartSuccess.type.includes(LOAD_PURCHASE_SUCCESS), [cartSuccess.type])
+  const purchaseIdListMemo = useMemo(() => purchaseList.map((product) => product.id), [purchaseList])
 
   const [coupons, setCoupons] = useState<ICoopon[]>([])
   const {
@@ -55,6 +56,8 @@ const indexPage: FC = () => {
     setOpen: setDropdownOpen,
     onClickHandle: onClickDropdownHandle,
   } = useDropdown(coupons)
+
+  const checkboxState = useCheckbox(purchaseList.length)
 
   const onClickUnAppliedCouponHandle = useCallback(() => {
     setDropdownValue(null)
@@ -69,28 +72,40 @@ const indexPage: FC = () => {
     dispatch(loadPurchaseReqeust(cartList))
   }, [cartList])
 
+  useEffect(() => {
+    checkboxState.checkAllCheckbox(purchaseIdListMemo)
+  }, [cartSuccessMemo])
+
   return (
     <>
       <ContentWrapper>
         <CartTitleWrap>
-          <ContentTitle title="장바구니" margin={0} titleLoading={cartLoadingState} />
-          {cartLoadingState ? (
+          <ContentTitle title="장바구니" margin={0} titleLoading={cartLoadingMemo} />
+          {cartLoadingMemo ? (
             <CartButtonWrap>
-              <Button value="삭제" buttonLoading={cartLoadingState} />
-              <Button value="전체선택" buttonLoading={cartLoadingState} />
+              <Button value="삭제" buttonLoading={cartLoadingMemo} />
+              <Button
+                value="전체선택"
+                buttonLoading={cartLoadingMemo}
+                onClickHandle={() => checkboxState.checkAllCheckbox(purchaseIdListMemo)}
+              />
             </CartButtonWrap>
-          ) : cartSuccessState && purchaseList.length > 0 ? (
+          ) : cartSuccessMemo && purchaseList.length > 0 ? (
             <CartButtonWrap>
-              <Button value="삭제" buttonLoading={cartLoadingState} />
-              <Button value="전체선택" buttonLoading={cartLoadingState} />
+              <Button value="삭제" buttonLoading={cartLoadingMemo} />
+              <Button
+                value="전체선택"
+                buttonLoading={cartLoadingMemo}
+                onClickHandle={() => checkboxState.checkAllCheckbox(purchaseIdListMemo)}
+              />
             </CartButtonWrap>
           ) : (
             <></>
           )}
         </CartTitleWrap>
-        {cartSuccessState && purchaseList.length === 0 && <CartEmpty />}
+        {cartSuccessMemo && purchaseList.length === 0 && <CartEmpty />}
         <CartListWrap>
-          {cartSuccessState &&
+          {cartSuccessMemo &&
             purchaseList &&
             purchaseList.length > 0 &&
             purchaseList.map((purchaseItem: IProductItem) => {
@@ -104,21 +119,26 @@ const indexPage: FC = () => {
                   monthly={productMonthly}
                   badge={purchaseItem.availableCoupon === false ? '쿠폰적용불가' : undefined}
                   isCounter={true}
+                  checkboxState={checkboxState}
                 />
               )
             })}
-          {cartLoadingState && range(3).map((el: number) => <Product key={el} />)}
+          {cartLoadingMemo && range(3).map((el: number) => <Product key={el} />)}
         </CartListWrap>
       </ContentWrapper>
 
       <ContentWrapper>
-        <CartSelectedItem cartLoading={cartLoadingState} cartSelectedData={purchaseList} />
+        <CartSelectedItem
+          cartLoading={cartLoadingMemo}
+          cartSelectedData={purchaseList}
+          checkState={checkboxState.form}
+        />
       </ContentWrapper>
       <ContentWrapper>
-        <ContentTitle title="쿠폰" titleLoading={cartLoadingState} />
+        <ContentTitle title="쿠폰" titleLoading={cartLoadingMemo} />
         <CouponWrap>
           <Dropdown
-            dropdownLoading={cartLoadingState}
+            dropdownLoading={cartLoadingMemo}
             value={dropdownValue}
             onClickHandle={onClickDropdownHandle}
             open={dropdownOpen}
@@ -142,40 +162,40 @@ const indexPage: FC = () => {
             ))}
           </Dropdown>
           <div className="coupon-wrap">
-            <Button value="미적용" onClickHandle={onClickUnAppliedCouponHandle} buttonLoading={cartLoadingState} />
-            <Button value="최적적용" buttonLoading={cartLoadingState} />
+            <Button value="미적용" onClickHandle={onClickUnAppliedCouponHandle} buttonLoading={cartLoadingMemo} />
+            <Button value="최적적용" buttonLoading={cartLoadingMemo} />
           </div>
         </CouponWrap>
       </ContentWrapper>
       <ContentWrapper>
-        <ContentTitle title="결제 금액" titleLoading={cartLoadingState} />
+        <ContentTitle title="결제 금액" titleLoading={cartLoadingMemo} />
         <PaymentReceipt>
           <ContentSpaceBetween>
-            <Label color="#858a8d" size="14px" value="총 상품 금액" labelLoading={cartLoadingState} />
-            <Label color="#858a8d" size="14px" value="282,200원" labelLoading={cartLoadingState} />
+            <Label color="#858a8d" size="14px" value="총 상품 금액" labelLoading={cartLoadingMemo} />
+            <Label color="#858a8d" size="14px" value="282,200원" labelLoading={cartLoadingMemo} />
           </ContentSpaceBetween>
           <ContentSpaceBetween>
-            <Label color="#858a8d" size="14px" value="상품 할인 금액" labelLoading={cartLoadingState} />
-            <Label color="#858a8d" size="14px" value="- 282,200원" labelLoading={cartLoadingState} />
+            <Label color="#858a8d" size="14px" value="상품 할인 금액" labelLoading={cartLoadingMemo} />
+            <Label color="#858a8d" size="14px" value="- 282,200원" labelLoading={cartLoadingMemo} />
           </ContentSpaceBetween>
           <Divider style={{ margin: '15px 0' }} />
           <ContentSpaceBetween>
-            <Label color="#1b1c1d" size="18px" weight="600" value="최종 가격" labelLoading={cartLoadingState} />
+            <Label color="#1b1c1d" size="18px" weight="600" value="최종 가격" labelLoading={cartLoadingMemo} />
             <Label
               color="#858a8d"
               size="14px"
               decoration="line-through"
               value="282,200원"
-              labelLoading={cartLoadingState}
+              labelLoading={cartLoadingMemo}
             />
           </ContentSpaceBetween>
           <ContentSpaceBetween>
             <Label value="" />
-            <Label color="#1b1c1d" size="18px" weight="600" value="252,200원" labelLoading={cartLoadingState} />
+            <Label color="#1b1c1d" size="18px" weight="600" value="252,200원" labelLoading={cartLoadingMemo} />
           </ContentSpaceBetween>
           <ContentSpaceBetween margin="40px 0 0">
             <Label value="" />
-            <Button value="결제하기" buttonLoading={cartLoadingState} />
+            <Button value="결제하기" buttonLoading={cartLoadingMemo} />
           </ContentSpaceBetween>
         </PaymentReceipt>
       </ContentWrapper>

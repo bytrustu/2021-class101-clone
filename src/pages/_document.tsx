@@ -64,9 +64,10 @@ class MyDocument extends Document<IProps> {
 
   render() {
     return (
-      <Html>
+      <Html lang="ko">
         <Head>
           <GlobalStyles />
+          <title>클래스101 | 준비물까지 챙겨주는 온라인 클래스</title>
         </Head>
         <body>
           <Main />

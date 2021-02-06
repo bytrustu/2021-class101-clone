@@ -35,7 +35,9 @@ const Products: FC = () => {
   const cartRevmoeLoadingMemo = useMemo(() => cartLoading.response[REMOVE_CART_REQUEST], [cartLoading.response])
   const cartAddRequestMemo = useMemo(() => cartLoading.type.includes(ADD_CART_REQUEST), [cartLoading.type])
   const cartRemoveRequestMemo = useMemo(() => cartLoading.type.includes(ADD_CART_REQUEST), [cartLoading.type])
-  const productLoadRequestMemo = useMemo(() => productLoading.type.includes(LOAD_PRODUCT_REQUEST), [productLoading.type])
+  const productLoadRequestMemo = useMemo(() => productLoading.type.includes(LOAD_PRODUCT_REQUEST), [
+    productLoading.type,
+  ])
 
   const handleScroll = useCallback(() => {
     if (currentPage >= maxPage) return
@@ -68,8 +70,10 @@ const Products: FC = () => {
 
   useEffect(() => {
     dispatch(loadBannerReqeust())
-    dispatch(loadProductReqeust(1))
     dispatch(loadLocalCart())
+    if (productItemList.length === 0) {
+      dispatch(loadProductReqeust(1))
+    }
   }, [])
 
   useEffect(() => {

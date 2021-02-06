@@ -13,7 +13,7 @@ const StyleContentTitleWrap = styled.div<IContentTitleProps>`
   margin: ${(props) => props.margin};
 `
 
-const StyleContentTitle = styled.h3`
+const StyleContentTitle = styled.h2`
   font-size: 25px;
   font-weight: 600;
   color: #5f5f61;

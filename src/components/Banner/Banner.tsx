@@ -26,7 +26,7 @@ const StyleBannerTextWrap = styled.div`
   max-width: 255px;
   z-index: 10;
 
-  h2 {
+  p.banner-title {
     font-size: 32px;
     font-weight: bold;
     color: rgb(255, 255, 255);
@@ -35,7 +35,7 @@ const StyleBannerTextWrap = styled.div`
     margin: 0px;
   }
 
-  h4 {
+  p.banner-detail {
     margin-top: 8px;
     opacity: 0.55;
     white-space: pre-line;
@@ -53,19 +53,17 @@ const StyleBannerTextWrap = styled.div`
   }
 
   @media (max-width: 1023px) {
-    h2 {
+    p.banner-title {
       font-size: 24px;
       font-weight: bold;
-      color: rgb(255, 255, 255);
       line-height: 34px;
       letter-spacing: -0.4px;
-      margin: 0px;
+      margin: 0;
     }
 
-    h4 {
+    p.banner-detail {
       font-size: 14px;
       font-weight: normal;
-      color: rgb(255, 255, 255);
       line-height: 20px;
       letter-spacing: -0.15px;
       margin-top: 12px;
@@ -75,6 +73,7 @@ const StyleBannerTextWrap = styled.div`
   @media (min-width: 768px) {
     max-width: 255px;
   }
+  
 `
 
 const StyleBannerImageWrap = styled.div`
@@ -113,8 +112,8 @@ const Banner: FC<IBannerProps> = ({ bannerData }) => {
   return bannerData ? (
     <StyleBannerWrap backgroundColor={bannerData.backgroundColor}>
       <StyleBannerTextWrap>
-        <h2>{bannerData?.title}</h2>
-        <h4>{bannerData?.detail}</h4>
+        <p className="banner-title">{bannerData?.title}</p>
+        <p className="banner-detail">{bannerData?.detail}</p>
       </StyleBannerTextWrap>
       <StyleBannerImageWrap>
         <StyleBannerImage src={bannerData?.imageUrl} alt="CLASS101 배너" />

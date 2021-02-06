@@ -1,7 +1,8 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
-import { ProductBadge, RecommendMotion } from '../../components'
+import { Checkbox, ProductBadge, RecommendMotion, CloseButton } from '../../components'
+import { TUseCheckbox } from '../../types'
 
 const StyleProductImageWrap = styled.div`
   @media (max-width: 768px) {
@@ -14,7 +15,6 @@ const StyleProductImageWrap = styled.div`
 
   & > div {
     display: block;
-    position: relative;
     overflow: hidden;
     padding-top: 75%;
   }
@@ -47,12 +47,14 @@ const StyleSkeletonByProductImage = styled(Skeleton)`
 `
 
 interface IProductImageProps {
+  id?: string
   imageUrl?: string
   badge?: string
   important?: boolean
+  checkboxState?: ReturnType<TUseCheckbox>
 }
 
-const ProductImage: FC<IProductImageProps> = ({ imageUrl, badge, important }) => {
+const ProductImage: FC<IProductImageProps> = ({ id, imageUrl, badge, important, checkboxState }) => {
   return (
     <StyleProductImageWrap>
       {important && <RecommendMotion />}
@@ -64,6 +66,19 @@ const ProductImage: FC<IProductImageProps> = ({ imageUrl, badge, important }) =>
           </>
         ) : (
           <StyleSkeletonByProductImage />
+        )}
+        {checkboxState ? (
+          <>
+          <Checkbox
+            checked={checkboxState.form && checkboxState.form.includes(id)}
+            onChange={checkboxState && checkboxState.onChangeSingle}
+            id={id}
+            name={id}
+          />
+          <CloseButton />
+          </>
+        ) : (
+          <></>
         )}
       </div>
     </StyleProductImageWrap>

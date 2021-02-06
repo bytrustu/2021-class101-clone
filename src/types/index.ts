@@ -73,7 +73,6 @@ export interface IResponseProductData extends IErrorMessage {
   recommendProductItem?: IProductItem
 }
 
-
 export interface IBannerData extends IErrorMessage {
   title?: string
   detail?: string
@@ -90,3 +89,13 @@ export type IUseCounter = (
   currentNumber: number,
   maxNumber: number,
 ) => { count: number; countUp: (action?: any) => void; countDown: (action?: any) => void }
+
+export type TUseCheckbox = (
+  length: number,
+) => {
+  form: any[]
+  onChangeSingle: (checked: boolean, name: string, id: any) => void
+  onChangeAll: (checked: boolean) => void
+  emptyCheckbox: () => void
+  checkAllCheckbox: (all: any[]) => void
+}

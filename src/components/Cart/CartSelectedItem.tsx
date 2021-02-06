@@ -59,9 +59,10 @@ const CartSelectedItemSkeleton = styled(Skeleton)`
 interface ICartSelectedItemProps {
   cartLoading?: boolean
   cartSelectedData?: IProductItem[]
+  checkState?: any[]
 }
 
-const CartSelectedItem: FC<ICartSelectedItemProps> = ({ cartLoading, cartSelectedData }) => {
+const CartSelectedItem: FC<ICartSelectedItemProps> = ({ cartLoading, cartSelectedData, checkState }) => {
   return (
     <>
       <StyleCartSelectedItemWrap>
@@ -71,11 +72,14 @@ const CartSelectedItem: FC<ICartSelectedItemProps> = ({ cartLoading, cartSelecte
           <div className="cart-selected-wrap">
             <CartSelectedItemTitle>구매목록</CartSelectedItemTitle>
             {cartSelectedData &&
-              cartSelectedData.map((product) => (
-                <StyleCartSelectedItem>
-                  {product.title} <StyleMultiplyIcon src="/images/Cross.svg" alt="곱하기 아이콘" /> {product.count}
-                </StyleCartSelectedItem>
-              ))}
+              cartSelectedData.map(
+                (product) =>
+                  checkState?.includes(product.id) && (
+                    <StyleCartSelectedItem>
+                      {product.title} <StyleMultiplyIcon src="/images/Cross.svg" alt="곱하기 아이콘" /> {product.count}
+                    </StyleCartSelectedItem>
+                  ),
+              )}
           </div>
         )}
       </StyleCartSelectedItemWrap>
