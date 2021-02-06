@@ -1,4 +1,4 @@
-import { IProductItem, IResponseProductData, TCreateAction } from '../../types'
+import { IProductItem, IPurchaseItem, IResponseProductData, TCreateAction } from "../../types";
 
 const createAction = (type: string, payload?: any) => ({ type, payload })
 
@@ -24,6 +24,9 @@ export const LOAD_PURCHASE_REQUEST = 'LOAD_PURCHASE_REQUEST'
 export const LOAD_PURCHASE_SUCCESS = 'LOAD_PURCHASE_SUCCESS'
 export const LOAD_PURCHASE_FAILURE = 'LOAD_PURCHASE_FAILURE'
 
+export const REQUEST_PLUS_PURCHASE = 'REQUEST_PLUS_PURCHASE'
+export const REQUEST_MINUS_PURCHASE = 'REQUEST_MINUS_PURCHASE'
+
 export const loadBannerReqeust: TCreateAction<any, any> = () => createAction(LOAD_BANNER_REQUEST)
 export const loadBannerSuccess: TCreateAction<string, IResponseProductData> = (payload) =>
   createAction(LOAD_BANNER_SUCCESS, payload)
@@ -48,10 +51,14 @@ export const loadLocalCart: TCreateAction<any, any> = () => createAction(LOAD_LO
 
 export const loadPurchaseReqeust: TCreateAction<string[], any> = (cartList) =>
   createAction(LOAD_PURCHASE_REQUEST, cartList)
-export const loadPurchaseSuccess: TCreateAction<IProductItem[], string> = (payload) =>
+export const loadPurchaseSuccess: TCreateAction<IPurchaseItem[], string> = (payload) =>
   createAction(LOAD_PURCHASE_SUCCESS, payload)
 export const loadPurchaseError: TCreateAction<string, string> = (payload) =>
   createAction(LOAD_PURCHASE_FAILURE, payload)
+
+export const reqestPlusPurchase: TCreateAction<string, any> = (payload) => createAction(REQUEST_PLUS_PURCHASE, payload)
+export const reqestMinusPurchase: TCreateAction<string, any> = (payload) =>
+  createAction(REQUEST_MINUS_PURCHASE, payload)
 
 export type TProductAction =
   | ReturnType<typeof loadBannerReqeust>
@@ -72,3 +79,6 @@ export type TCartAction =
   | ReturnType<typeof loadPurchaseReqeust>
   | ReturnType<typeof loadPurchaseSuccess>
   | ReturnType<typeof loadPurchaseError>
+  | ReturnType<typeof reqestPlusPurchase>
+  | ReturnType<typeof reqestMinusPurchase>
+

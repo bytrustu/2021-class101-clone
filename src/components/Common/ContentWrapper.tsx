@@ -2,7 +2,7 @@ import React, { FC, ReactElement, ReactFragment } from 'react'
 import styled from 'styled-components'
 
 interface ICartWrapProps {
-  children?: ReactElement | ReactElement[] | ReactFragment
+  children: any
 }
 
 const StyleContentWrapper = styled.section`

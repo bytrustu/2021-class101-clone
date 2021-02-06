@@ -1,6 +1,7 @@
-import React, { FC, ReactElement, ReactFragment } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
+import { IProductItem } from '../../types'
 
 const StyleCartSelectedItemWrap = styled.div`
   height: auto;
@@ -9,6 +10,7 @@ const StyleCartSelectedItemWrap = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
+    min-height: 110px;
     font-size: 14px;
     background: #f9f9f9;
     display: flex;
@@ -56,9 +58,10 @@ const CartSelectedItemSkeleton = styled(Skeleton)`
 
 interface ICartSelectedItemProps {
   cartLoading?: boolean
+  cartSelectedData?: IProductItem[]
 }
 
-const CartSelectedItem: FC<ICartSelectedItemProps> = ({ cartLoading }) => {
+const CartSelectedItem: FC<ICartSelectedItemProps> = ({ cartLoading, cartSelectedData }) => {
   return (
     <>
       <StyleCartSelectedItemWrap>
@@ -67,15 +70,12 @@ const CartSelectedItem: FC<ICartSelectedItemProps> = ({ cartLoading }) => {
         ) : (
           <div className="cart-selected-wrap">
             <CartSelectedItemTitle>구매목록</CartSelectedItemTitle>
-            <StyleCartSelectedItem>
-              소복소복 바늘 끝에서 피어오르는 자수 <StyleMultiplyIcon src="/images/Cross.svg" alt="곱하기 아이콘" /> 3
-            </StyleCartSelectedItem>
-            <StyleCartSelectedItem>
-              소복소복 바늘 끝에서 피어오르는 자수 <StyleMultiplyIcon src="/images/Cross.svg" alt="곱하기 아이콘" /> 3
-            </StyleCartSelectedItem>
-            <StyleCartSelectedItem>
-              소복소복 바늘 끝에서 피어오르는 자수 <StyleMultiplyIcon src="/images/Cross.svg" alt="곱하기 아이콘" /> 3
-            </StyleCartSelectedItem>
+            {cartSelectedData &&
+              cartSelectedData.map((product) => (
+                <StyleCartSelectedItem>
+                  {product.title} <StyleMultiplyIcon src="/images/Cross.svg" alt="곱하기 아이콘" /> {product.count}
+                </StyleCartSelectedItem>
+              ))}
           </div>
         )}
       </StyleCartSelectedItemWrap>

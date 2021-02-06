@@ -15,13 +15,9 @@ import {
   PaymentReceipt,
   CartButtonWrap,
   CartTitleWrap,
+  CartEmpty,
 } from '../components'
-import {
-  LOAD_PURCHASE_REQUEST,
-  LOAD_PURCHASE_SUCCESS,
-  loadLocalCart,
-  loadPurchaseReqeust,
-} from '../redux/actions'
+import { LOAD_PURCHASE_REQUEST, LOAD_PURCHASE_SUCCESS, loadLocalCart, loadPurchaseReqeust } from '../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { image750Size, productMonthly } from '../const'
 import { ICoopon, IProductItem, IStoreState } from '../types'
@@ -43,9 +39,6 @@ const couponsData = [
 
 const indexPage: FC = () => {
   const dispatch = useDispatch()
-  const { productItemList, loading: productLoading, success: productSuccess } = useSelector(
-    (state: IStoreState) => state.product,
-  )
 
   const { cartList, purchaseList, loading: cartLoading, success: cartSuccess } = useSelector(
     (state: IStoreState) => state.cart,
@@ -73,9 +66,7 @@ const indexPage: FC = () => {
   }, [])
 
   useEffect(() => {
-    if (cartList.length > 0) {
-      dispatch(loadPurchaseReqeust(cartList))
-    }
+    dispatch(loadPurchaseReqeust(cartList))
   }, [cartList])
 
   return (
@@ -83,12 +74,21 @@ const indexPage: FC = () => {
       <ContentWrapper>
         <CartTitleWrap>
           <ContentTitle title="장바구니" margin={0} titleLoading={cartLoadingState} />
-          <CartButtonWrap>
-            <Button value="삭제" buttonLoading={cartLoadingState} />
-            <Button value="전체선택" buttonLoading={cartLoadingState} />
-          </CartButtonWrap>
+          {cartLoadingState ? (
+            <CartButtonWrap>
+              <Button value="삭제" buttonLoading={cartLoadingState} />
+              <Button value="전체선택" buttonLoading={cartLoadingState} />
+            </CartButtonWrap>
+          ) : cartSuccessState && purchaseList.length > 0 ? (
+            <CartButtonWrap>
+              <Button value="삭제" buttonLoading={cartLoadingState} />
+              <Button value="전체선택" buttonLoading={cartLoadingState} />
+            </CartButtonWrap>
+          ) : (
+            <></>
+          )}
         </CartTitleWrap>
-        {/*<CartEmpty />*/}
+        {cartSuccessState && purchaseList.length === 0 && <CartEmpty />}
         <CartListWrap>
           {cartSuccessState &&
             purchaseList &&
@@ -110,8 +110,9 @@ const indexPage: FC = () => {
           {cartLoadingState && range(3).map((el: number) => <Product key={el} />)}
         </CartListWrap>
       </ContentWrapper>
+
       <ContentWrapper>
-        <CartSelectedItem cartLoading={cartLoadingState} />
+        <CartSelectedItem cartLoading={cartLoadingState} cartSelectedData={purchaseList} />
       </ContentWrapper>
       <ContentWrapper>
         <ContentTitle title="쿠폰" titleLoading={cartLoadingState} />

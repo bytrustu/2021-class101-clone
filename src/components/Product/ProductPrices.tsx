@@ -5,6 +5,8 @@ import { Counter } from '../../components'
 import { calcMontlyPrice, changeToPrice } from '../../utils'
 import { useCounter } from '../../hooks'
 import { IUseCounter } from '../../types'
+import { useDispatch } from 'react-redux'
+import { reqestPlusPurchase, reqestMinusPurchase } from '../../redux/actions'
 
 const StyleProductPricesWrap = styled.div`
   position: relative;
@@ -60,10 +62,15 @@ interface IProductPricesProps {
   counterState?: ReturnType<IUseCounter> | null
 }
 
-const ProductPrices: FC<IProductPricesProps> = ({ price, monthly = 0, productFeature, counterState }) => {
+const ProductPrices: FC<IProductPricesProps> = ({ id, price, monthly = 0, productFeature, counterState }) => {
+  const dispatch = useDispatch()
+  const requestPlusByPurchase = () => dispatch(reqestPlusPurchase(id))
+  const requestMinusByPurchase = () => dispatch(reqestMinusPurchase(id))
+
   const priceMemo = price && counterState ? useMemo(() => price * counterState.count, [counterState.count]) : price
   const originPrice = priceMemo && changeToPrice(priceMemo)
   const monthlyPrice = priceMemo && calcMontlyPrice(priceMemo, monthly)
+
 
   return (
     <StyleProductPricesWrap>
@@ -77,8 +84,8 @@ const ProductPrices: FC<IProductPricesProps> = ({ price, monthly = 0, productFea
           {counterState && (
             <Counter
               value={counterState.count}
-              countUp={() => counterState.countUp()}
-              countDown={() => counterState.countDown()}
+              countUp={() => counterState.countUp(requestPlusByPurchase)}
+              countDown={() => counterState.countDown(requestMinusByPurchase)}
             />
           )}
         </>

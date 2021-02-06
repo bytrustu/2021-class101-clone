@@ -1,4 +1,4 @@
-import { IBannerData, IErrorMessage, IProductItem, IResponseProductData } from '../types'
+import { IBannerData, IErrorMessage, IProductItem, IPurchaseItem, IResponseProductData } from "../types";
 import { pushLocalStorageByArray, randomPickElement } from '../utils'
 
 const productItems: IProductItem[] = [
@@ -123,7 +123,7 @@ export const loadProductItemListAPI = async (page: number): Promise<IResponsePro
   }
 }
 
-export const loadPurchaseAPI = async (cartList: string[]): Promise<IProductItem[] | IErrorMessage> => {
+export const loadPurchaseAPI = async (cartList: string[]): Promise<IPurchaseItem[] | IErrorMessage> => {
   try {
     return productItems
       .filter((product) => cartList.includes(product.id))

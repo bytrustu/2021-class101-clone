@@ -24,7 +24,7 @@ export interface IProductState extends IFetchState {
 
 export interface ICartState extends IFetchState {
   cartList: string[]
-  purchaseList: IProductItem[]
+  purchaseList: IPurchaseItem[]
 }
 
 export interface IAction<T> {
@@ -43,6 +43,16 @@ export interface IProductItem {
   title: string
   availableCoupon?: boolean
   count?: number
+}
+
+export interface IPurchaseItem {
+  id: string
+  coverImage: string
+  price: number
+  title: string
+  availableCoupon?: boolean
+  score: number
+  count: number
 }
 
 export interface ICoopon extends IErrorMessage {

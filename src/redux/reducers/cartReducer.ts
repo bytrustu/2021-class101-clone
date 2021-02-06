@@ -8,8 +8,13 @@ import {
   REMOVE_CART_REQUEST,
   REMOVE_CART_SUCCESS,
   REMOVE_CART_FAILURE,
-  LOAD_LOCAL_CART, LOAD_PURCHASE_REQUEST, LOAD_PURCHASE_SUCCESS, LOAD_PURCHASE_FAILURE
-} from "../actions";
+  LOAD_LOCAL_CART,
+  LOAD_PURCHASE_REQUEST,
+  LOAD_PURCHASE_SUCCESS,
+  LOAD_PURCHASE_FAILURE,
+  REQUEST_PLUS_PURCHASE,
+  REQUEST_MINUS_PURCHASE,
+} from '../actions'
 import { initFetchCycle, processFetchCycle } from '../utils'
 import { fetchCycle } from '../../const'
 import { pushLocalStorageByArray } from '../../utils'
@@ -81,6 +86,26 @@ export default (state: TCartReducerState = initialState, action: TCartAction) =>
       case LOAD_PURCHASE_FAILURE: {
         draft.loading = initFetchCycle(draft.loading, LOAD_PURCHASE_REQUEST)
         draft.error = processFetchCycle(draft.error, LOAD_PURCHASE_FAILURE, action.payload)
+        break
+      }
+
+      case REQUEST_PLUS_PURCHASE: {
+        draft.purchaseList = draft.purchaseList.map((product) => {
+          if (product.id === action.payload) {
+            product.count += 1
+          }
+          return product
+        })
+        break
+      }
+
+      case REQUEST_MINUS_PURCHASE: {
+        draft.purchaseList = draft.purchaseList.map((product) => {
+          if (product.id === action.payload) {
+            product.count -= 1
+          }
+          return product
+        })
         break
       }
       default: {
