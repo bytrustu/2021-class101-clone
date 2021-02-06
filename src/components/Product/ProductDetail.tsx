@@ -10,7 +10,7 @@ const StyleProductDetailWrap = styled.div`
 
 const StyleProductDetailTitle = styled.h3`
   @media (max-width: 375px) {
-    font-size: 12px;
+    font-size: 13px;
   }
   margin-top: 10px;
   font-size: 15px;
@@ -23,6 +23,10 @@ const StyleProductDetailTitle = styled.h3`
   padding: 0 10px;
   overflow: hidden;
   text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  white-space: normal;
 `
 
 const StyleSkeletonByProductDetail = styled(Skeleton)`

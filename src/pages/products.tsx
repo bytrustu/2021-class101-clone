@@ -56,8 +56,8 @@ const productsPage: FC = () => {
       if (cartAddRequestMemo || cartRemoveRequestMemo) {
         return message.info('장바구니 갱신 중입니다.')
       }
-      if (cartList.includes(id as string)) {
-        return dispatch(removeCartReqeust(id))
+      if (cartList.includes(id)) {
+        return dispatch(removeCartReqeust([id]))
       } else {
         if (cartList.length >= 3) {
           return message.info('장바구니 개수를 초과 하였습니다.')

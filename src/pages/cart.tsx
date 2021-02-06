@@ -21,12 +21,14 @@ import {
   loadCouponReqeust,
   loadLocalCart,
   loadPurchaseReqeust,
+  REMOVE_CART_REQUEST,
+  removeCartReqeust,
 } from '../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { image750Size, productMonthly } from '../const'
 import { IProductItem, IStoreState } from '../types'
 import { changeToPrice, range } from '../utils'
-import { useCheckbox, useDropdown } from '../hooks'
+import { useAlert, useCheckbox, useDropdown } from '../hooks'
 import { discountCost, sumTotalCost, bestPricingByCoupon } from '../utils/calculatorPrice'
 
 const cartPage: FC = () => {
@@ -44,6 +46,7 @@ const cartPage: FC = () => {
     setOpen: setDropdownOpen,
     onClickHandle: onClickDropdownHandle,
   } = useDropdown(couponList)
+  const { Alert, requestApiConfirmHanlder } = useAlert()
 
   const onClickUnAppliedCouponHandle = useCallback(() => {
     setDropdownValue(null)
@@ -53,6 +56,7 @@ const cartPage: FC = () => {
   }, [checkboxState.form])
 
   const cartLoadingMemo = useMemo(() => cartLoading.type.includes(LOAD_PURCHASE_REQUEST), [cartLoading.type])
+  const removeCartLoadingMemo = useMemo(() => cartLoading.type.includes(REMOVE_CART_REQUEST), [cartLoading.type])
   const cartSuccessMemo = useMemo(() => cartSuccess.type.includes(LOAD_PURCHASE_SUCCESS), [cartSuccess.type])
   const purchaseIdListMemo = useMemo(() => purchaseList.map((product) => product.id), [purchaseList])
   const discountPrice = useMemo(() => discountCost(purchaseList, dropdownValue, checkboxState.form), [
@@ -61,6 +65,19 @@ const cartPage: FC = () => {
     checkboxState.form,
   ])
   const totalPrice = useMemo(() => sumTotalCost(purchaseList, checkboxState.form), [purchaseList, checkboxState.form])
+
+  const requestRemoveCart = useCallback(
+    (data: string | string[]) => {
+      if (typeof data === 'string') data = [data]
+      return requestApiConfirmHanlder({
+        funcAPI: () => {
+          dispatch(removeCartReqeust(data as string[]))
+        },
+        message: '선택한 클래스를 삭제 하시겠습니까?',
+      })
+    },
+    [dispatch],
+  )
 
   useEffect(() => {
     dispatch(loadLocalCart())
@@ -75,21 +92,30 @@ const cartPage: FC = () => {
 
   return (
     <>
+      <Alert />
       <ContentWrapper>
         <CartTitleWrap>
           <ContentTitle title="장바구니" margin={0} titleLoading={cartLoadingMemo} />
-          {cartLoadingMemo ? (
+          {cartLoadingMemo || removeCartLoadingMemo ? (
             <CartButtonWrap>
-              <Button value="삭제" buttonLoading={cartLoadingMemo} />
+              <Button
+                value="삭제"
+                buttonLoading={cartLoadingMemo || removeCartLoadingMemo}
+                onClickHandle={() => requestRemoveCart(checkboxState.form)}
+              />
               <Button
                 value="전체선택"
-                buttonLoading={cartLoadingMemo}
+                buttonLoading={cartLoadingMemo || removeCartLoadingMemo}
                 onClickHandle={() => checkboxState.checkAllCheckbox(purchaseIdListMemo)}
               />
             </CartButtonWrap>
           ) : cartSuccessMemo && purchaseList.length > 0 ? (
             <CartButtonWrap>
-              <Button value="삭제" buttonLoading={cartLoadingMemo} />
+              <Button
+                value="삭제"
+                buttonLoading={cartLoadingMemo}
+                onClickHandle={() => requestRemoveCart(checkboxState.form)}
+              />
               <Button
                 value="전체선택"
                 buttonLoading={cartLoadingMemo}
@@ -103,6 +129,7 @@ const cartPage: FC = () => {
         {cartSuccessMemo && purchaseList.length === 0 && <CartEmpty />}
         <CartListWrap>
           {cartSuccessMemo &&
+            !removeCartLoadingMemo &&
             purchaseList &&
             purchaseList.length > 0 &&
             purchaseList.map((purchaseItem: IProductItem) => {
@@ -117,10 +144,11 @@ const cartPage: FC = () => {
                   badge={purchaseItem.availableCoupon === false ? '쿠폰적용불가' : undefined}
                   isCounter={true}
                   checkboxState={checkboxState}
+                  onClickRemoveCartHandle={requestRemoveCart}
                 />
               )
             })}
-          {cartLoadingMemo && range(3).map((el: number) => <Product key={el} />)}
+          {(cartLoadingMemo || removeCartLoadingMemo) && range(3).map((el: number) => <Product key={el} />)}
         </CartListWrap>
       </ContentWrapper>
 

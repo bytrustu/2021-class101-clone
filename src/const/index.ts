@@ -11,4 +11,4 @@ export const fetchCycle: IFetchCycle = {
   response: {},
 }
 
-export const githubLink: string = 'https://github.com/bytrustu/class101-assignment';
+export const githubLink = 'https://github.com/bytrustu/class101-assignment'

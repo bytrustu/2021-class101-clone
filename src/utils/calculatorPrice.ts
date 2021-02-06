@@ -12,7 +12,6 @@ const sumPaymentProducts = (products: IPurchaseItem[] = []): number => {
 
 const calcDiscountCoupon = (price = 0, coupon: ICoupon): number => {
   if (price === 0 || !coupon) return 0
-  console.log(price, coupon)
   if (coupon.type === 'rate' && coupon.discountRate) {
     return (price * coupon.discountRate) / 100
   }
@@ -27,7 +26,6 @@ const appliedDiscountCoupon = (products: IPurchaseItem[] = [], coupon: ICoupon):
   const appliedCouponProducts = products.filter((product) => product.availableCoupon !== false)
   if (appliedCouponProducts.length === 0) return 0
   const sumProductsPrice = sumPaymentProducts(appliedCouponProducts)
-  console.log(products)
   if (sumProductsPrice === 0) return 0
   return calcDiscountCoupon(sumProductsPrice, coupon)
 }

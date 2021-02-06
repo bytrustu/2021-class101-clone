@@ -52,9 +52,17 @@ interface IProductImageProps {
   badge?: string
   important?: boolean
   checkboxState?: ReturnType<TUseCheckbox>
+  onClickRemoveCartHandle?: any
 }
 
-const ProductImage: FC<IProductImageProps> = ({ id, imageUrl, badge, important, checkboxState }) => {
+const ProductImage: FC<IProductImageProps> = ({
+  id,
+  imageUrl,
+  badge,
+  important,
+  checkboxState,
+  onClickRemoveCartHandle,
+}) => {
   return (
     <StyleProductImageWrap>
       {important && <RecommendMotion />}
@@ -75,7 +83,7 @@ const ProductImage: FC<IProductImageProps> = ({ id, imageUrl, badge, important, 
               id={id}
               name={id}
             />
-            <CloseButton />
+            <CloseButton onClickHandle={() => onClickRemoveCartHandle && onClickRemoveCartHandle(id)} />
           </>
         ) : (
           <></>

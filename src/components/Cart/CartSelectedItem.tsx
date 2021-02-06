@@ -7,6 +7,10 @@ const StyleCartSelectedItemWrap = styled.div`
   height: auto;
   min-height: 110px;
   & > div.cart-selected-wrap {
+    @media (max-width: 768px) {
+      padding-top: 70px !important;  
+    }
+    
     position: relative;
     width: 100%;
     height: 100%;
@@ -16,16 +20,16 @@ const StyleCartSelectedItemWrap = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    padding: 1rem;
+    padding: 1.5rem;
   }
 `
 
 const CartSelectedItemTitle = styled.h3`
   position: absolute;
-  font-size: 16px;
-  font-weight: 500;
-  top: 15px;
-  left: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  top: 1.5rem;
+  left: 1.5rem;
 `
 
 const StyleCartSelectedItem = styled.div`
@@ -41,7 +45,7 @@ const StyleCartSelectedItem = styled.div`
   color: #1b1c1d;
 
   & + & {
-    margin-top: 14px;
+    margin-top: 20px;
   }
 `
 
@@ -54,6 +58,33 @@ const StyleMultiplyIcon = styled.img`
 const CartSelectedItemSkeleton = styled(Skeleton)`
   height: 110px;
   width: 100%;
+`
+
+const StyleClassTitle = styled.span`
+  @media (max-width: 1023px) {
+  }
+  @media (max-width: 768px) {
+    min-width: 0;
+    width: 300px;
+    font-size: 14px;
+  }
+  @media (max-width: 375px) {
+    width: 240px;
+  }
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 400px;
+  text-align: right;
+  color: #858a8d;
+  font-size: 15px;
+  font-weight: 400;
+`
+
+const StyleClassCount = styled.span`
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.15px;
 `
 
 interface ICartSelectedItemProps {
@@ -76,7 +107,9 @@ const CartSelectedItem: FC<ICartSelectedItemProps> = ({ cartLoading, cartSelecte
                 (product) =>
                   checkState?.includes(product.id) && (
                     <StyleCartSelectedItem>
-                      {product.title} <StyleMultiplyIcon src="/images/Cross.svg" alt="곱하기 아이콘" /> {product.count}
+                      <StyleClassTitle>{product.title}</StyleClassTitle>
+                      <StyleMultiplyIcon src="/images/Cross.svg" alt="곱하기 아이콘" />
+                      <StyleClassCount>{product.count}</StyleClassCount>
                     </StyleCartSelectedItem>
                   ),
               )}

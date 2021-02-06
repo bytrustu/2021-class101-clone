@@ -21,6 +21,7 @@ interface IProductProps {
   important?: boolean
   isCounter?: boolean
   checkboxState?: ReturnType<TUseCheckbox>
+  onClickRemoveCartHandle?: any
   children?: React.ReactNode
 }
 
@@ -34,6 +35,7 @@ const Product: FC<IProductProps> = ({
   important = false,
   isCounter = false,
   checkboxState,
+  onClickRemoveCartHandle,
   children,
 }) => {
   const counterState = useCounter(1, 10)
@@ -45,6 +47,7 @@ const Product: FC<IProductProps> = ({
         badge={badge}
         important={important}
         checkboxState={checkboxState ? checkboxState : undefined}
+        onClickRemoveCartHandle={onClickRemoveCartHandle}
       />
       <ProductDetail title={title} />
       <Divider />

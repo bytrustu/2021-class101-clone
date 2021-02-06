@@ -100,3 +100,11 @@ export type TUseCheckbox = (
   emptyCheckbox: () => void
   checkAllCheckbox: (all: any[]) => void
 }
+
+export interface IMessageAlert {
+  message?: string
+  isOk?: boolean
+  okOnClick?: () => void
+  isCancel?: boolean
+  isSuccess?: boolean
+}

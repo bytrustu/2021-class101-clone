@@ -29,8 +29,8 @@ export const pushLocalStorageByArray = (key: string, value?: any): void => {
   localStorage.setItem(key, JSON.stringify([...new Set(storageArray)]))
 }
 
-export const filterLocalStorageByArray = (key: string, value: any): void => {
+export const filterLocalStorageByArray = (key: string, value: string[]): void => {
   const storageArray = JSON.parse(localStorage.getItem(key) as string)
-  const filterCartList = storageArray.filter((cartProduct: string) => cartProduct !== value)
+  const filterCartList = storageArray.filter((cartProduct: string) => !value.includes(cartProduct))
   localStorage.setItem(key, JSON.stringify(filterCartList))
 }

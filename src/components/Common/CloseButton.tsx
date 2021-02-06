@@ -25,7 +25,7 @@ interface ICloseButton {
 
 const CloseButton: FC<ICloseButton> = ({ onClickHandle }) => {
   return (
-    <StyleCloseButton>
+    <StyleCloseButton onClick={onClickHandle}>
       <CircleIcon />
       <CrossIcon src="/images/Cross.svg" alt="장바구니 제거 아이콘" />
     </StyleCloseButton>
