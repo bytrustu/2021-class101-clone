@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 import { Divider, ProductDetail, ProductImage, ProductPrices } from '../../components'
-import { useCheckbox, useCounter } from '../../hooks'
+import { useCounter } from '../../hooks'
 import { TUseCheckbox } from '../../types'
 
 const StyleProduct = styled.div`

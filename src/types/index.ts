@@ -15,7 +15,7 @@ export interface IFetchState {
 export interface IProductState extends IFetchState {
   productItemList: IProductItem[]
   recommendProductItem: IProductItem | null
-  cooponList: ICoopon[]
+  cooponList: ICoupon[]
   bannerData: IBannerData | null
   currentPage: number
   maxPage: number
@@ -25,6 +25,7 @@ export interface IProductState extends IFetchState {
 export interface ICartState extends IFetchState {
   cartList: string[]
   purchaseList: IPurchaseItem[]
+  couponList: ICoupon[]
 }
 
 export interface IAction<T> {
@@ -55,7 +56,7 @@ export interface IPurchaseItem {
   count: number
 }
 
-export interface ICoopon extends IErrorMessage {
+export interface ICoupon {
   type: string
   title: string
   discountRate?: number

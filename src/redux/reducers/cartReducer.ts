@@ -14,6 +14,9 @@ import {
   LOAD_PURCHASE_FAILURE,
   REQUEST_PLUS_PURCHASE,
   REQUEST_MINUS_PURCHASE,
+  LOAD_COUPON_REQUEST,
+  LOAD_COUPON_SUCCESS,
+  LOAD_COUPON_FAILURE,
 } from '../actions'
 import { initFetchCycle, processFetchCycle } from '../utils'
 import { fetchCycle } from '../../const'
@@ -25,6 +28,7 @@ const initialState: ICartState = {
   error: fetchCycle,
   cartList: [],
   purchaseList: [],
+  couponList: [],
 }
 
 export type TCartReducerState = typeof initialState
@@ -106,6 +110,24 @@ export default (state: TCartReducerState = initialState, action: TCartAction) =>
           }
           return product
         })
+        break
+      }
+
+      case LOAD_COUPON_REQUEST: {
+        draft.loading = processFetchCycle(draft.loading, LOAD_COUPON_REQUEST)
+        draft.error = initFetchCycle(draft.error, LOAD_COUPON_FAILURE)
+        draft.success = initFetchCycle(draft.success, LOAD_COUPON_SUCCESS)
+        break
+      }
+      case LOAD_COUPON_SUCCESS: {
+        draft.loading = initFetchCycle(draft.loading, LOAD_COUPON_REQUEST)
+        draft.success = processFetchCycle(draft.success, LOAD_COUPON_SUCCESS)
+        draft.couponList = action.payload
+        break
+      }
+      case LOAD_COUPON_FAILURE: {
+        draft.loading = initFetchCycle(draft.loading, LOAD_COUPON_REQUEST)
+        draft.error = processFetchCycle(draft.error, LOAD_COUPON_FAILURE, action.payload)
         break
       }
       default: {

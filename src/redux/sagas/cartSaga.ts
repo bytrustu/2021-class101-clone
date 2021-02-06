@@ -12,11 +12,11 @@ import {
   ADD_CART_REQUEST,
   REMOVE_CART_REQUEST,
   loadPurchaseSuccess,
-  loadPurchaseError, LOAD_PURCHASE_REQUEST
+  loadPurchaseError, LOAD_PURCHASE_REQUEST, loadCouponSuccess, loadCouponError, LOAD_COUPON_REQUEST
 } from "../actions";
 import { IAction } from '../../types'
 import { filterLocalStorageByArray, pushLocalStorageByArray, sleep } from '../../utils'
-import { loadProductItemListAPI, loadPurchaseAPI } from "../../api";
+import { loadCooponListAPI, loadProductItemListAPI, loadPurchaseAPI } from "../../api";
 
 export function* addCart(action: IAction<string>) {
   try {
@@ -59,13 +59,27 @@ export function* loadPurchase(action: IAction<string[]>) {
     yield put(loadPurchaseError(e.message))
   }
 }
-
 function* watchLoadPurchase() {
   yield takeLatest(LOAD_PURCHASE_REQUEST, loadPurchase)
+}
+
+export function* loadCoupon() {
+  try {
+    yield sleep(1)
+    const result = yield call(loadCooponListAPI)
+    yield put(loadCouponSuccess(result))
+  } catch (e) {
+    console.error(e)
+    yield put(loadCouponError(e.message))
+  }
+}
+function* watchLoadCoupon() {
+  yield takeLatest(LOAD_COUPON_REQUEST, loadCoupon)
 }
 
 export default function* cartSaga() {
   yield all([fork(watchAddCart)])
   yield all([fork(watchRemoveCart)])
   yield all([fork(watchLoadPurchase)])
+  yield all([fork(watchLoadCoupon)])
 }

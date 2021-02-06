@@ -2,7 +2,7 @@ import React, { FC, useMemo } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 import { Counter } from '../../components'
-import { calcMontlyPrice, changeToPrice } from '../../utils'
+import { calcMonthlyPrice, changeToPrice } from '../../utils'
 import { useCounter } from '../../hooks'
 import { IUseCounter } from '../../types'
 import { useDispatch } from 'react-redux'
@@ -69,7 +69,7 @@ const ProductPrices: FC<IProductPricesProps> = ({ id, price, monthly = 0, produc
 
   const priceMemo = price && counterState ? useMemo(() => price * counterState.count, [counterState.count]) : price
   const originPrice = priceMemo && changeToPrice(priceMemo)
-  const monthlyPrice = priceMemo && calcMontlyPrice(priceMemo, monthly)
+  const monthlyPrice = priceMemo && calcMonthlyPrice(priceMemo, monthly)
 
 
   return (

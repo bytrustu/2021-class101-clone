@@ -1,15 +1,14 @@
-import { ICoopon, IErrorMessage } from '../types'
+import { ICoupon, IErrorMessage } from '../types'
 
-export const loadCooponListAPI = async (): Promise<ICoopon[] | IErrorMessage> => {
+export const loadCooponListAPI = async (): Promise<ICoupon[] | IErrorMessage> => {
   try {
-    console.log(coopons)
     return coopons
   } catch (e) {
     return { message: '쿠폰을 불러올 수 없습니다.' }
   }
 }
 
-export const coopons: ICoopon[] = [
+export const coopons: ICoupon[] = [
   {
     type: 'rate',
     title: '10% 할인 쿠폰',

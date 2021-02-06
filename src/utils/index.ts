@@ -11,7 +11,7 @@ export const changeToPrice = (price?: number): string => {
   return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
-export const calcMontlyPrice = (price: number, monthly?: number): string => {
+export const calcMonthlyPrice = (price: number, monthly?: number): string => {
   if (!price || !monthly) return '0'
   const monthlyPrice = Math.floor(price / monthly)
   return changeToPrice(monthlyPrice)
@@ -44,3 +44,5 @@ export const generateObject = (arr: string[], init: number): { [k: string]: numb
     return acc
   }, {})
 }
+
+export const sum = (a: number, b: number): number => a + b
