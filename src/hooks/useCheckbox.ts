@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react'
-import { range } from '../utils'
 import { TUseCheckbox } from '../types'
 
 const useCheckbox: TUseCheckbox = (length) => {

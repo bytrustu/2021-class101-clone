@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, ReactFragment } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 
 const StyleCartListWrapper = styled.div`
@@ -21,7 +21,7 @@ const StyleCartListWrapper = styled.div`
 `
 
 interface ICartListWrapProps {
-  children?: ReactElement | ReactElement[] | ReactFragment
+  children?: React.ReactNode
 }
 
 const CartListWrap: FC<ICartListWrapProps> = ({ children }) => {

@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
+import { githubLink } from '../../const'
 
 const StyleFooter = styled.footer`
   display: flex;
@@ -23,7 +24,7 @@ const StyleCopyright = styled.h3`
 const Footer: FC = () => {
   return (
     <StyleFooter>
-      <Link href="https://github.com/bytrustu/class101-assignment">
+      <Link href={githubLink}>
         <StyleCopyright>CLASS101 ASSIGNMENT</StyleCopyright>
       </Link>
     </StyleFooter>

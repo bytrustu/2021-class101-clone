@@ -20,14 +20,14 @@ const CrossIcon = styled.img`
 `
 
 interface ICloseButton {
-  onClickHandle?: React.MouseEvent
+  onClickHandle?: React.MouseEventHandler<HTMLElement>
 }
 
 const CloseButton: FC<ICloseButton> = ({ onClickHandle }) => {
   return (
     <StyleCloseButton>
-        <CircleIcon />
-        <CrossIcon src="/images/Cross.svg" alt="장바구니 제거 아이콘" />
+      <CircleIcon />
+      <CrossIcon src="/images/Cross.svg" alt="장바구니 제거 아이콘" />
     </StyleCloseButton>
   )
 }

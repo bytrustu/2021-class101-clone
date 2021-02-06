@@ -17,7 +17,7 @@ import { range } from '../utils'
 import { adjustableHeight, image750Size, productMonthly } from '../const'
 import { message } from 'antd'
 
-const Products: FC = () => {
+const productsPage: FC = () => {
   const [isFetching, setIsFetching] = useState<boolean>(false)
   const dispatch = useDispatch()
   const {
@@ -97,7 +97,7 @@ const Products: FC = () => {
 
   return (
     <>
-      <Banner bannerData={bannerData ? bannerData : null} />
+      <Banner bannerData={bannerData ? bannerData : undefined} />
       <ProductWrap>
         {recommendProductItem && (
           <Product
@@ -154,4 +154,4 @@ const Products: FC = () => {
   )
 }
 
-export default Products
+export default React.memo(productsPage)

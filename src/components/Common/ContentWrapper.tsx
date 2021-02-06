@@ -1,9 +1,5 @@
-import React, { FC, ReactElement, ReactFragment } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
-
-interface ICartWrapProps {
-  children: any
-}
 
 const StyleContentWrapper = styled.section`
   & + & {
@@ -11,6 +7,10 @@ const StyleContentWrapper = styled.section`
   }
   position: relative;
 `
+
+interface ICartWrapProps {
+  children: React.ReactNode
+}
 
 const ContentWrapper: FC<ICartWrapProps> = ({ children }) => {
   return <StyleContentWrapper>{children}</StyleContentWrapper>

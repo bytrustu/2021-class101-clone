@@ -1,6 +1,6 @@
 import React from 'react'
-import Document, { DocumentContext, Head, Html, Main, NextScript } from "next/document"
-import { createGlobalStyle, ServerStyleSheet } from "styled-components";
+import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
+import { createGlobalStyle, ServerStyleSheet } from 'styled-components'
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -27,10 +27,10 @@ const GlobalStyles = createGlobalStyle`
   body {
     height: 100%;
   }
-`;
+`
 
 interface IProps {
-  styleTags: Array<React.ReactElement<{}>>;
+  styleTags: Array<React.ReactNode>
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

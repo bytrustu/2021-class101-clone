@@ -4,18 +4,6 @@ import { Label } from '../../components'
 import Skeleton from 'react-loading-skeleton'
 import { DownOutlined } from '@ant-design/icons'
 
-export interface IDropdownProps {
-  dropdownLoading?: boolean
-  value?: any
-  onClickHandle?: React.MouseEventHandler<HTMLElement>
-  open?: boolean
-  setOpen?: () => void
-  children?: React.ReactNode
-  disabled?: boolean
-  className?: string
-  defaultValue?: string
-}
-
 const StyleDropdownWrapper = styled.div<IDropdownProps>`
   @media (max-width: 768px) {
     width: 100%;
@@ -67,6 +55,18 @@ const StyleDropdownSkeleton = styled(Skeleton)`
   width: 400px !important;
   height: 45px;
 `
+
+export interface IDropdownProps {
+  dropdownLoading?: boolean
+  value?: any
+  onClickHandle?: React.MouseEventHandler<HTMLElement>
+  open?: boolean
+  setOpen?: () => void
+  children?: React.ReactNode
+  disabled?: boolean
+  className?: string
+  defaultValue?: string
+}
 
 const Dropdown: FC<IDropdownProps> = ({
   dropdownLoading,

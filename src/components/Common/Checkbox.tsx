@@ -6,7 +6,7 @@ const StyleCheckbox = styled.div`
   position: absolute;
   bottom: 20px;
   right: 20px;
-  
+
   .checkbox {
     margin-top: 0;
     padding-left: 4px;
@@ -29,13 +29,12 @@ const StyleCheckbox = styled.div`
 
   .checkbox span {
     display: inline-block;
-    margin-left: .6rem;
-    font-size: .75rem;
+    margin-left: 0.6rem;
+    font-size: 0.75rem;
     color: #222;
     line-height: 20px;
     vertical-align: top;
   }
-
 
   .checkbox {
     position: relative;
@@ -62,7 +61,7 @@ const StyleCheckbox = styled.div`
     border-radius: 50%;
   }
 
-  input[type="checkbox"] + i:before {
+  input[type='checkbox'] + i:before {
     content: '';
     position: absolute;
     display: block;
@@ -75,12 +74,12 @@ const StyleCheckbox = styled.div`
     border-left: 2px solid #ddd;
   }
 
-  .checkbox input[type="checkbox"]:checked + i {
+  .checkbox input[type='checkbox']:checked + i {
     background-color: #3869da;
     border: 1px solid #3869da;
   }
 
-  input[type="checkbox"]:checked + i:before {
+  input[type='checkbox']:checked + i:before {
     content: '';
     position: absolute;
     display: block;
@@ -96,17 +95,16 @@ const StyleCheckbox = styled.div`
   .checkbox input + i:after {
     position: absolute;
     opacity: 0;
-    transition: opacity .1s;
+    transition: opacity 0.1s;
   }
-}
 `
 
 interface ICheckboxProps {
-  onChange?: any
-  checked?: any
-  id?: any
-  name?: any
-  onClick?: any
+  onChange: (checked: boolean, name: string | undefined, id: string | undefined) => void
+  checked?: boolean
+  id?: string
+  name?: string
+  onClick?: React.MouseEventHandler<HTMLElement>
 }
 
 const Checkbox: FC<ICheckboxProps> = ({ onChange, checked, id, name, onClick }) => {
@@ -116,7 +114,7 @@ const Checkbox: FC<ICheckboxProps> = ({ onChange, checked, id, name, onClick }) 
         <input
           name={name ? name : ''}
           type="checkbox"
-          onChange={(e) => onChange(e.target.checked, name, id)}
+          onChange={(e) => onChange && onChange(e.target.checked, name, id)}
           onClick={onClick}
           checked={checked}
         />

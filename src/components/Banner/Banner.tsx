@@ -73,7 +73,6 @@ const StyleBannerTextWrap = styled.div`
   @media (min-width: 768px) {
     max-width: 255px;
   }
-  
 `
 
 const StyleBannerImageWrap = styled.div`
@@ -105,7 +104,7 @@ const StyleBannerImage = styled.img`
 `
 
 interface IBannerProps {
-  bannerData: IBannerData | null
+  bannerData?: IBannerData
 }
 
 const Banner: FC<IBannerProps> = ({ bannerData }) => {

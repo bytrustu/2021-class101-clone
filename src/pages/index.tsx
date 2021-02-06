@@ -4,4 +4,4 @@ const indexPage: FC = () => {
   return <></>
 }
 
-export default indexPage
+export default React.memo(indexPage)

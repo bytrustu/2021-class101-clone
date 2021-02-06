@@ -1,8 +1,7 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 import { Button, ContentSpaceBetween, Divider, Label } from '../../components'
-import { ICoupon, IPurchaseItem } from '../../types'
-import { calcMonthlyPrice, changeToPrice } from '../../utils'
+import { changeToPrice } from '../../utils'
 
 const StylePaymentReceipt = styled.section`
   @media (min-width: 768px) and (max-width: 1022px) {
@@ -39,12 +38,7 @@ const PaymentReceipt: FC<IPaymentReceiptProps> = ({ paymentLoading, discountPric
       <StylePaymentReceipt>
         <ContentSpaceBetween>
           <Label color="#858a8d" size="14px" value="총 상품 금액" labelLoading={paymentLoading} />
-          <Label
-            color="#858a8d"
-            size="14px"
-            value={`${changeToPrice(totalPrice)}원`}
-            labelLoading={paymentLoading}
-          />
+          <Label color="#858a8d" size="14px" value={`${changeToPrice(totalPrice)}원`} labelLoading={paymentLoading} />
         </ContentSpaceBetween>
         <ContentSpaceBetween>
           <Label color="#858a8d" size="14px" value="상품 할인 금액" labelLoading={paymentLoading} />

@@ -10,3 +10,5 @@ export const fetchCycle: IFetchCycle = {
   type: [],
   response: {},
 }
+
+export const githubLink: string = 'https://github.com/bytrustu/class101-assignment';

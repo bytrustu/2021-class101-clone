@@ -95,7 +95,7 @@ export type TUseCheckbox = (
   length: number,
 ) => {
   form: any[]
-  onChangeSingle: (checked: boolean, name: string, id: any) => void
+  onChangeSingle: (checked: boolean, name: string | undefined, id: string | undefined) => void
   onChangeAll: (checked: boolean) => void
   emptyCheckbox: () => void
   checkAllCheckbox: (all: any[]) => void

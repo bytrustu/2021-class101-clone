@@ -12,11 +12,15 @@ import {
   ADD_CART_REQUEST,
   REMOVE_CART_REQUEST,
   loadPurchaseSuccess,
-  loadPurchaseError, LOAD_PURCHASE_REQUEST, loadCouponSuccess, loadCouponError, LOAD_COUPON_REQUEST
-} from "../actions";
+  loadPurchaseError,
+  LOAD_PURCHASE_REQUEST,
+  loadCouponSuccess,
+  loadCouponError,
+  LOAD_COUPON_REQUEST,
+} from '../actions'
 import { IAction } from '../../types'
 import { filterLocalStorageByArray, pushLocalStorageByArray, sleep } from '../../utils'
-import { loadCooponListAPI, loadProductItemListAPI, loadPurchaseAPI } from "../../api";
+import { loadCooponListAPI, loadPurchaseAPI } from '../../api'
 
 export function* addCart(action: IAction<string>) {
   try {

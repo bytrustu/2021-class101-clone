@@ -1,9 +1,5 @@
-import React, { FC, ReactElement } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
-
-interface IProps {
-  children: ReactElement | ReactElement[]
-}
 
 const StyleContentsWrap = styled.div`
   @media (min-width: 1240px) {
@@ -21,7 +17,11 @@ const StyleContentsWrap = styled.div`
   padding-bottom: 80px;
 `
 
-const Contents: FC<IProps> = ({ children }) => {
+interface IContentsProps {
+  children: React.ReactNode
+}
+
+const Contents: FC<IContentsProps> = ({ children }) => {
   return (
     <main>
       <StyleContentsWrap>{children}</StyleContentsWrap>

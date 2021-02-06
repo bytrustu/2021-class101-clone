@@ -69,13 +69,13 @@ const ProductImage: FC<IProductImageProps> = ({ id, imageUrl, badge, important, 
         )}
         {checkboxState ? (
           <>
-          <Checkbox
-            checked={checkboxState.form && checkboxState.form.includes(id)}
-            onChange={checkboxState && checkboxState.onChangeSingle}
-            id={id}
-            name={id}
-          />
-          <CloseButton />
+            <Checkbox
+              checked={checkboxState.form && checkboxState.form.includes(id)}
+              onChange={checkboxState && checkboxState.onChangeSingle}
+              id={id}
+              name={id}
+            />
+            <CloseButton />
           </>
         ) : (
           <></>

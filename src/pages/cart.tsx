@@ -29,7 +29,7 @@ import { changeToPrice, range } from '../utils'
 import { useCheckbox, useDropdown } from '../hooks'
 import { discountCost, sumTotalCost, bestPricingByCoupon } from '../utils/calculatorPrice'
 
-const indexPage: FC = () => {
+const cartPage: FC = () => {
   const dispatch = useDispatch()
 
   const { cartList, purchaseList, loading: cartLoading, success: cartSuccess, couponList } = useSelector(
@@ -172,4 +172,4 @@ const indexPage: FC = () => {
   )
 }
 
-export default indexPage
+export default React.memo(cartPage)

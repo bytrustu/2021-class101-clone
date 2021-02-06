@@ -1,4 +1,4 @@
-import { IBannerData, IErrorMessage, IProductItem, IPurchaseItem, IResponseProductData } from "../types";
+import { IBannerData, IErrorMessage, IProductItem, IPurchaseItem, IResponseProductData } from '../types'
 import { pushLocalStorageByArray, randomPickElement } from '../utils'
 
 const productItems: IProductItem[] = [

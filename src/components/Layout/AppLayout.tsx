@@ -14,4 +14,4 @@ const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
   return <StyleAppLayout>{children}</StyleAppLayout>
 }
 
-export default AppLayout
+export default React.memo(AppLayout)

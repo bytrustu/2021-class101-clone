@@ -88,4 +88,4 @@ const RecommendMotion: FC = () => {
   )
 }
 
-export default RecommendMotion
+export default React.memo(RecommendMotion)

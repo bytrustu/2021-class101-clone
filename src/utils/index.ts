@@ -34,15 +34,3 @@ export const filterLocalStorageByArray = (key: string, value: any): void => {
   const filterCartList = storageArray.filter((cartProduct: string) => cartProduct !== value)
   localStorage.setItem(key, JSON.stringify(filterCartList))
 }
-
-export const generateObject = (arr: string[], init: number): { [k: string]: number } => {
-  return arr.reduce((acc, curr) => {
-    acc = {
-      ...acc,
-      [curr]: init || 0,
-    }
-    return acc
-  }, {})
-}
-
-export const sum = (a: number, b: number): number => a + b

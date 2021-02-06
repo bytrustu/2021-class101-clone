@@ -1,4 +1,4 @@
-import { ICoupon, IProductItem, IPurchaseItem, IResponseProductData, TCreateAction } from '../../types'
+import { ICoupon, IPurchaseItem, IResponseProductData, TCreateAction } from '../../types'
 
 const createAction = (type: string, payload?: any) => ({ type, payload })
 
