@@ -62,7 +62,7 @@ export default (state: TCartReducerState = initialState, action: TCartAction) =>
       case REMOVE_CART_SUCCESS: {
         draft.loading = initFetchCycle(draft.loading, REMOVE_CART_REQUEST)
         draft.success = processFetchCycle(draft.success, REMOVE_CART_SUCCESS)
-        draft.cartList = draft.cartList.filter((cartItem) => cartItem !== action.payload)
+        draft.cartList = draft.cartList.filter((cartItem) => !action.payload.includes(cartItem))
         break
       }
       case REMOVE_CART_FAILURE: {

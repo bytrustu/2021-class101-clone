@@ -46,8 +46,8 @@ export const addCartSuccess: TCreateAction<string, IResponseProductData> = (payl
   createAction(ADD_CART_SUCCESS, payload)
 export const addCartError: TCreateAction<string, string> = (payload) => createAction(ADD_CART_FAILURE, payload)
 
-export const removeCartReqeust: TCreateAction<string, any> = (id) => createAction(REMOVE_CART_REQUEST, id)
-export const removeCartSuccess: TCreateAction<string, IResponseProductData> = (payload) =>
+export const removeCartReqeust: TCreateAction<string[], any> = (data) => createAction(REMOVE_CART_REQUEST, data)
+export const removeCartSuccess: TCreateAction<string[], IResponseProductData> = (payload) =>
   createAction(REMOVE_CART_SUCCESS, payload)
 export const removeCartError: TCreateAction<string, string> = (payload) => createAction(REMOVE_CART_FAILURE, payload)
 

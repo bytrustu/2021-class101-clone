@@ -38,11 +38,10 @@ function* watchAddCart() {
   yield takeLatest(ADD_CART_REQUEST, addCart)
 }
 
-export function* removeCart(action: IAction<string>) {
+export function* removeCart(action: IAction<string[]>) {
   try {
-    yield sleep(1)
     yield put(removeCartSuccess(action.payload))
-    filterLocalStorageByArray('cart', action.payload)
+    filterLocalStorageByArray('cart', action.payload as string[])
   } catch (e) {
     console.error(e)
     yield put(removeCartError(e.message))
