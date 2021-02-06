@@ -1,5 +1,5 @@
-import { IBannerData, IProductItem, IResponseProductData } from '../types'
-import { pushLocalStorageByArray, randomPickElement } from "../utils";
+import { IBannerData, IErrorMessage, IProductItem, IResponseProductData } from '../types'
+import { pushLocalStorageByArray, randomPickElement } from '../utils'
 
 const productItems: IProductItem[] = [
   {
@@ -118,6 +118,18 @@ export const loadProductItemListAPI = async (page: number): Promise<IResponsePro
     responseProductData.maxPage = maxPage
 
     return responseProductData
+  } catch (e) {
+    return { message: '상품을 불러올수 없습니다.' }
+  }
+}
+
+export const loadPurchaseAPI = async (cartList: string[]): Promise<IProductItem[] | IErrorMessage> => {
+  try {
+    return productItems
+      .filter((product) => cartList.includes(product.id))
+      .map((product) => {
+        return { ...product, count: 1 }
+      })
   } catch (e) {
     return { message: '상품을 불러올수 없습니다.' }
   }

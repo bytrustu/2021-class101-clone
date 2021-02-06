@@ -1,4 +1,4 @@
-import { IResponseProductData, TCreateAction } from '../../types'
+import { IProductItem, IResponseProductData, TCreateAction } from '../../types'
 
 const createAction = (type: string, payload?: any) => ({ type, payload })
 
@@ -18,7 +18,11 @@ export const REMOVE_CART_REQUEST = 'REMOVE_CART_REQUEST'
 export const REMOVE_CART_SUCCESS = 'REMOVE_CART_SUCCESS'
 export const REMOVE_CART_FAILURE = 'REMOVE_CART_FAILURE'
 
-export const LOAD_CART = 'LOAD_CART'
+export const LOAD_LOCAL_CART = 'LOAD_LOCAL_CART'
+
+export const LOAD_PURCHASE_REQUEST = 'LOAD_PURCHASE_REQUEST'
+export const LOAD_PURCHASE_SUCCESS = 'LOAD_PURCHASE_SUCCESS'
+export const LOAD_PURCHASE_FAILURE = 'LOAD_PURCHASE_FAILURE'
 
 export const loadBannerReqeust: TCreateAction<any, any> = () => createAction(LOAD_BANNER_REQUEST)
 export const loadBannerSuccess: TCreateAction<string, IResponseProductData> = (payload) =>
@@ -40,7 +44,14 @@ export const removeCartSuccess: TCreateAction<string, IResponseProductData> = (p
   createAction(REMOVE_CART_SUCCESS, payload)
 export const removeCartError: TCreateAction<string, string> = (payload) => createAction(REMOVE_CART_FAILURE, payload)
 
-export const loadCart: TCreateAction<any, any> = () => createAction(LOAD_CART)
+export const loadLocalCart: TCreateAction<any, any> = () => createAction(LOAD_LOCAL_CART)
+
+export const loadPurchaseReqeust: TCreateAction<string[], any> = (cartList) =>
+  createAction(LOAD_PURCHASE_REQUEST, cartList)
+export const loadPurchaseSuccess: TCreateAction<IProductItem[], string> = (payload) =>
+  createAction(LOAD_PURCHASE_SUCCESS, payload)
+export const loadPurchaseError: TCreateAction<string, string> = (payload) =>
+  createAction(LOAD_PURCHASE_FAILURE, payload)
 
 export type TProductAction =
   | ReturnType<typeof loadBannerReqeust>
@@ -57,4 +68,7 @@ export type TCartAction =
   | ReturnType<typeof removeCartReqeust>
   | ReturnType<typeof removeCartSuccess>
   | ReturnType<typeof removeCartError>
-  | ReturnType<typeof loadCart>
+  | ReturnType<typeof loadLocalCart>
+  | ReturnType<typeof loadPurchaseReqeust>
+  | ReturnType<typeof loadPurchaseSuccess>
+  | ReturnType<typeof loadPurchaseError>

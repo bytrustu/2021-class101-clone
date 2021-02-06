@@ -16,10 +16,15 @@ import {
   CartButtonWrap,
   CartTitleWrap,
 } from '../components'
-import { LOAD_PRODUCT_REQUEST, LOAD_PRODUCT_SUCCESS, loadProductReqeust } from '../redux/actions'
+import {
+  LOAD_PURCHASE_REQUEST,
+  LOAD_PURCHASE_SUCCESS,
+  loadLocalCart,
+  loadPurchaseReqeust,
+} from '../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { image750Size, productMonthly } from '../const'
-import { ICoopon, IStoreState } from '../types'
+import { ICoopon, IProductItem, IStoreState } from '../types'
 import { changeToPrice, range } from '../utils'
 import { useDropdown } from '../hooks'
 
@@ -42,7 +47,12 @@ const indexPage: FC = () => {
     (state: IStoreState) => state.product,
   )
 
-  const loadingState = useMemo(() => productLoading.type.includes(LOAD_PRODUCT_REQUEST), [productLoading.type])
+  const { cartList, purchaseList, loading: cartLoading, success: cartSuccess } = useSelector(
+    (state: IStoreState) => state.cart,
+  )
+
+  const cartLoadingState = useMemo(() => cartLoading.type.includes(LOAD_PURCHASE_REQUEST), [cartLoading.type])
+  const cartSuccessState = useMemo(() => cartSuccess.type.includes(LOAD_PURCHASE_SUCCESS), [cartSuccess.type])
 
   const [coupons, setCoupons] = useState<ICoopon[]>([])
   const {
@@ -58,52 +68,56 @@ const indexPage: FC = () => {
   }, [])
 
   useEffect(() => {
-    dispatch(loadProductReqeust(1))
+    dispatch(loadLocalCart())
     setCoupons(couponsData)
   }, [])
 
   useEffect(() => {
-    console.log(dropdownValue)
-  }, [dropdownValue])
+    if (cartList.length > 0) {
+      dispatch(loadPurchaseReqeust(cartList))
+    }
+  }, [cartList])
 
   return (
     <>
       <ContentWrapper>
         <CartTitleWrap>
-          <ContentTitle title="장바구니" margin={0} titleLoading={loadingState} />
+          <ContentTitle title="장바구니" margin={0} titleLoading={cartLoadingState} />
           <CartButtonWrap>
-            <Button value="삭제" buttonLoading={loadingState} />
-            <Button value="전체선택" buttonLoading={loadingState} />
+            <Button value="삭제" buttonLoading={cartLoadingState} />
+            <Button value="전체선택" buttonLoading={cartLoadingState} />
           </CartButtonWrap>
         </CartTitleWrap>
         {/*<CartEmpty />*/}
         <CartListWrap>
-          {productSuccess.type.includes(LOAD_PRODUCT_SUCCESS) &&
-            productItemList.length > 0 &&
-            productItemList.map(
-              (productItem, index) =>
-                index < 3 && (
-                  <Product
-                    key={productItem.id}
-                    id={productItem.id}
-                    imageUrl={productItem.coverImage + image750Size}
-                    title={productItem.title}
-                    price={productItem.price}
-                    monthly={productMonthly}
-                  />
-                ),
-            )}
-          {loadingState && range(3).map((el: number) => <Product key={el} />)}
+          {cartSuccessState &&
+            purchaseList &&
+            purchaseList.length > 0 &&
+            purchaseList.map((purchaseItem: IProductItem) => {
+              return (
+                <Product
+                  key={purchaseItem.id}
+                  id={purchaseItem.id}
+                  imageUrl={purchaseItem.coverImage + image750Size}
+                  title={purchaseItem.title}
+                  price={purchaseItem.price}
+                  monthly={productMonthly}
+                  badge={purchaseItem.availableCoupon === false ? '쿠폰적용불가' : undefined}
+                  isCounter={true}
+                />
+              )
+            })}
+          {cartLoadingState && range(3).map((el: number) => <Product key={el} />)}
         </CartListWrap>
       </ContentWrapper>
       <ContentWrapper>
-        <CartSelectedItem cartLoading={loadingState} />
+        <CartSelectedItem cartLoading={cartLoadingState} />
       </ContentWrapper>
       <ContentWrapper>
-        <ContentTitle title="쿠폰" titleLoading={loadingState} />
+        <ContentTitle title="쿠폰" titleLoading={cartLoadingState} />
         <CouponWrap>
           <Dropdown
-            dropdownLoading={loadingState}
+            dropdownLoading={cartLoadingState}
             value={dropdownValue}
             onClickHandle={onClickDropdownHandle}
             open={dropdownOpen}
@@ -127,40 +141,40 @@ const indexPage: FC = () => {
             ))}
           </Dropdown>
           <div className="coupon-wrap">
-            <Button value="미적용" onClickHandle={onClickUnAppliedCouponHandle} buttonLoading={loadingState} />
-            <Button value="최적적용" buttonLoading={loadingState} />
+            <Button value="미적용" onClickHandle={onClickUnAppliedCouponHandle} buttonLoading={cartLoadingState} />
+            <Button value="최적적용" buttonLoading={cartLoadingState} />
           </div>
         </CouponWrap>
       </ContentWrapper>
       <ContentWrapper>
-        <ContentTitle title="결제 금액" titleLoading={loadingState} />
+        <ContentTitle title="결제 금액" titleLoading={cartLoadingState} />
         <PaymentReceipt>
           <ContentSpaceBetween>
-            <Label color="#858a8d" size="14px" value="총 상품 금액" labelLoading={loadingState} />
-            <Label color="#858a8d" size="14px" value="282,200원" labelLoading={loadingState} />
+            <Label color="#858a8d" size="14px" value="총 상품 금액" labelLoading={cartLoadingState} />
+            <Label color="#858a8d" size="14px" value="282,200원" labelLoading={cartLoadingState} />
           </ContentSpaceBetween>
           <ContentSpaceBetween>
-            <Label color="#858a8d" size="14px" value="상품 할인 금액" labelLoading={loadingState} />
-            <Label color="#858a8d" size="14px" value="- 282,200원" labelLoading={loadingState} />
+            <Label color="#858a8d" size="14px" value="상품 할인 금액" labelLoading={cartLoadingState} />
+            <Label color="#858a8d" size="14px" value="- 282,200원" labelLoading={cartLoadingState} />
           </ContentSpaceBetween>
           <Divider style={{ margin: '15px 0' }} />
           <ContentSpaceBetween>
-            <Label color="#1b1c1d" size="18px" weight="600" value="최종 가격" labelLoading={loadingState} />
+            <Label color="#1b1c1d" size="18px" weight="600" value="최종 가격" labelLoading={cartLoadingState} />
             <Label
               color="#858a8d"
               size="14px"
               decoration="line-through"
               value="282,200원"
-              labelLoading={loadingState}
+              labelLoading={cartLoadingState}
             />
           </ContentSpaceBetween>
           <ContentSpaceBetween>
             <Label value="" />
-            <Label color="#1b1c1d" size="18px" weight="600" value="252,200원" labelLoading={loadingState} />
+            <Label color="#1b1c1d" size="18px" weight="600" value="252,200원" labelLoading={cartLoadingState} />
           </ContentSpaceBetween>
           <ContentSpaceBetween margin="40px 0 0">
             <Label value="" />
-            <Button value="결제하기" buttonLoading={loadingState} />
+            <Button value="결제하기" buttonLoading={cartLoadingState} />
           </ContentSpaceBetween>
         </PaymentReceipt>
       </ContentWrapper>

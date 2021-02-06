@@ -24,6 +24,7 @@ export interface IProductState extends IFetchState {
 
 export interface ICartState extends IFetchState {
   cartList: string[]
+  purchaseList: IProductItem[]
 }
 
 export interface IAction<T> {
@@ -41,6 +42,7 @@ export interface IProductItem {
   score: number
   title: string
   availableCoupon?: boolean
+  count?: number
 }
 
 export interface ICoopon extends IErrorMessage {
@@ -61,7 +63,8 @@ export interface IResponseProductData extends IErrorMessage {
   recommendProductItem?: IProductItem
 }
 
-export interface IBannerData extends IErrorMessage{
+
+export interface IBannerData extends IErrorMessage {
   title?: string
   detail?: string
   imageUrl?: string
@@ -72,3 +75,8 @@ export interface IStoreState {
   product: TProductReducerState
   cart: TCartReducerState
 }
+
+export type IUseCounter = (
+  currentNumber: number,
+  maxNumber: number,
+) => { count: number; countUp: (action?: any) => void; countDown: (action?: any) => void }

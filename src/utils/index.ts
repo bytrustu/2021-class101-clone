@@ -11,7 +11,7 @@ export const changeToPrice = (price?: number): string => {
   return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
-export const calcMontlyPrice = (price?: number, monthly?: number): string => {
+export const calcMontlyPrice = (price: number, monthly?: number): string => {
   if (!price || !monthly) return '0'
   const monthlyPrice = Math.floor(price / monthly)
   return changeToPrice(monthlyPrice)
@@ -33,4 +33,14 @@ export const filterLocalStorageByArray = (key: string, value: any): void => {
   const storageArray = JSON.parse(localStorage.getItem(key) as string)
   const filterCartList = storageArray.filter((cartProduct: string) => cartProduct !== value)
   localStorage.setItem(key, JSON.stringify(filterCartList))
+}
+
+export const generateObject = (arr: string[], init: number): { [k: string]: number } => {
+  return arr.reduce((acc, curr) => {
+    acc = {
+      ...acc,
+      [curr]: init || 0,
+    }
+    return acc
+  }, {})
 }
