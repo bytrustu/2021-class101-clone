@@ -8,6 +8,9 @@ export const filterPaymentProducts = (
   return products.filter((product) => checkboxState.includes(product.id))
 }
 
+const filterNotAvailableCouponProducts = (products: IPurchaseItem[]) =>
+  products.filter((product) => product.availableCoupon !== false)
+
 const sumPaymentProducts = (products: IPurchaseItem[] = []): number => {
   if (products.length === 0) return 0
   return products.reduce((acc, curr) => acc + curr.price * curr.count, 0)
@@ -26,9 +29,9 @@ const calcDiscountCoupon = (price = 0, coupon: ICoupon): number => {
 
 const appliedDiscountCoupon = (products: IPurchaseItem[] = [], coupon: ICoupon): number => {
   if (products.length === 0 || !coupon) return 0
-  const appliedCouponProducts = products.filter((product) => product.availableCoupon !== false)
-  if (appliedCouponProducts.length === 0) return 0
-  const sumProductsPrice = sumPaymentProducts(appliedCouponProducts)
+  const appicableCouponProducts = filterNotAvailableCouponProducts(products)
+  if (appicableCouponProducts.length === 0) return 0
+  const sumProductsPrice = sumPaymentProducts(appicableCouponProducts)
   if (sumProductsPrice === 0) return 0
   return calcDiscountCoupon(sumProductsPrice, coupon)
 }
@@ -52,7 +55,9 @@ export const bestPricingByCoupon = (
   if (purchaseList.length === 0 || coupons.length === 0) return null
   const filterProducts = filterPaymentProducts(purchaseList, checkboxState)
   if (filterProducts.length === 0) return null
-  const sumProductsPrice = sumPaymentProducts(filterProducts)
+  const appicableCouponProducts = filterNotAvailableCouponProducts(filterProducts)
+  if (appicableCouponProducts.length === 0) return null
+  const sumProductsPrice = sumPaymentProducts(appicableCouponProducts)
   if (sumProductsPrice === 0) return null
   const prices: number[] = coupons.map((coupon) => calcDiscountCoupon(sumProductsPrice, coupon))
   const bestDiscount: number = Math.max(...prices)
