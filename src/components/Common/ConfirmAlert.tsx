@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '../../components'
 import styled from 'styled-components'
 
-const StyleConfirmAlert = styled.div`
+const StyleConfirmAlert = styled.section`
   @media (max-width: 768px) {
     width: 300px;
   }
@@ -28,12 +28,12 @@ const StyleConfirmAlert = styled.div`
   }
 `
 
-const StyleConfirmAlertBody = styled.div`
+const StyleConfirmAlertBody = styled.article`
   line-height: 32px;
   padding: 30px 36px 15px 37px;
 `
 
-const StyleConfirmAlertFooter = styled.div`
+const StyleConfirmAlertFooter = styled.article`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -42,7 +42,7 @@ const StyleConfirmAlertFooter = styled.div`
   padding: 0 40px 25px 0;
 `
 
-const StyleConfirmAlertMessage = styled.h5`
+const StyleConfirmAlertMessage = styled.p`
   @media (max-width: 768px) {
     font-size: 15px !important;
     text-align: center;

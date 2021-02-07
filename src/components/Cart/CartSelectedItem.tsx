@@ -3,14 +3,14 @@ import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 import { IProductItem } from '../../types'
 
-const StyleCartSelectedItemWrap = styled.div`
+const StyleCartSelectedItemWrap = styled.section`
   height: auto;
   min-height: 110px;
-  & > div.cart-selected-wrap {
+  & > section.cart-selected-wrap {
     @media (max-width: 768px) {
-      padding-top: 70px !important;  
+      padding-top: 70px !important;
     }
-    
+
     position: relative;
     width: 100%;
     height: 100%;
@@ -32,7 +32,7 @@ const CartSelectedItemTitle = styled.h3`
   left: 1.5rem;
 `
 
-export const StyleCartSelectedItem = styled.div`
+export const StyleCartSelectedItem = styled.p`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -43,6 +43,7 @@ export const StyleCartSelectedItem = styled.div`
   font-weight: 600;
   letter-spacing: -0.15px;
   color: #1b1c1d;
+  margin-bottom: 0;
 
   & + & {
     margin-top: 20px;
@@ -100,7 +101,7 @@ const CartSelectedItem: FC<ICartSelectedItemProps> = ({ cartLoading, cartSelecte
         {cartLoading ? (
           <CartSelectedItemSkeleton />
         ) : (
-          <div className="cart-selected-wrap">
+          <section className="cart-selected-wrap">
             <CartSelectedItemTitle>구매목록</CartSelectedItemTitle>
             {cartSelectedData &&
               cartSelectedData.map(
@@ -113,7 +114,7 @@ const CartSelectedItem: FC<ICartSelectedItemProps> = ({ cartLoading, cartSelecte
                     </StyleCartSelectedItem>
                   ),
               )}
-          </div>
+          </section>
         )}
       </StyleCartSelectedItemWrap>
     </>

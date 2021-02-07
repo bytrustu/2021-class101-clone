@@ -2,13 +2,13 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 
-const StyleProductDetailWrap = styled.div`
+const StyleProductDetailWrap = styled.article`
   position: relative;
   display: flex;
   flex-direction: column;
 `
 
-const StyleProductDetailTitle = styled.h3`
+const StyleProductDetailTitle = styled.p`
   @media (max-width: 375px) {
     font-size: 13px;
   }
@@ -27,6 +27,7 @@ const StyleProductDetailTitle = styled.h3`
   -webkit-box-orient: vertical;
   word-wrap: break-word;
   white-space: normal;
+  margin-bottom: 5px;
 `
 
 const StyleSkeletonByProductDetail = styled(Skeleton)`

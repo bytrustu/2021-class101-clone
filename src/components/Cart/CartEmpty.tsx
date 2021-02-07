@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 
-const StyleCartEmptyItemWrap = styled.div`
+const StyleCartEmptyItemWrap = styled.section`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -9,7 +9,7 @@ const StyleCartEmptyItemWrap = styled.div`
   margin: 2rem 0;
 `
 
-const StyleCartEmptyItem = styled.div`
+const StyleCartEmptyItem = styled.article`
   @media (min-width: 768px) and (max-width: 1022px) {
     width: 350px;
   }

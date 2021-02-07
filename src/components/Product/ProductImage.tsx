@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton'
 import { Checkbox, ProductBadge, RecommendMotion, CloseButton } from '../../components'
 import { TUseCheckbox } from '../../types'
 
-const StyleProductImageWrap = styled.div`
+const StyleProductImageWrap = styled.article`
   @media (max-width: 768px) {
     max-height: 200px;
   }

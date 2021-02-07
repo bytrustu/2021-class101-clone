@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 
-const StyleCartListWrapper = styled.div`
+const StyleCartListWrapper = styled.section`
   @media (min-width: 768px) and (max-width: 1022px) {
     gap: 40px 25px;
     padding: 0 2rem;

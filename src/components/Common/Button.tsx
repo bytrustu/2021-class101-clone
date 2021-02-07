@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 
-const StyleButtonWrapper = styled.div`
+const StyleButtonWrapper = styled.section`
   display: inline-block;
   & + & {
     margin-left: 10px;

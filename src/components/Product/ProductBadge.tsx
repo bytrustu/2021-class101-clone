@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 
-const StyleProductBadge = styled.div<IProductBadgeProps>`
+const StyleProductBadge = styled.span<IProductBadgeProps>`
   @media (max-width: 375px) {
     font-size: 10px;
     padding: 4px 5px;

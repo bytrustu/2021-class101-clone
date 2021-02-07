@@ -4,7 +4,7 @@ import { Divider, ProductDetail, ProductImage, ProductPrices } from '../../compo
 import { useCounter } from '../../hooks'
 import { TUseCheckbox } from '../../types'
 
-const StyleProduct = styled.div`
+const StyleProduct = styled.article`
   display: flex;
   flex-direction: column;
   width: 100%;

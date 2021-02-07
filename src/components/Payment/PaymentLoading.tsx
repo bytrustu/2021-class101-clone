@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 
-const StylePaymentLoading = styled.div`
+const StylePaymentLoading = styled.section`
   position: fixed;
   top: 40%;
   left: 50%;

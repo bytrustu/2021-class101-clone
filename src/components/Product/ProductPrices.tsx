@@ -7,7 +7,7 @@ import { IUseCounter } from '../../types'
 import { useDispatch } from 'react-redux'
 import { reqestPlusPurchase, reqestMinusPurchase } from '../../redux/actions'
 
-const StyleProductPricesWrap = styled.div`
+const StyleProductPricesWrap = styled.section`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -16,7 +16,7 @@ const StyleProductPricesWrap = styled.div`
   width: 100%;
 `
 
-const StyleProductPrice = styled.span`
+const StyleProductPrice = styled.em`
   @media (max-width: 375px) {
     line-height: 28px;
   }

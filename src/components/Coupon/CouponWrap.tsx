@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 
-const StyleCouponWrapper = styled.div`
+const StyleCouponWrapper = styled.section`
   @media (min-width: 768px) and (max-width: 1022px) {
     padding: 0 2rem;
   }

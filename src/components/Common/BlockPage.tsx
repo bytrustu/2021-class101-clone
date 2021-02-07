@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 
-const StyleBlockPage = styled.div`
+const StyleBlockPage = styled.section`
   z-index: 10000;
   overflow: hidden;
 `

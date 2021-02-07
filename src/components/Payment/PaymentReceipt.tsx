@@ -19,7 +19,7 @@ const StylePaymentReceipt = styled.section`
     }
 `
 
-const StyleTotalCostWrap = styled.div`
+const StyleTotalCostWrap = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

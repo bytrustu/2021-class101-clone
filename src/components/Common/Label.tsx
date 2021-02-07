@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 
-export const StyleLabelWrapper = styled.div<ILabelProps>`
+export const StyleLabelWrapper = styled.span<ILabelProps>`
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.weight};
   padding: ${(props) => props.padding};

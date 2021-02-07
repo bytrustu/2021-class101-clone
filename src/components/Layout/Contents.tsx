@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 
-const StyleContentsWrap = styled.div`
+const StyleContentsWrap = styled.section`
   @media (min-width: 1240px) {
     max-width: 1176px;
     width: 100%;

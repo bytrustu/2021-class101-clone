@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 import { IBannerData } from '../../types'
 
-const StyleBannerWrap = styled.div<IBannerData>`
+const StyleBannerWrap = styled.section<IBannerData>`
   @media (max-width: 1023px) {
   }
   @media (min-width: 768px) {
@@ -18,7 +18,7 @@ const StyleBannerWrap = styled.div<IBannerData>`
   cursor: not-allowed;
 `
 
-const StyleBannerTextWrap = styled.div`
+const StyleBannerTextWrap = styled.hgroup`
   position: absolute;
   word-break: keep-all;
   top: 30px;
@@ -26,7 +26,7 @@ const StyleBannerTextWrap = styled.div`
   max-width: 255px;
   z-index: 10;
 
-  p.banner-title {
+  h4.banner-title {
     font-size: 32px;
     font-weight: bold;
     color: rgb(255, 255, 255);
@@ -35,7 +35,7 @@ const StyleBannerTextWrap = styled.div`
     margin: 0px;
   }
 
-  p.banner-detail {
+  h5.banner-detail {
     margin-top: 8px;
     opacity: 0.55;
     white-space: pre-line;
@@ -53,7 +53,7 @@ const StyleBannerTextWrap = styled.div`
   }
 
   @media (max-width: 1023px) {
-    p.banner-title {
+    h4.banner-title {
       font-size: 24px;
       font-weight: bold;
       line-height: 34px;
@@ -61,7 +61,7 @@ const StyleBannerTextWrap = styled.div`
       margin: 0;
     }
 
-    p.banner-detail {
+    h5.banner-detail {
       font-size: 14px;
       font-weight: normal;
       line-height: 20px;
@@ -75,7 +75,7 @@ const StyleBannerTextWrap = styled.div`
   }
 `
 
-const StyleBannerImageWrap = styled.div`
+const StyleBannerImageWrap = styled.article`
   @media (min-width: 768px) {
     height: 320px;
   }
@@ -111,8 +111,8 @@ const Banner: FC<IBannerProps> = ({ bannerData }) => {
   return bannerData ? (
     <StyleBannerWrap backgroundColor={bannerData.backgroundColor}>
       <StyleBannerTextWrap>
-        <p className="banner-title">{bannerData?.title}</p>
-        <p className="banner-detail">{bannerData?.detail}</p>
+        <h4 className="banner-title">{bannerData?.title}</h4>
+        <h5 className="banner-detail">{bannerData?.detail}</h5>
       </StyleBannerTextWrap>
       <StyleBannerImageWrap>
         <StyleBannerImage src={bannerData?.imageUrl} alt="CLASS101 배너" />

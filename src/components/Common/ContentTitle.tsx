@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 
-const StyleContentTitleWrap = styled.div<IContentTitleProps>`
+const StyleContentTitleWrap = styled.hgroup<IContentTitleProps>`
   @media (min-width: 768px) and (max-width: 1022px) {
     padding-left: 2rem;
   }

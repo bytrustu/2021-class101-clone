@@ -12,3 +12,5 @@ export const fetchCycle: IFetchCycle = {
 }
 
 export const githubLink = 'https://github.com/bytrustu/class101-assignment'
+
+export const baseUrl = 'http://class101.net'

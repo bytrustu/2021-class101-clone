@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 
-const StyleCartButtonWrap = styled.div`
+const StyleCartButtonWrap = styled.nav`
   @media (min-width: 768px) {
     right: 3vw;
   }
