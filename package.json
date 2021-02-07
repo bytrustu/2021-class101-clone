@@ -2,9 +2,9 @@
   "name": "class101-assignment",
   "version": "1.0.0",
   "scripts": {
-    "dev": "next -p 3001",
+    "start": "next -p 3001",
     "build": "cross-env ANALYZE=true NODE_ENV=production next build",
-    "start": "cross-env NODE_ENV=production next start -p 3001",
+    "client:start": "cross-env NODE_ENV=production next start -p 3001",
     "test": "jest"
   },
   "dependencies": {
