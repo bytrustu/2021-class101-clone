@@ -8,7 +8,6 @@ import { AppLayout, Header, Contents, Footer } from '../components'
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" className="next-head" />
       <AppLayout>
         <Header />
         <Contents>
