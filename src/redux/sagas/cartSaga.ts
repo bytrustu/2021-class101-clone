@@ -85,7 +85,7 @@ function* watchLoadCoupon() {
 
 export function* requestPayment(action: IAction<IPayment>) {
   try {
-    yield sleep(10)
+    yield sleep(5)
     yield put(paymentSuccess(action.payload))
   } catch (e) {
     console.error(e)

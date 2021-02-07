@@ -20,6 +20,7 @@ import {
   PAYMENT_REQUEST,
   PAYMENT_SUCCESS,
   PAYMENT_FAILURE,
+  CLEAR_PAYMENT,
 } from '../actions'
 import { initFetchCycle, processFetchCycle } from '../utils'
 import { fetchCycle } from '../../const'
@@ -152,6 +153,13 @@ export default (state: TCartReducerState = initialState, action: TCartAction) =>
       case PAYMENT_FAILURE: {
         draft.loading = initFetchCycle(draft.loading, PAYMENT_REQUEST)
         draft.error = processFetchCycle(draft.error, PAYMENT_FAILURE, action.payload)
+        break
+      }
+
+      case CLEAR_PAYMENT: {
+        draft.loading = initFetchCycle(draft.loading, PAYMENT_REQUEST)
+        draft.success = initFetchCycle(draft.success, PAYMENT_SUCCESS)
+        draft.payment = {}
         break
       }
 

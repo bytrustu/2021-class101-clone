@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo } from 'react'
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import {
   Button,
   CartListWrap,
@@ -14,13 +14,18 @@ import {
   CartButtonWrap,
   CartTitleWrap,
   CartEmpty,
+  PaymentLoading,
+  PaymentReceiptModal,
 } from '../components'
 import {
+  clearPayment,
   LOAD_PURCHASE_REQUEST,
   LOAD_PURCHASE_SUCCESS,
   loadCouponReqeust,
   loadLocalCart,
-  loadPurchaseReqeust, PAYMENT_SUCCESS,
+  loadPurchaseReqeust,
+  PAYMENT_REQUEST,
+  PAYMENT_SUCCESS,
   paymentReqeust,
   REMOVE_CART_REQUEST,
   removeCartReqeust
@@ -36,7 +41,12 @@ import { discountCost, sumTotalCost, bestPricingByCoupon, filterPaymentProducts 
 const cartPage: FC = () => {
   const dispatch = useDispatch()
 
-  const { cartList, purchaseList, loading: cartLoading, success: cartSuccess, couponList } = useSelector(
+  const [viewModal, setViewModal] = useState<boolean>(false)
+  const onClickModalCloseHandle = useCallback((): void => {
+    setViewModal(false)
+  }, [])
+
+  const { cartList, purchaseList, loading: cartLoading, success: cartSuccess, couponList, payment } = useSelector(
     (state: IStoreState) => state.cart,
   )
 
@@ -60,6 +70,7 @@ const cartPage: FC = () => {
   const cartLoadingMemo = useMemo(() => cartLoading.type.includes(LOAD_PURCHASE_REQUEST), [cartLoading.type])
   const removeCartLoadingMemo = useMemo(() => cartLoading.type.includes(REMOVE_CART_REQUEST), [cartLoading.type])
   const cartSuccessMemo = useMemo(() => cartSuccess.type.includes(LOAD_PURCHASE_SUCCESS), [cartSuccess.type])
+  const paymentRequestMemo = useMemo(() => cartLoading.type.includes(PAYMENT_REQUEST), [cartLoading.type])
   const paymentSuccessMemo = useMemo(() => cartSuccess.type.includes(PAYMENT_SUCCESS), [cartSuccess.type])
   const purchaseIdListMemo = useMemo(() => purchaseList.map((product) => product.id), [purchaseList])
   const discountPrice = useMemo(() => discountCost(purchaseList, dropdownValue, checkboxState.form), [
@@ -106,6 +117,7 @@ const cartPage: FC = () => {
   )
 
   useEffect(() => {
+    dispatch(clearPayment())
     dispatch(loadLocalCart())
     dispatch(loadCouponReqeust())
   }, [])
@@ -118,12 +130,27 @@ const cartPage: FC = () => {
   useEffect(() => {
     if (paymentSuccessMemo) {
       dispatch(removeCartReqeust(checkboxState.form))
+      setViewModal(true)
     }
   }, [paymentSuccessMemo])
+  useEffect(() => {
+    if (paymentRequestMemo) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    }
+  }, [paymentRequestMemo])
 
   return (
     <>
+      {paymentRequestMemo && <PaymentLoading />}
       <Alert />
+      <PaymentReceiptModal
+        visible={viewModal}
+        onClose={onClickModalCloseHandle}
+        totalPrice={payment.totalPrice}
+        discountPrice={payment.discountPrice}
+        products={payment.products}
+        checkboxState={checkboxState.form}
+      />
       <ContentWrapper>
         <CartTitleWrap>
           <ContentTitle title="장바구니" margin={0} titleLoading={cartLoadingMemo} />

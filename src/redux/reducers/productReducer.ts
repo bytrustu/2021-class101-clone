@@ -73,6 +73,7 @@ export default (state: TProductReducerState = initialState, action: TProductActi
         draft.error = processFetchCycle(draft.error, LOAD_PRODUCT_FAILURE, action.payload)
         break
       }
+
       default: {
         break
       }

@@ -30,10 +30,15 @@ interface IPaymentReceiptProps {
   paymentLoading: boolean
   discountPrice: number
   totalPrice: number
-  onClickPaymentHandle: (totalPrice: number, discountPrice: number) => void
+  onClickPaymentHandle?: (totalPrice: number, discountPrice: number) => void
 }
 
-const PaymentReceipt: FC<IPaymentReceiptProps> = ({ paymentLoading, discountPrice, totalPrice, onClickPaymentHandle }) => {
+const PaymentReceipt: FC<IPaymentReceiptProps> = ({
+  paymentLoading,
+  discountPrice,
+  totalPrice,
+  onClickPaymentHandle,
+}) => {
   return (
     <>
       <StylePaymentReceipt>
@@ -75,11 +80,13 @@ const PaymentReceipt: FC<IPaymentReceiptProps> = ({ paymentLoading, discountPric
 
         <ContentSpaceBetween margin="40px 0 0">
           <Label value="" />
-          <Button
-            value="결제하기"
-            buttonLoading={paymentLoading}
-            onClickHandle={() => onClickPaymentHandle(totalPrice, discountPrice)}
-          />
+          {onClickPaymentHandle && (
+            <Button
+              value="결제하기"
+              buttonLoading={paymentLoading}
+              onClickHandle={() => onClickPaymentHandle(totalPrice, discountPrice)}
+            />
+          )}
         </ContentSpaceBetween>
       </StylePaymentReceipt>
     </>

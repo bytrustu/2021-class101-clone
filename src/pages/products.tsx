@@ -2,15 +2,15 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   ADD_CART_REQUEST,
-  addCartReqeust,
+  addCartReqeust, clearPayment,
   LOAD_PRODUCT_REQUEST,
   LOAD_PRODUCT_SUCCESS,
   loadBannerReqeust,
   loadLocalCart,
   loadProductReqeust,
   REMOVE_CART_REQUEST,
-  removeCartReqeust,
-} from '../redux/actions'
+  removeCartReqeust
+} from "../redux/actions";
 import { IStoreState } from '../types'
 import { Banner, ProductWrap, Product, ProductCartIcon } from '../components'
 import { range } from '../utils'
@@ -69,6 +69,7 @@ const productsPage: FC = () => {
   )
 
   useEffect(() => {
+    dispatch(clearPayment())
     dispatch(loadBannerReqeust())
     dispatch(loadLocalCart())
     if (productItemList.length === 0) {

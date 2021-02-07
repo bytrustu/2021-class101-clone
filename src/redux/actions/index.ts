@@ -35,6 +35,8 @@ export const PAYMENT_REQUEST = 'PAYMENT_REQUEST'
 export const PAYMENT_SUCCESS = 'PAYMENT_SUCCESS'
 export const PAYMENT_FAILURE = 'PAYMENT_FAILURE'
 
+export const CLEAR_PAYMENT = 'CLEAR_PAYMENT'
+
 export const loadBannerReqeust: TCreateAction<any, any> = () => createAction(LOAD_BANNER_REQUEST)
 export const loadBannerSuccess: TCreateAction<string, IResponseProductData> = (payload) =>
   createAction(LOAD_BANNER_SUCCESS, payload)
@@ -77,6 +79,8 @@ export const paymentReqeust: TCreateAction<IPayment, any> = (payload) => createA
 export const paymentSuccess: TCreateAction<IPayment, string> = (payload) => createAction(PAYMENT_SUCCESS, payload)
 export const paymentError: TCreateAction<string, string> = (payload) => createAction(PAYMENT_FAILURE, payload)
 
+export const clearPayment: TCreateAction<any, any> = () => createAction(CLEAR_PAYMENT)
+
 export type TProductAction =
   | ReturnType<typeof loadBannerReqeust>
   | ReturnType<typeof loadBannerSuccess>
@@ -104,3 +108,4 @@ export type TCartAction =
   | ReturnType<typeof paymentReqeust>
   | ReturnType<typeof paymentSuccess>
   | ReturnType<typeof paymentError>
+  | ReturnType<typeof clearPayment>

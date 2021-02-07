@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState } from 'react'
 import { useInputs } from '../hooks'
 import { ConfirmAlert, BlockPage } from '../components'
 import { IMessageAlert } from '../types'
@@ -16,7 +16,6 @@ const useAlert = () => {
 
   const MessageAlert = ({ message, isOk = true, okOnClick, isCancel = false, isSuccess = true }: IMessageAlert) => {
     setView(true)
-
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     setConfig({
@@ -41,8 +40,6 @@ const useAlert = () => {
     })
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   const Alert = () => ConfirmAlert({ view, setView, config, isSuccess: true }) as ReactElement<any>
   const AlertLoading = () => BlockPage({ view: loading }) as ReactElement<any>
 

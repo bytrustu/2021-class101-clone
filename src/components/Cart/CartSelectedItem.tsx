@@ -32,7 +32,7 @@ const CartSelectedItemTitle = styled.h3`
   left: 1.5rem;
 `
 
-const StyleCartSelectedItem = styled.div`
+export const StyleCartSelectedItem = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -49,7 +49,7 @@ const StyleCartSelectedItem = styled.div`
   }
 `
 
-const StyleMultiplyIcon = styled.img`
+export const StyleMultiplyIcon = styled.img`
   margin: 0 10px;
   width: 10px;
   height: 10px;
@@ -60,7 +60,7 @@ const CartSelectedItemSkeleton = styled(Skeleton)`
   width: 100%;
 `
 
-const StyleClassTitle = styled.span`
+export const StyleClassTitle = styled.span`
   @media (max-width: 1023px) {
   }
   @media (max-width: 768px) {
@@ -81,7 +81,7 @@ const StyleClassTitle = styled.span`
   font-weight: 400;
 `
 
-const StyleClassCount = styled.span`
+export const StyleClassCount = styled.span`
   font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.15px;
