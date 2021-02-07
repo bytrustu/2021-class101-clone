@@ -117,3 +117,9 @@ export interface IPayment {
   discountPrice?: number
   products?: IPurchaseItem[]
 }
+
+export interface IButton {
+  value: string
+  onClickHandle: () => any
+  loading: boolean
+}

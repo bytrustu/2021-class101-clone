@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { IStoreState } from '../../types'
-import { CartButton, Logo } from '../../components'
+import { NavLink, Logo } from '../../components'
 
 const StyleHeader = styled.header`
   @media (min-width: 1240px) {
@@ -34,7 +34,7 @@ const Header: FC = () => {
     <StyleHeader>
       <div>
         <Logo link="/products" imageUrl="/images/HeaderLogo.svg" />
-        <CartButton link="/cart" imageUrl="/images/CartIcon.svg" cartList={cartList} />
+        <NavLink link="/cart" imageUrl="/images/CartIcon.svg" dataList={cartList} />
       </div>
     </StyleHeader>
   )

@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 
-const StyleCartButtonWrap = styled.nav`
+const StyleNavLinkWrap = styled.nav`
   @media (min-width: 768px) {
     right: 3vw;
   }
@@ -25,11 +25,11 @@ const StyleCartButtonWrap = styled.nav`
   }
 `
 
-const StyleCartButtonIcon = styled.img`
+const StyleNavLink = styled.img`
   width: 25px;
 `
 
-const StyleCartButtonCounter = styled.div`
+const StyleNavLinkCounter = styled.div`
   position: absolute;
   top: 5px;
   right: 6px;
@@ -46,23 +46,23 @@ const StyleCartButtonCounter = styled.div`
   font-size: 12px;
 `
 
-interface ICartButton {
+interface INavLink {
   link: string
   imageUrl: string
-  cartList?: string[]
+  dataList?: string[]
 }
 
-const CartButton: FC<ICartButton> = ({ link, imageUrl, cartList }) => {
+const NavLink: FC<INavLink> = ({ link, imageUrl, dataList }) => {
   return (
     <>
       <Link href={link}>
-        <StyleCartButtonWrap>
-          <StyleCartButtonCounter>{cartList ? cartList.length : 0}</StyleCartButtonCounter>
-          <StyleCartButtonIcon src={imageUrl} alt="장바구니 아이콘" />
-        </StyleCartButtonWrap>
+        <StyleNavLinkWrap>
+          <StyleNavLinkCounter>{dataList ? dataList.length : 0}</StyleNavLinkCounter>
+          <StyleNavLink src={imageUrl} alt="링크 아이콘" />
+        </StyleNavLinkWrap>
       </Link>
     </>
   )
 }
 
-export default React.memo(CartButton)
+export default React.memo(NavLink)
