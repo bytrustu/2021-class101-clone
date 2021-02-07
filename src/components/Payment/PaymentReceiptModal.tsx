@@ -83,7 +83,7 @@ const PaymentReceiptModal: FC<IPaymentReceiptModalProps> = ({
       <ContentWrapper>
         {products &&
           products.map((product) => (
-            <StyleCartSelectedItem>
+            <StyleCartSelectedItem key={product.id}>
               <StyleClassTitle>{product.title}</StyleClassTitle>
               <StyleMultiplyIcon src="/images/Cross.svg" alt="곱하기 아이콘" />
               <StyleClassCount>{product.count}</StyleClassCount>

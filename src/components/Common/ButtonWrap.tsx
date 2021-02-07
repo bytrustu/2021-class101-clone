@@ -34,8 +34,13 @@ const ButtonWrap: FC<IButtonWrap> = ({ buttonData }) => {
   return (
     <StyleButtonWrap>
       {buttonData &&
-        buttonData.map((button: IButton) => (
-          <Button value={button.value} buttonLoading={button.loading} onClickHandle={button.onClickHandle} />
+        buttonData.map((button: IButton, index: number) => (
+          <Button
+            key={index}
+            value={button.value}
+            buttonLoading={button.loading}
+            onClickHandle={button.onClickHandle}
+          />
         ))}
     </StyleButtonWrap>
   )

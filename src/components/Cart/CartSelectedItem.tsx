@@ -107,7 +107,7 @@ const CartSelectedItem: FC<ICartSelectedItemProps> = ({ cartLoading, cartSelecte
               cartSelectedData.map(
                 (product) =>
                   checkState?.includes(product.id) && (
-                    <StyleCartSelectedItem>
+                    <StyleCartSelectedItem key={product.id}>
                       <StyleClassTitle>{product.title}</StyleClassTitle>
                       <StyleMultiplyIcon src="/images/Cross.svg" alt="곱하기 아이콘" />
                       <StyleClassCount>{product.count}</StyleClassCount>
