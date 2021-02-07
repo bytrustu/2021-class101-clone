@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   Button,
   CartListWrap,
@@ -11,11 +11,11 @@ import {
   Label,
   Product,
   PaymentReceipt,
-  CartButtonWrap,
   CartTitleWrap,
   CartEmpty,
   PaymentLoading,
   PaymentReceiptModal,
+  ButtonWrap,
 } from '../components'
 import {
   clearPayment,
@@ -33,7 +33,7 @@ import {
 import { message } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { image750Size, productMonthly } from '../const'
-import { IProductItem, IStoreState } from '../types'
+import { IButton, IProductItem, IStoreState } from '../types'
 import { changeToPrice, range } from '../utils'
 import { useAlert, useCheckbox, useDropdown } from '../hooks'
 import { discountCost, sumTotalCost, bestPricingByCoupon, filterPaymentProducts } from '../utils/calculatorPrice'
@@ -83,6 +83,21 @@ const cartPage: FC = () => {
     purchaseList,
     checkboxState.form,
   ])
+  const cartButtonDataMemo = useMemo(
+    (): IButton[] => [
+      {
+        value: '삭제',
+        loading: cartLoadingMemo || removeCartLoadingMemo,
+        onClickHandle: () => requestRemoveCart(checkboxState.form),
+      },
+      {
+        value: '전체선택',
+        loading: cartLoadingMemo || removeCartLoadingMemo,
+        onClickHandle: () => checkboxState.checkAllCheckbox(purchaseIdListMemo),
+      },
+    ],
+    [cartLoadingMemo, removeCartLoadingMemo, checkboxState.form, purchaseIdListMemo],
+  )
 
   const requestRemoveCart = useCallback(
     (data: string | string[]) => {
@@ -156,18 +171,13 @@ const cartPage: FC = () => {
       <ContentWrapper>
         <CartTitleWrap>
           <ContentTitle title="장바구니" margin={0} titleLoading={cartLoadingMemo} />
-          <CartButtonWrap>
-            <Button
-              value="삭제"
-              buttonLoading={cartLoadingMemo || removeCartLoadingMemo}
-              onClickHandle={() => requestRemoveCart(checkboxState.form)}
-            />
-            <Button
-              value="전체선택"
-              buttonLoading={cartLoadingMemo || removeCartLoadingMemo}
-              onClickHandle={() => checkboxState.checkAllCheckbox(purchaseIdListMemo)}
-            />
-          </CartButtonWrap>
+          {cartLoadingMemo ? (
+            <ButtonWrap buttonData={cartButtonDataMemo} />
+          ) : cartSuccessMemo && cartList.length > 0 ? (
+            <ButtonWrap buttonData={cartButtonDataMemo} />
+          ) : (
+            <></>
+          )}
         </CartTitleWrap>
         {cartSuccessMemo && purchaseList.length === 0 && <CartEmpty />}
         <CartListWrap>

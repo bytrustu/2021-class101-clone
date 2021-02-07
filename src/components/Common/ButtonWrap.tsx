@@ -1,7 +1,9 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
+import { IButton } from '../../types'
+import { Button } from '../../components'
 
-const StyleCartButtonWrap = styled.div`
+const StyleButtonWrap = styled.div`
   @media (min-width: 768px) and (max-width: 1022px) {
     display: inline-block;
     padding: 0 2rem;
@@ -24,12 +26,19 @@ const StyleCartButtonWrap = styled.div`
   }
   display: inline-block;
 `
-interface ICartButtonWrap {
-  children?: React.ReactNode
+interface IButtonWrap {
+  buttonData: IButton[]
 }
 
-const CartButtonWrap: FC<ICartButtonWrap> = ({ children }) => {
-  return <StyleCartButtonWrap>{children}</StyleCartButtonWrap>
+const ButtonWrap: FC<IButtonWrap> = ({ buttonData }) => {
+  return (
+    <StyleButtonWrap>
+      {buttonData &&
+        buttonData.map((button: IButton) => (
+          <Button value={button.value} buttonLoading={button.loading} onClickHandle={button.onClickHandle} />
+        ))}
+    </StyleButtonWrap>
+  )
 }
 
-export default React.memo(CartButtonWrap)
+export default React.memo(ButtonWrap)
