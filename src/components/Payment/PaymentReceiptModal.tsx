@@ -32,7 +32,6 @@ const StylePaymentReceiptModal = styled(Modal)`
     @media (max-width: 768px) {
       padding: 3rem 3rem 2rem 3rem;
     }
-    padding: 0;
     height: auto;
     max-height: 50rem;
     background: #f9f9f9;

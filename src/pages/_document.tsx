@@ -1,7 +1,7 @@
 import React from 'react'
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
 import { createGlobalStyle, ServerStyleSheet } from 'styled-components'
-import { baseUrl } from "../const";
+import { baseUrl } from '../const'
 
 const GlobalStyles = createGlobalStyle`
   body {

@@ -108,6 +108,8 @@ export interface IMessageAlert {
   okOnClick?: () => void
   isCancel?: boolean
   isSuccess?: boolean
+  okText?: string
+  cancelText?: string
 }
 
 export interface IPayment {

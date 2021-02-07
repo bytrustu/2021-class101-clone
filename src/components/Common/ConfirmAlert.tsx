@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Button } from '../../components'
 import styled from 'styled-components'
+import { IMessageAlert } from '../../types'
 
 const StyleConfirmAlert = styled.section`
   @media (max-width: 768px) {
@@ -52,9 +53,13 @@ const StyleConfirmAlertMessage = styled.p`
   letter-spacing: -1px !important;
 `
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const ConfirmAlert = ({ view = false, setView, config, isSuccess = true }) => {
+interface IConfigAlertProps {
+  view: any
+  setView: (view: boolean) => void
+  config: IMessageAlert
+}
+
+const ConfirmAlert: FC<IConfigAlertProps> = ({ view, setView, config }) => {
   const { message, isOk = true, okText = '확인', okOnClick, isCancel = false, cancelText = '취소' } = config
 
   const onClickOk = () => {

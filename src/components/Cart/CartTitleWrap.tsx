@@ -2,8 +2,6 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 
 const StyleCartTitleWrap = styled.article<ICartTitleWrapProps>`
-  @media (min-width: 768px) and (max-width: 1022px) {
-  }
   @media (max-width: 768px) {
     flex-direction: column;
   }

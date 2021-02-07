@@ -9,12 +9,11 @@ const useAlert = () => {
   const [config, , setConfig] = useInputs<IMessageAlert>({
     message: '',
     isOk: true,
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    okOnClick: () => {},
+    okOnClick: undefined,
     isCancel: false,
   })
 
-  const MessageAlert = ({ message, isOk = true, okOnClick, isCancel = false, isSuccess = true }: IMessageAlert) => {
+  const MessageAlert = ({ message, isOk = true, okOnClick, isCancel = false }: IMessageAlert) => {
     setView(true)
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -26,8 +25,9 @@ const useAlert = () => {
     })
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const requestApiConfirmHanlder = ({ funcAPI = () => {}, data = {}, message = '', afterAction = () => {} }) => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const requestApiConfirmHanlder = ({ funcAPI, data = {}, message = '' }) => {
     MessageAlert({
       message: message,
       isSuccess: true,
@@ -40,6 +40,8 @@ const useAlert = () => {
     })
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const Alert = () => ConfirmAlert({ view, setView, config, isSuccess: true }) as ReactElement<any>
   const AlertLoading = () => BlockPage({ view: loading }) as ReactElement<any>
 
