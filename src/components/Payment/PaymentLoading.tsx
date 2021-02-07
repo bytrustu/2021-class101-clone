@@ -13,7 +13,7 @@ const StylePaymentLoading = styled.div`
       font-size: 40px;
     }
     @media (max-width: 375px) {
-      font-size: 32px;
+      font-size: 28px;
     }
     display: inline-block;
     margin: 0 -0.03em;
