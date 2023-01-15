@@ -11,7 +11,7 @@
 > Typescript, React, NextJS, Redux, Redux-saga, StyledComponent
 
 ## 데모 사이트
-http://133.186.159.157
+https://class101-bytrustu.netlify.app
 
 ## 데모 유튜브 영상
 https://youtu.be/1CMSG_PW5dM
